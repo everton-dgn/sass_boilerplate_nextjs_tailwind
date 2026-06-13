@@ -37,7 +37,7 @@ jobs:
 
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chrome
-        timeout-minutes: 10
+        timeout-minutes: 20
 
       - name: Run Playwright tests
         run: pnpm playwright test
