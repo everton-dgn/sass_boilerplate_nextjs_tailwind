@@ -1,0 +1,29 @@
+# Image comparison dependencies for skill-figma-visual-loop
+# Install: pip install -r requirements.txt
+
+# Core image processing (headless = no GUI, smaller footprint, fewer CVEs)
+opencv-python-headless>=4.8,<5.0
+
+# SSIM implementation (academic reference)
+scikit-image>=0.22,<1.0
+
+# ΔE2000 color difference (CIE compliant)
+# Required for perceptual color comparison
+colour-science>=0.4,<1.0
+
+# Array operations
+numpy>=1.24,<3.0
+
+# Perceptual hashing for quick triage (pHash, dHash, wHash)
+# Used as HEURISTIC only, not for pass/fail decision
+imagehash>=4.3,<5.0
+Pillow>=10.0,<12.0
+
+# MS-SSIM (Multi-Scale SSIM) - more robust than single-scale SSIM
+# 15% higher correlation with human perception
+sewar>=0.4,<1.0
+
+# OCR for text similarity validation
+# Used to extract and compare text content between Figma and browser
+# Note: Requires Tesseract OCR installed on system (brew install tesseract)
+pytesseract>=0.3,<1.0

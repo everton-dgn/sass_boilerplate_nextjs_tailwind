@@ -1,0 +1,17 @@
+# Optional dependencies for advanced features
+# Install: pip install -r requirements-optional.txt
+
+# ----- LPIPS (Learned Perceptual Image Patch Similarity) -----
+# Requires PyTorch (~500MB models, ~200ms per comparison)
+# Better correlation with human perception for UI elements
+# torch>=2.0,<3.0
+# lpips>=0.1,<1.0
+
+# ----- OCR for text region detection -----
+# SLOW (~500ms-2s per image) and requires tesseract-ocr binary
+# Prefer using DOM/Figma metadata instead
+# pytesseract>=0.3,<1.0
+
+# ----- DISTS (Deep Image Structure and Texture Similarity) -----
+# Alternative to LPIPS, more robust to texture variance
+# DISTS-pytorch>=0.1,<1.0
