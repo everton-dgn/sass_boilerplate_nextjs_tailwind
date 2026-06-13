@@ -35,9 +35,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps chrome
+      - name: Install Playwright system dependencies
+        run: npx playwright install-deps chromium
         timeout-minutes: 10
+
+      - name: Prepare E2E environment file
+        run: printf 'BASE_URL_TEST=http://localhost:3000\nNEXT_PUBLIC_API_BASE_URL=\n' > .env.test
 
       - name: Run Playwright tests
         run: pnpm playwright test
