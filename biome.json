@@ -88,7 +88,7 @@
       "project": "all"
     },
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "a11y": {
         "useButtonType": "off",
         "noSvgWithoutTitle": "off",
@@ -341,7 +341,8 @@
         "noDelete": "off",
         "noReExportAll": "error",
         "noBarrelFile": "error",
-        "noAccumulatingSpread": "error"
+        "noAccumulatingSpread": "error",
+        "noJsxPropsBind": "off"
       },
       "nursery": {
         "useSortedClasses": {

@@ -75,7 +75,7 @@ export const NotesClient = ({ sessionId }: NotesClientProps) => {
             variant={form.formState.errors.title ? 'destructive' : 'default'}
             {...form.register('title')}
           />
-          {form.formState.errors.title && (
+          {!!form.formState.errors.title && (
             <p className="text-destructive text-sm">
               {form.formState.errors.title.message}
             </p>
@@ -87,7 +87,7 @@ export const NotesClient = ({ sessionId }: NotesClientProps) => {
             variant={form.formState.errors.content ? 'destructive' : 'default'}
             {...form.register('content')}
           />
-          {form.formState.errors.content && (
+          {!!form.formState.errors.content && (
             <p className="text-destructive text-sm">
               {form.formState.errors.content.message}
             </p>
@@ -119,7 +119,7 @@ export const NotesClient = ({ sessionId }: NotesClientProps) => {
         </p>
       )}
 
-      {hasNextPage && (
+      {!!hasNextPage && (
         <div className="flex justify-center">
           <Button
             disabled={isFetchingNextPage}
