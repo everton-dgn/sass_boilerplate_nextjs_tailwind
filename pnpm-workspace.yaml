@@ -1,7 +1,9 @@
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - '@swc/core'
-  - esbuild
-  - lefthook
-  - sharp
-
+allowBuilds:
+  '@biomejs/biome': true
+  '@swc/core': true
+  esbuild: true
+  lefthook: true
+  sharp: true
+engineStrict: true
+saveExact: true
+minimumReleaseAge: 1440
