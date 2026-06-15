@@ -18,15 +18,11 @@ test.describe('home page', () => {
     await expect(topbar.getByText('SaaS Boilerplate')).toBeVisible()
 
     await expect(topbar.getByRole('link', { name: 'Início' })).toBeVisible()
-    await expect(topbar.getByRole('link', { name: 'Notas' })).toBeVisible()
   })
 
   test('should highlight active nav link', async ({ page }) => {
     const inicioLink = page.getByRole('link', { name: 'Início' })
     await expect(inicioLink).toHaveAttribute('aria-current', 'page')
-
-    const notasLink = page.getByRole('link', { name: 'Notas' })
-    await expect(notasLink).not.toHaveAttribute('aria-current', 'page')
   })
 
   test('should render logos and subtitle', async ({ page }) => {
@@ -60,10 +56,10 @@ test.describe('home page', () => {
     ).toBeVisible()
   })
 
-  test('should navigate to notes page', async ({ page }) => {
-    await page.getByRole('link', { name: 'Notas' }).click()
+  test('should keep home navigation on the current page', async ({ page }) => {
+    await page.getByRole('link', { name: 'Início' }).click()
 
-    await expect(page).toHaveURL('/notes')
-    await expect(page.getByRole('heading', { name: 'Notas' })).toBeVisible()
+    await expect(page).toHaveURL('/')
+    await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
   })
 })

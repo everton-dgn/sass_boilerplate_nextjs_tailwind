@@ -1,102 +1,50 @@
-# Regras de Produto
+# Regras de Experiência
 
-Regras que definem a experiência do usuário, funcionalidades
-e comportamentos do produto.
+Regras que definem experiência de uso, fluxos, permissões visíveis e feedback
+de interface.
 
-## Onboarding
+## Primeira experiência
 
-### PRD-001: Fluxo de primeiro acesso
+### UX-001: Estado inicial
 
-**Contexto**: Primeira impressão define retenção.
+**Contexto**: A primeira tela precisa deixar claro o que o usuário pode fazer.
 
-**Regra**: Após o cadastro, o usuário deve passar por um fluxo
-guiado de 3 etapas:
-1. Completar perfil (nome, avatar)
-2. Criar ou entrar em uma organização
-3. Configuração inicial do workspace
-
-O fluxo pode ser pulado, mas um indicador de "setup incompleto"
-permanece visível até conclusão.
-
-### PRD-002: Empty states
-
-**Contexto**: Telas vazias são oportunidades de engajamento.
-
-**Regra**: Todo empty state deve conter:
-- Ilustração ou ícone contextual
-- Texto explicando o que aparecerá ali
-- CTA primário para a ação que popula a tela
+**Regra**: Toda tela inicial deve apresentar estado carregando, estado vazio,
+estado com dados e estado de erro. O estado vazio deve incluir ação principal
+quando houver uma próxima etapa clara.
 
 **Exemplos**:
-- Lista de projetos vazia: "Crie seu primeiro projeto" + botão
-- Dashboard sem dados: "Comece adicionando dados" + link para import
+- Caso válido: lista vazia explica o conteúdo esperado e mostra CTA.
+- Caso inválido: lista vazia renderiza apenas uma área em branco.
 
-## Permissões por plano
+## Permissões e disponibilidade
 
-### PRD-003: Feature gating
+### UX-002: Ações indisponíveis
 
-**Contexto**: Funcionalidades premium devem ser visíveis mas
-bloqueadas para planos inferiores.
+**Contexto**: A interface precisa comunicar quando uma ação não pode ser usada.
 
-**Regra**: Features de planos superiores são exibidas no UI
-com indicador visual (badge "Pro", ícone de cadeado). Ao clicar,
-o sistema exibe modal de upgrade com benefícios do plano superior.
+**Regra**: Ações indisponíveis devem indicar motivo e, quando possível,
+oferecer caminho de resolução. Não esconda ações necessárias para entender o
+fluxo, a menos que a permissão seja sensível.
 
-**Exceções**: Features Enterprise são completamente ocultas para
-usuários Free (evitar confusão com funcionalidades muito avançadas).
+**Exceções**: Ações administrativas ou perigosas podem ser ocultadas para
+papéis sem permissão.
 
-### PRD-004: Degradação de plano
+## Feedback de ações
 
-**Contexto**: Ao fazer downgrade, o usuário pode ter mais recursos
-do que o novo plano permite.
-
-**Regra**: Recursos existentes não são deletados no downgrade.
-Ficam em modo somente leitura até que o usuário reduza manualmente
-ou faça upgrade novamente. O sistema indica quais recursos excedem
-o limite.
-
-## Notificações
-
-### PRD-005: Canais de notificação
-
-**Contexto**: Usuários precisam ser informados sem serem incomodados.
-
-**Regra**: Três canais disponíveis:
-- **In-app**: Toast para ações imediatas, badge para pendências
-- **Email**: Eventos importantes (billing, segurança, convites)
-- **Push** (opcional): Apenas se o usuário optar
-
-O usuário pode configurar preferências por canal e por tipo
-de notificação.
-
-### PRD-006: Frequência de emails
-
-**Contexto**: Excesso de email causa unsubscribe.
-
-**Regra**: Máximo de 1 email de marketing por semana. Emails
-transacionais (reset de senha, confirmação) não têm limite
-mas devem ser agrupados quando possível (digest de notificações
-a cada 4 horas em vez de email individual).
-
-## Fluxos de usuário
-
-### PRD-007: Ações destrutivas
-
-**Contexto**: Exclusões acidentais causam frustração e churn.
-
-**Regra**: Toda ação destrutiva (excluir projeto, remover membro,
-cancelar assinatura) deve:
-1. Exigir confirmação explícita (modal com texto descritivo)
-2. Para exclusões irreversíveis: exigir digitação do nome do recurso
-3. Soft delete com período de recuperação de 30 dias
-
-### PRD-008: Feedback de ações
+### UX-003: Feedback consistente
 
 **Contexto**: O usuário precisa saber que sua ação foi processada.
 
-**Regra**: Toda ação do usuário deve ter feedback visual:
-- **Imediato** (< 100ms): Estado de loading no botão/elemento
-- **Sucesso**: Toast de confirmação com descrição da ação
-- **Erro**: Toast de erro com mensagem acessível e ação sugerida
-- **Longa duração** (> 3s): Progress indicator com possibilidade
-  de cancelar
+**Regra**: Toda ação relevante deve ter feedback visual:
+- **Imediato**: estado de loading no controle acionado.
+- **Sucesso**: confirmação discreta e contextual.
+- **Erro**: mensagem acessível com ação sugerida.
+- **Longa duração**: progresso ou estado intermediário.
+
+### UX-004: Ações destrutivas
+
+**Contexto**: Exclusões acidentais causam perda de confiança.
+
+**Regra**: Ações destrutivas devem exigir confirmação explícita e texto claro
+sobre impacto, reversibilidade e próximos passos.

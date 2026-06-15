@@ -6,9 +6,9 @@ Catálogo centralizado de regras do sistema, organizadas por categoria.
 
 | Categoria                        | Escopo                                           |
 |----------------------------------|--------------------------------------------------|
-| [Negócio](./business/)           | Planos, billing, limites, assinaturas            |
-| [Aplicação](./application/)      | Autenticação, validação, erros, rate limiting     |
-| [Produto](./product/)            | Funcionalidades, permissões, fluxos, onboarding  |
+| [Domínio](./business/)           | Regras do negócio ou problema atendido            |
+| [Aplicação](./application/)      | Regras técnicas, segurança, erros e integrações   |
+| [Experiência](./product/)        | Regras de interface, permissões e fluxos          |
 
 ## Como documentar regras
 
@@ -30,7 +30,7 @@ Cada regra segue o formato:
 
 ### Convenções
 
-- **ID**: Prefixo por categoria (`BIZ-`, `APP-`, `PRD-`) + número sequencial
+- **ID**: Prefixo por categoria (`DOM-`, `APP-`, `UX-`) + número sequencial
 - **Idioma**: Português para documentação, inglês para identificadores
   no código
 - **Granularidade**: Uma regra por comportamento. Se uma regra tem muitas
@@ -41,6 +41,6 @@ Cada regra segue o formato:
 ## Quando criar uma regra
 
 - Comportamento que precisa ser consistente em toda a aplicação
-- Decisão de negócio que impacta múltiplos fluxos
+- Decisão de domínio que impacta múltiplos fluxos
 - Restrição que desenvolvedores precisam conhecer antes de implementar
 - Lógica que já causou bugs por falta de documentação

@@ -4,38 +4,38 @@ Cada feature com lógica própria vive dentro de `src/app/<rota>/` com
 componentes, hooks e services colocalizados:
 
 ```
-src/app/notes/
+src/app/resources/
 ├── page.tsx                        # Server Component (prefetch + hydration)
 ├── Client.tsx                      # Client Component principal ('use client')
 ├── layout.tsx                      # Metadata da rota
 ├── loading.tsx                     # Skeleton loading (Server Component)
 ├── components/                     # Componentes exclusivos da rota
-│   ├── NoteCard/
+│   ├── ResourceCard/
 │   │   ├── index.tsx
 │   │   └── types.ts
-│   ├── NoteList/
+│   ├── ResourceList/
 │   │   ├── index.tsx
 │   │   └── types.ts
-│   ├── NotesToolbar/
+│   ├── ResourcesToolbar/
 │   │   ├── index.tsx
 │   │   └── types.ts
-│   └── EditNoteDialog/
+│   └── EditResourceDialog/
 │       ├── index.tsx
 │       └── types.ts
 ├── hooks/                          # Hooks exclusivos da rota
-│   └── useCreateNoteForm/
+│   └── useCreateResourceForm/
 │       └── index.ts
 └── services/                       # Camada de serviços (React Query)
     ├── config.ts
     ├── types.ts
     ├── mappers.ts
     ├── queries/
-    │   └── useFindNotes.ts
+    │   └── useFindResources.ts
     └── mutations/
         ├── types.ts
-        ├── useCreateNote.ts
-        ├── useDeleteNote.ts
-        └── useUpdateNote.ts
+        ├── useCreateResource.ts
+        ├── useDeleteResource.ts
+        └── useUpdateResource.ts
 ```
 
 ## Regras de colocalização
@@ -57,16 +57,16 @@ Padrão para páginas que precisam de dados do servidor + interatividade:
 ### `page.tsx` — Server Component
 
 ```tsx
-const NotesPage = async () => {
+const ResourcesPage = async () => {
   const queryClient = getQueryClient()
-  await queryClient.prefetchInfiniteQuery(notesQueryOptions)
+  await queryClient.prefetchInfiniteQuery(resourcesQueryOptions)
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient />
+      <ResourcesClient />
     </HydrationBoundary>
   )
 }
-export default NotesPage
+export default ResourcesPage
 ```
 
 - Faz **prefetch** no servidor via `getQueryClient()`.
@@ -77,18 +77,18 @@ export default NotesPage
 
 - Arquivo separado com `'use client'` no topo.
 - Consome hooks de query/mutation, state do Zustand, formulários.
-- Nome: `<Feature>Client` (ex: `NotesClient`).
+- Nome: `<Feature>Client` (ex: `ResourcesClient`).
 
 ### `layout.tsx` — Metadata
 
 ```tsx
 export const metadata: Metadata = {
-  title: 'Notas',
+  title: 'Recursos',
   description:
     'Demonstração de mutations com React Query'
 }
-const NotesLayout = ({ children }: { children: ReactNode }) => children
-export default NotesLayout
+const ResourcesLayout = ({ children }: { children: ReactNode }) => children
+export default ResourcesLayout
 ```
 
 - Define `metadata` para SEO.
@@ -107,30 +107,30 @@ export default NotesLayout
 Hook customizado que encapsula React Hook Form + mutation:
 
 ```
-src/app/notes/hooks/useCreateNoteForm/
+src/app/resources/hooks/useCreateResourceForm/
 └── index.ts
 ```
 
 ```tsx
-export const useCreateNoteForm = () => {
+export const useCreateResourceForm = () => {
   const [formKey, setFormKey] = useState(0)
-  const createNote = useCreateNote()
-  const form = useForm<CreateNoteInput>({
-    resolver: zodResolver(createNoteSchema),
-    defaultValues: { title: '', content: '' }
+  const createResource = useCreateResource()
+  const form = useForm<CreateResourceInput>({
+    resolver: zodResolver(createResourceSchema),
+    defaultValues: { name: '', description: '' }
   })
-  const onSubmit = (values: CreateNoteInput) => {
-    createNote.mutate(values, {
+  const onSubmit = (values: CreateResourceInput) => {
+    createResource.mutate(values, {
       onSuccess: () => { form.reset(); setFormKey(prev => prev + 1) }
     })
   }
-  return { form, formKey, isPending: createNote.isPending, onSubmit }
+  return { form, formKey, isPending: createResource.isPending, onSubmit }
 }
 ```
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Hook de form | `useCreate<Recurso>Form` | `useCreateNoteForm` |
+| Hook de form | `useCreate<Recurso>Form` | `useCreateResourceForm` |
 | Retorno: form | `form` (instância RHF) | `useForm<T>()` |
 | Retorno: key | `formKey` (reset visual) | `useState(0)` |
 | Retorno: submit | `onSubmit` | handler para `form.handleSubmit` |

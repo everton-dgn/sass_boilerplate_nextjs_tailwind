@@ -1,7 +1,6 @@
 # Documentação
 
-Índice da documentação do SaaS Boilerplate, organizada pelo framework
-Diátaxis.
+Índice da documentação do projeto, organizada pelo framework Diátaxis.
 
 ## Estrutura
 
@@ -10,8 +9,7 @@ docs/
 ├── guides/              # Como fazer (orientado a tarefas)
 ├── reference/           # Consulta técnica (orientado a informação)
 ├── decisions/           # ADRs (por quê decidimos)
-├── rules/               # Regras (o que deve ser respeitado)
-└── specs/               # Especificações (o que será construído)
+└── rules/               # Regras (o que deve ser respeitado)
 ```
 
 ## Guias — "Como eu faço X?"
@@ -28,8 +26,8 @@ docs/
 | Documento | Descrição |
 |-----------|-----------|
 | [Arquitetura](./reference/architecture.md) | Estrutura de camadas, App Router e convenções |
-| [Convenções](./reference/conventions/) | Padrões de implementação: services, stores, API routes, nomenclatura |
-| [Funcionalidades](./reference/features.md) | Notes CRUD, modo escuro, toast, validação de ambiente, React Query |
+| [Convenções](./reference/conventions/) | Padrões de implementação para UI, infraestrutura, services e nomenclatura |
+| [Funcionalidades](./reference/features.md) | Base de UI, modo escuro, toast, validação de ambiente e React Query |
 | [Restrições de qualidade](./reference/quality-constraints.md) | Regras de código, estilização e ferramentas de lint |
 | [Guia de estilo](./reference/styleguide.md) | Cores, tipografia, espaçamento e acessibilidade |
 
@@ -43,13 +41,6 @@ docs/
 
 | Categoria | Descrição |
 |-----------|-----------|
-| [Negócio](./rules/business/) | Planos, billing, limites, assinaturas |
-| [Aplicação](./rules/application/) | Autenticação, validação, erros, rate limiting |
-| [Produto](./rules/product/) | Funcionalidades, permissões, fluxos, onboarding |
-
-## Especificações — "O que será construído?"
-
-| Diretório | Descrição |
-|-----------|-----------|
-| [Em andamento](./specs/in-progress/) | Features em planejamento ou desenvolvimento |
-| [Concluídas](./specs/done/) | Features implementadas (referência) |
+| [Domínio](./rules/business/) | Regras do negócio ou problema atendido |
+| [Aplicação](./rules/application/) | Regras técnicas, segurança, erros e integrações |
+| [Experiência](./rules/product/) | Regras de interface, permissões e fluxos |

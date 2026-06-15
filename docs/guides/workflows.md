@@ -46,19 +46,16 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
 ```
 src/tests/
 ├── pages/               # Testes por página individual
-│   ├── home.spec.ts     # UI, navegação, tema da home
-│   └── notes.spec.ts    # CRUD, paginação, ordenação, validação
+│   └── home.spec.ts     # UI, navegação e tema da home
 ├── flows/               # Jornadas multi-página
-│   ├── navigation.spec.ts   # Navegação entre páginas, persistência de tema
-│   └── notesCrud.spec.ts    # CRUD completo, persistência de dados
+│   └── navigation.spec.ts   # Navegação e persistência de tema
 ├── mocks/               # Mocks compartilhados
 ├── providers/           # Providers de teste
 └── helpers/             # Helpers compartilhados
 ```
 
 - **Page tests**: verificam funcionalidade isolada de cada página.
-- **Flow tests**: validam jornadas do usuário que cruzam múltiplas páginas
-  (ex: criar nota → navegar → voltar → verificar persistência).
+- **Flow tests**: validam jornadas do usuário que cruzam estados ou páginas.
 
 ## Detecção de duplicatas
 
@@ -140,17 +137,15 @@ Todo `.ts` com funções exportadas segue a mesma estrutura de pasta:
 Exemplo de estrutura:
 
 ```
-src/app/api/notes/
+src/app/api/<resource>/
 ├── route.ts             # GET (listagem) e POST (criação)
-├── store.ts             # Store em memória (desenvolvimento)
 └── [id]/
     └── route.ts         # PATCH (atualização) e DELETE (remoção)
 ```
 
 ## Adicionando services com React Query
 
-Ao criar uma feature com busca/mutação de dados, siga o padrão da rota
-`notes`:
+Ao criar uma feature com busca/mutação de dados, siga este padrão:
 
 ```
 src/app/<rota>/services/

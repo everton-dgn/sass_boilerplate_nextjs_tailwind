@@ -1,37 +1,22 @@
 # Funcionalidades
 
-## Notes (CRUD completo)
+## Página inicial
 
-Feature de gerenciamento de notas com CRUD completo:
-
-- **Página**: `src/app/notes/` com Server Component que faz prefetch via
-  React Query e hidrata no cliente.
-- **API Routes**: `src/app/api/notes/` com endpoints REST (GET paginado,
-  POST, PATCH, DELETE) e store em memória.
-- **Componentes**: NoteCard, NoteList, NotesToolbar e EditNoteDialog
-  colocalizados em `src/app/notes/components/`.
-- **Services**: camada de serviços com mutations (useCreateNote,
-  useDeleteNote, useUpdateNote), queries (useFindNotes), mappers
-  (transformação snake_case → camelCase com validação Zod) e config.
-- **Hook de formulário**: `useCreateNoteForm` em
-  `src/app/notes/hooks/useCreateNoteForm/`.
-- **Preferências**: Zustand store `notesPreferences` para viewMode
-  (grid/list) e sortOrder (newest/oldest) com persistência.
-- **Paginação**: infinite query com botão "Mostrar mais".
+O boilerplate entrega uma página inicial mínima em `src/app/(home)/` para
+validar layout, assets, tema e configuração do App Router.
 
 ## Modo escuro
 
 Suporte a modo escuro via `next-themes` com `attribute="class"`. Tokens de cor
 são definidos como variáveis CSS em `src/theme/globals.css` com valores
-distintos para `:root` (claro) e `.dark` (escuro). O toggle de tema está
-disponível na Topbar via componente `ThemeToggle`.
+distintos para `:root` e `.dark`. O toggle de tema está disponível na Topbar
+via componente `ThemeToggle`.
 
 ## Topbar
 
-Barra de navegação fixa no topo da página com backdrop blur. Contém links
-de navegação (Home, Notes) à esquerda e o botão de toggle de tema à direita.
-Componente molecule em `src/components/molecules/Topbar/`. Links configurados
-em `constants.ts`.
+Barra de navegação fixa no topo da página com backdrop blur. O componente fica
+em `src/components/molecules/Topbar/` e os links são configurados em
+`constants.ts`.
 
 ## Notificações toast
 
@@ -40,11 +25,9 @@ atom em `src/components/atoms/Toast/`.
 
 ## Fronteiras de erro
 
-- **ErrorFallback**: organism em `src/components/organisms/ErrorFallback/` para
-  tratamento de erros em nível de rota.
+- **ErrorFallback**: organism em `src/components/organisms/ErrorFallback/`.
 - **error.tsx**: fronteira de erro em nível de rota.
-- **global-error.tsx**: fronteira de erro global do Next.js para erros não
-  capturados.
+- **global-error.tsx**: fronteira de erro global do Next.js.
 - **not-found.tsx**: página 404 customizada.
 
 ## Validação de ambiente
@@ -52,48 +35,27 @@ atom em `src/components/atoms/Toast/`.
 Variáveis de ambiente são validadas com schemas Zod em `src/constants/`:
 
 - **serverEnv**: variáveis server-only protegidas pelo pacote `server-only`.
-- **clientEnv**: variáveis do lado do cliente protegidas pelo pacote
-  `client-only`, prefixadas com `NEXT_PUBLIC_`.
+- **clientEnv**: variáveis client-only protegidas pelo pacote `client-only`.
+- **sharedEnv**: variáveis compartilhadas e helpers de ambiente.
 
-Erros de validação falham no build, prevenindo deploys com configuração
-incorreta.
-
-## Gerenciamento de estado
-
-Zustand em `src/infra/store/` com:
-
-- Persist middleware para persistência automática no cliente.
-- Guard `IS_CLIENT` para evitar erros de SSR.
-- Store `notesPreferences` para preferências de visualização (viewMode,
-  sortOrder).
+Erros de validação falham no build e evitam deploys com configuração inválida.
 
 ## Busca de dados
 
-TanStack React Query com:
+TanStack React Query fica configurado no `MainProvider` com:
 
-- Async storage persister para cache offline.
-- Configuração de stale time, retry e refetch.
-- Suporte a abort signals para cancelamento de requisições.
-- Infinite queries para paginação.
-- Prefetch no servidor com hidratação no cliente.
-- Integrado ao MainProvider.
+- QueryClient singleton no browser e instância nova no servidor.
+- Async storage persister para cache no cliente.
+- `staleTime` e `gcTime` padronizados.
+- React Query Devtools disponível em desenvolvimento.
 
-## Formulários
+## HTTP, estado e formulários
 
-React Hook Form + Zod para:
+O boilerplate mantém fundações prontas para features:
 
-- Validação de formulários com schemas tipados.
-- Integração com segurança de tipos entre schema e estado do formulário.
-- Hook customizado `useCreateNoteForm` para lógica de formulário de notas.
-
-## API Routes
-
-Endpoints REST em `src/app/api/notes/`:
-
-- `GET /api/notes` — listagem paginada com query params.
-- `POST /api/notes` — criação com validação Zod.
-- `PATCH /api/notes/[id]` — atualização parcial.
-- `DELETE /api/notes/[id]` — remoção.
+- Axios via `src/infra/adapters/httpClient/`.
+- Zustand com configuração base em `src/infra/store/`.
+- React Hook Form + Zod disponíveis para formulários tipados.
 
 ## Atomic Design
 
@@ -101,32 +63,29 @@ Componentes organizados em três níveis:
 
 - **atoms**: Button, Input, Textarea, Toast, MainProvider, ThemeToggle.
 - **molecules**: Topbar, Dialog.
-- **organisms**: ErrorFallback e seções complexas.
+- **organisms**: ErrorFallback.
 
 ## shadcn/ui
 
-Biblioteca de componentes UI baseada em Radix UI + Tailwind
-Variants. Componentes gerados em `src/components/atoms/` via CLI
-`npx shadcn@latest add`.
+Biblioteca de componentes UI baseada em Radix UI + Tailwind Variants.
+Componentes são gerados em `src/components/atoms/` via configuração do
+`components.json`.
 
 ## SVG como componentes
 
-SVGs importados como componentes React via `@svgr/webpack` com regra
+SVGs são importados como componentes React via `@svgr/webpack` com regra
 Turbopack configurada no `next.config`.
 
 ## React Compiler
 
-React Compiler habilitado via `babel-plugin-react-compiler` para
-otimização automática de re-renderizações.
+React Compiler habilitado via `babel-plugin-react-compiler` para otimização
+automática de re-renderizações.
 
 ## Rotas tipadas
 
-Rotas tipadas via `typedRoutes: true` no Next.js config, fornecendo
-autocompletar e validação de links em tempo de compilação.
+Rotas tipadas via `typedRoutes: true` no Next.js config.
 
 ## Testes
 
 - **Unitários**: Vitest + Testing Library em `src/**/__tests__/test.{ts,tsx}`.
-- **E2E por página**: Playwright em `src/tests/pages/` (home, notes).
-- **Flow tests**: Playwright em `src/tests/flows/` para jornadas multi-página
-  (navegação, CRUD de notas, persistência de tema e dados).
+- **E2E**: Playwright em `src/tests/` para home, tema e navegação base.

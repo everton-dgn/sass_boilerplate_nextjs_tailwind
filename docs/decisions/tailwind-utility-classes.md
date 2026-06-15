@@ -1,6 +1,6 @@
 # Classes utilitárias Tailwind em vez de CSS Modules
 
-**Situação**: Aceita (substitui decisão anterior sobre CSS Modules)
+**Situação**: Aceita
 
 ## Contexto
 
@@ -15,8 +15,8 @@ tailwind-merge) para classes condicionais. Variáveis CSS em
 
 ## Alternativas rejeitadas
 
-- **CSS Modules** (anterior) — substituída: sobrecarga de arquivos extras,
-  nomenclatura manual, não integra com Tailwind.
+- **CSS Modules** — rejeitada: sobrecarga de arquivos extras, nomenclatura
+  manual e menor integração com Tailwind.
 
 ## Consequências
 

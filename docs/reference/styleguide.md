@@ -1,7 +1,7 @@
 # Guia de estilo
 
-Guia visual do SaaS Boilerplate. Todas as decisões de estilo usam Tailwind
-CSS v4 com tokens semânticos do shadcn/ui e propriedades CSS customizadas.
+Guia visual base do projeto. Todas as decisões de estilo usam Tailwind CSS v4
+com tokens semânticos do shadcn/ui e propriedades CSS customizadas.
 
 ---
 

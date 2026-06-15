@@ -1,40 +1,20 @@
 <div align="center">
 
-<a href="./LICENSE">![GitHub](https://img.shields.io/github/license/everton-dgn/sass_boilerplate_next_tailwind?style=plastic)</a>
-![GitHub repo size](https://img.shields.io/github/repo-size/everton-dgn/sass_boilerplate_next_tailwind?style=plastic)
-![GitHub Repo stars](https://img.shields.io/github/stars/everton-dgn/sass_boilerplate_next_tailwind?color=yellow&style=plastic)
+<a href="./LICENSE">![GitHub](https://img.shields.io/github/license/everton-dgn/sass_boilerplate_nextjs_tailwind?style=plastic)</a>
+![GitHub repo size](https://img.shields.io/github/repo-size/everton-dgn/sass_boilerplate_nextjs_tailwind?style=plastic)
+![GitHub Repo stars](https://img.shields.io/github/stars/everton-dgn/sass_boilerplate_nextjs_tailwind?color=yellow&style=plastic)
 
 </div>
 
-<h1 align="center">SaaS Boilerplate &mdash; Next.js + Tailwind CSS</h1>
+<h1 align="center">Next.js + Tailwind CSS Boilerplate</h1>
 
 <br />
 
 # :memo: Sobre o Projeto
 
-Boilerplate pronto para produção para construir aplicações SaaS com
-Next.js 16, React 19, TypeScript e Tailwind CSS v4. Projetado para escalar
-com segurança, qualidade de código e manutenibilidade.
-
-Construído sobre três pilares: **legibilidade**, **reusabilidade** e
-**facilidade de refatoração**.
-
-<br />
-
----
-
-# :pushpin: Conteúdo
-
-- [Tecnologias](#globe_with_meridians-tecnologias)
-- [Funcionalidades](#triangular_flag_on_post-funcionalidades)
-- [Estrutura do Projeto](#open_file_folder-estrutura-do-projeto)
-- [Pré-requisitos](#white_check_mark-pré-requisitos)
-- [Primeiros Passos](#rocket-primeiros-passos)
-- [Scripts](#wrench-scripts)
-- [Guias](#books-guias)
-- [Considerações Importantes](#rotating_light-considerações-importantes)
-- [Referências](#link-referências)
-- [Autor](#technologist-autor)
+Boilerplate enxuto para iniciar projetos com Next.js 16, React 19, TypeScript
+e Tailwind CSS v4. A base mantém tooling, providers e componentes essenciais,
+sem trazer uma aplicação de produto pronta.
 
 <br />
 
@@ -73,10 +53,8 @@ Construído sobre três pilares: **legibilidade**, **reusabilidade** e
   client-only)
 - [x] Estrutura de componentes com Atomic Design (atoms, molecules, organisms)
 - [x] Biblioteca de componentes shadcn/ui pronta
-- [x] Notes CRUD completo (criar, editar, excluir) com paginação
-- [x] API Routes REST com validação Zod
-- [x] Zustand store com persist middleware
-- [x] React Query com async storage persister e infinite queries
+- [x] React Query configurado no provider principal
+- [x] Axios, Zustand, React Hook Form e Zod disponíveis para features
 - [x] SVG como componentes React via SVGR
 - [x] React Compiler habilitado
 - [x] Rotas tipadas
@@ -91,13 +69,11 @@ Construído sobre três pilares: **legibilidade**, **reusabilidade** e
 # :open_file_folder: Estrutura do Projeto
 
 ```
-saas-boilerplate/
+project/
 ├── src/
 │   ├── @types/              # Declarações de tipo globais
 │   ├── app/                 # Rotas (App Router)
 │   │   ├── (home)/          # Grupo de rotas da home
-│   │   ├── notes/           # CRUD de notas (componentes, hooks, services)
-│   │   ├── api/notes/       # API Routes REST
 │   │   ├── layout.tsx       # Layout raiz
 │   │   ├── global-error.tsx # Fronteira de erro global
 │   │   └── not-found.tsx    # Página 404
@@ -111,10 +87,10 @@ saas-boilerplate/
 │   ├── helpers/             # Utilitários compartilhados (cn helper)
 │   ├── infra/               # Infraestrutura
 │   │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
-│   │   └── store/           # Zustand stores (notesPreferences)
+│   │   └── store/           # Base para stores Zustand
 │   ├── tests/               # Testes E2E e utilitários
-│   │   ├── pages/           # Testes por página (home, notes)
-│   │   ├── flows/           # Testes de jornada multi-página
+│   │   ├── pages/           # Testes por página
+│   │   ├── flows/           # Testes de jornada
 │   │   ├── mocks/           # Mocks compartilhados
 │   │   ├── providers/       # Providers de teste
 │   │   └── helpers/         # Helpers de teste
@@ -123,13 +99,7 @@ saas-boilerplate/
 │   ├── guides/              # Como fazer (tarefas)
 │   ├── reference/           # Consulta técnica
 │   ├── decisions/           # ADRs (decisões arquiteturais)
-│   ├── rules/               # Catálogo de regras
-│   │   ├── business/        # Regras de negócio
-│   │   ├── application/     # Regras de aplicação
-│   │   └── product/         # Regras de produto
-│   └── specs/               # Especificações de features
-│       ├── in-progress/     # Em desenvolvimento
-│       └── done/            # Implementadas
+│   └── rules/               # Regras de domínio, aplicação e experiência
 └── CLAUDE.md                # Convenções do repositório
 ```
 
@@ -150,7 +120,7 @@ saas-boilerplate/
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/everton-dgn/sass_boilerplate_next_tailwind.git
+git clone https://github.com/everton-dgn/sass_boilerplate_nextjs_tailwind.git
 
 # Habilitar Corepack (para pnpm)
 corepack enable
@@ -212,17 +182,16 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
   App Router e convenções de import
 - [Convenções](./docs/reference/conventions/) — Padrões de implementação:
   services, stores, API routes, nomenclatura
-- [Funcionalidades](./docs/reference/features.md) — Notes CRUD, modo escuro,
-  toast, validação de ambiente, React Query
+- [Funcionalidades](./docs/reference/features.md) — base de UI, modo escuro,
+  toast, validação de ambiente e React Query
 - [Restrições de qualidade](./docs/reference/quality-constraints.md) — Regras
   de código, estilização e ferramentas de lint
 - [Guia de estilo](./docs/reference/styleguide.md) — Cores, tipografia,
   espaçamento e acessibilidade
 
-**Projeto** — Decisões, regras e specs:
+**Projeto** — Decisões e regras:
 - [Decisões (ADRs)](./docs/decisions/) — Registro de decisões arquiteturais
-- [Regras](./docs/rules/) — Regras de negócio, aplicação e produto
-- [Especificações](./docs/specs/) — Features em andamento e prontas
+- [Regras](./docs/rules/) — Regras de domínio, aplicação e experiência
 
 <br />
 

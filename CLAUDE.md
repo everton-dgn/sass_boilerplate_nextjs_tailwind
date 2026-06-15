@@ -132,8 +132,7 @@ Exemplos:
 
 ### Contexto rápido
 
-- **Projeto**: SaaS Boilerplate — fundação para construir aplicações SaaS
-  com Next.js.
+- **Projeto**: boilerplate Next.js para iniciar projetos.
 - **Tecnologias**: Next.js 16 App Router + React 19 + TypeScript + shadcn/ui +
   Tailwind CSS v4
 - **Gerenciador de pacotes**: pnpm (não use npm/yarn). Node 24.x.
@@ -181,13 +180,11 @@ Schemas validados com Zod em `src/constants/`:
 ### Estrutura do repositório
 
 ```
-saas-boilerplate/
+project/
 ├── src/
 │   ├── @types/              # Declarações de tipo globais
 │   ├── app/                 # Rotas (App Router)
 │   │   ├── (home)/          # Grupo de rotas da home
-│   │   ├── notes/           # CRUD de notas (componentes, hooks, services)
-│   │   ├── api/notes/       # API Routes REST
 │   │   ├── layout.tsx       # Layout raiz
 │   │   ├── global-error.tsx # Fronteira de erro global
 │   │   └── not-found.tsx    # Página 404
@@ -201,23 +198,17 @@ saas-boilerplate/
 │   ├── helpers/             # Utilitários compartilhados (cn helper)
 │   ├── infra/               # Infraestrutura
 │   │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
-│   │   └── store/           # Zustand stores (notesPreferences)
+│   │   └── store/           # Base para stores Zustand
 │   ├── tests/               # Testes E2E e utilitários
-│   │   ├── pages/           # Testes por página (home, notes)
-│   │   ├── flows/           # Testes de jornada multi-página
+│   │   ├── pages/           # Testes por página
+│   │   ├── flows/           # Testes de jornada
 │   │   └── ...              # mocks, providers, helpers
 │   └── theme/               # Configuração de fontes
 ├── docs/
 │   ├── guides/              # Como fazer (tarefas)
 │   ├── reference/           # Consulta técnica
 │   ├── decisions/           # ADRs
-│   ├── rules/               # Catálogo de regras
-│   │   ├── business/        # Regras de negócio
-│   │   ├── application/     # Regras de aplicação
-│   │   └── product/         # Regras de produto
-│   └── specs/               # Especificações de features
-│       ├── in-progress/     # Em desenvolvimento
-│       └── done/            # Implementadas
+│   └── rules/               # Regras de domínio, aplicação e experiência
 └── CLAUDE.md                # Este arquivo
 ```
 
@@ -401,15 +392,9 @@ Documentadas em `docs/rules/`:
 
 | Categoria   | Diretório      | Escopo                                  |
 |-------------|----------------|-----------------------------------------|
-| Negócio     | `business/`    | Planos, billing, limites, assinaturas   |
-| Aplicação   | `application/` | Autenticação, validação, erros          |
-| Produto     | `product/`     | Funcionalidades, permissões, fluxos     |
-
-### Especificações de features
-
-Documentadas em `docs/specs/`:
-- `in-progress/` — features em planejamento ou desenvolvimento
-- `done/` — features implementadas (referência)
+| Domínio     | `business/`    | Regras do negócio ou problema atendido  |
+| Aplicação   | `application/` | Regras técnicas, segurança e erros      |
+| Experiência | `product/`     | Interface, permissões e fluxos          |
 
 ---
 
