@@ -82,7 +82,6 @@
   },
   "linter": {
     "domains": {
-      "test": "all",
       "next": "all",
       "react": "all",
       "project": "all"
@@ -182,7 +181,7 @@
         "noUnsafeOptionalChaining": "error",
         "noUnusedLabels": "error",
         "noUnusedVariables": "error",
-        "useExhaustiveDependencies": "off",
+        "useExhaustiveDependencies": "error",
         "useHookAtTopLevel": "error",
         "useIsNan": "error",
         "useJsxKeyInIterable": "error",
@@ -200,7 +199,8 @@
         "noDangerouslySetInnerHtmlWithChildren": "off",
         "noDangerouslySetInnerHtml": "off",
         "noGlobalEval": "error",
-        "noBlankTarget": "error"
+        "noBlankTarget": "error",
+        "noSecrets": "error"
       },
       "style": {
         "useComponentExportOnlyModules": "off",
@@ -217,6 +217,10 @@
         "useAsConstAssertion": "error",
         "useBlockStatements": "off",
         "useConsistentArrayType": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        },
         "useConst": "error",
         "useExportType": "error",
         "useImportType": "error",
@@ -335,7 +339,8 @@
         "noApproximativeNumericConstant": "error",
         "noMisrefactoredShorthandAssign": "error",
         "useAwait": "error",
-        "noEvolvingTypes": "error"
+        "noEvolvingTypes": "error",
+        "noUnnecessaryConditions": "error"
       },
       "performance": {
         "noDelete": "off",
@@ -352,7 +357,16 @@
             "attributes": ["classList"],
             "functions": ["clsx", "tv", "cn"]
           }
-        }
+        },
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "useExhaustiveSwitchCases": "error",
+        "useNullishCoalescing": "error",
+        "noUnsafePlusOperands": "error",
+        "noBaseToString": "error",
+        "useStringStartsEndsWith": "error",
+        "noComponentHookFactories": "error",
+        "useReactAsyncServerFunction": "error"
       }
     }
   },
@@ -440,6 +454,41 @@
           },
           "complexity": {
             "noArguments": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/**/__tests__/**/*.{ts,tsx}", "src/**/*.spec.ts"],
+      "linter": {
+        "domains": { "test": "all" },
+        "rules": {
+          "nursery": {
+            "useExpect": "error",
+            "noConditionalExpect": "error",
+            "noIdenticalTestTitle": "error",
+            "useTestHooksInOrder": "error",
+            "useTestHooksOnTop": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/**/*.spec.ts"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noPlaywrightElementHandle": "error",
+            "noPlaywrightEval": "error",
+            "noPlaywrightForceOption": "error",
+            "noPlaywrightMissingAwait": "error",
+            "noPlaywrightNetworkidle": "error",
+            "noPlaywrightPagePause": "error",
+            "noPlaywrightUselessAwait": "error",
+            "noPlaywrightWaitForNavigation": "error",
+            "noPlaywrightWaitForSelector": "error",
+            "noPlaywrightWaitForTimeout": "error",
+            "usePlaywrightValidDescribeCallback": "error"
           }
         }
       }
