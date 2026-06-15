@@ -6,11 +6,11 @@ Padrão de organização de Zustand stores em `src/infra/store/`:
 src/infra/store/
 ├── config.ts                   # middlewaresProvider (factory)
 ├── types.ts                    # Tipos base (Middleware, MiddlewaresProvider)
-└── notesPreferences/
+└── resourceFilters/
     ├── types.ts                # State, Actions, Store, Slice
     ├── slice.ts                # initialState + slice (reducers)
     ├── store.ts                # useStore (instância com middlewares)
-    └── index.ts                # Hook facade (useNotesPreferences)
+    └── index.ts                # Hook facade (useResourceFilters)
 ```
 
 ---
@@ -64,7 +64,7 @@ export const slice: Slice = set => ({
 ## `store.ts` — Instância com middlewares
 
 ```tsx
-const name = 'notesPreferences'
+const name = 'resourceFilters'
 const storage: PersistOptions<Store, Partial<State>> = {
   name,
   partialize: state => {
@@ -84,21 +84,21 @@ export const useStore = middlewaresProvider<Store>({ slice, storage, name })
 ## `index.ts` — Hook facade
 
 ```tsx
-export const useNotesPreferences = () => {
-  const stateNotesPreferences = {
+export const useResourceFilters = () => {
+  const stateResourceFilters = {
     viewMode: useStore(state => state.viewMode),
     sortOrder: useStore(state => state.sortOrder),
     setToggleViewMode: useStore(state => state.setToggleViewMode),
     setToggleSortOrder: useStore(state => state.setToggleSortOrder)
   }
-  return { stateNotesPreferences }
+  return { stateResourceFilters }
 }
 ```
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Hook facade | `use<Nome>` | `useNotesPreferences` |
-| Objeto retornado | `state<Nome>` | `stateNotesPreferences` |
+| Hook facade | `use<Nome>` | `useResourceFilters` |
+| Objeto retornado | `state<Nome>` | `stateResourceFilters` |
 | Actions | `setToggle<Propriedade>` | `setToggleViewMode` |
 | Store interna | `useStore` (não exportada) | — |
 

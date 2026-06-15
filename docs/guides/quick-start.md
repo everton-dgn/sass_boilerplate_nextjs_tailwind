@@ -1,7 +1,6 @@
 # Início rápido
 
-Este guia cobre o mínimo para rodar o SaaS Boilerplate e entender a
-configuração.
+Este guia cobre o mínimo para rodar o boilerplate e entender a configuração.
 
 ## Requisitos
 
@@ -48,25 +47,22 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
 ## Estrutura do projeto
 
 ```
-saas-boilerplate/
+project/
 ├── src/                    Código-fonte
 │   ├── app/                Rotas (App Router)
-│   │   ├── (home)/         Página inicial
-│   │   ├── notes/          CRUD de notas (componentes, hooks, services)
-│   │   └── api/notes/      API Routes REST
+│   │   └── (home)/         Página inicial
 │   ├── components/         Atomic Design (atoms, molecules, organisms)
 │   ├── constants/          Schemas de ambiente e configurações
 │   ├── hooks/              React hooks customizados
 │   ├── helpers/            Utilitários compartilhados
-│   ├── infra/              Infraestrutura (adapters + stores)
-│   ├── tests/              Testes E2E (pages, flows) e utilitários
+│   ├── infra/              Infraestrutura (adapters + store base)
+│   ├── tests/              Testes E2E e utilitários
 │   └── theme/              Configuração de fontes
 ├── docs/                   Documentação
 │   ├── guides/             Como fazer (tarefas)
 │   ├── reference/          Consulta técnica
 │   ├── decisions/          ADRs (decisões arquiteturais)
-│   ├── rules/              Regras de negócio, aplicação e produto
-│   └── specs/              Especificações de features
+│   └── rules/              Regras de domínio, aplicação e experiência
 ├── package.json
 └── ...
 ```
@@ -79,5 +75,4 @@ saas-boilerplate/
 - Restrições de qualidade: `../reference/quality-constraints.md`
 - Fluxos de trabalho: `./workflows.md`
 - Regras: `../rules/`
-- Especificações: `../specs/`
 - Perguntas frequentes: `./faq.md`

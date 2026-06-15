@@ -43,15 +43,12 @@ describe('[Component] Topbar', () => {
     expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
-  it('should highlight the active link for notes', () => {
-    mockUsePathname.mockReturnValue('/notes')
+  it('should render the home link as inactive outside home', () => {
+    mockUsePathname.mockReturnValue('/settings')
     renderWithProviders(<Topbar />)
-
-    const notesLink = screen.getByText('Notas')
-    expect(notesLink).toHaveClass('text-foreground')
-    expect(notesLink).toHaveAttribute('aria-current', 'page')
 
     const homeLink = screen.getByText('Início')
     expect(homeLink).toHaveClass('text-muted-foreground')
+    expect(homeLink).not.toHaveAttribute('aria-current')
   })
 })

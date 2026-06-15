@@ -45,7 +45,7 @@ Se qualquer comando falhar, corrija e repita até todos passarem.
 
 ## Tecnologias
 
-- **Projeto**: SaaS Boilerplate com Next.js
+- **Projeto**: boilerplate Next.js para iniciar projetos
 - **Stack**: Next.js 16 App Router + React 19 + TypeScript + shadcn/ui +
   Tailwind CSS v4
 - **Pacotes**: pnpm (não use npm/yarn). Node 24.x
@@ -70,8 +70,6 @@ src/
 ├── @types/              # Declarações de tipo globais
 ├── app/                 # Rotas (App Router)
 │   ├── (home)/          # Grupo de rotas da home
-│   ├── notes/           # CRUD de notas (componentes, hooks, services)
-│   ├── api/notes/       # API Routes REST
 │   ├── layout.tsx       # Layout raiz
 │   ├── global-error.tsx # Fronteira de erro global
 │   └── not-found.tsx    # Página 404
@@ -85,10 +83,10 @@ src/
 ├── helpers/             # Utilitários compartilhados (cn helper)
 ├── infra/               # Infraestrutura
 │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
-│   └── store/           # Zustand stores (notesPreferences)
+│   └── store/           # Base para stores Zustand
 ├── tests/               # Testes E2E e utilitários
-│   ├── pages/           # Testes por página (home, notes)
-│   ├── flows/           # Testes de jornada multi-página
+│   ├── pages/           # Testes por página
+│   ├── flows/           # Testes de jornada
 │   ├── mocks/           # Mocks compartilhados
 │   ├── providers/       # Providers de teste
 │   └── helpers/         # Helpers de teste

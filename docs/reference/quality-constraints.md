@@ -1,7 +1,7 @@
 # Restrições de qualidade
 
-SaaS Boilerplate aplica um padrão de qualidade rigoroso e previsível. Essas
-regras são aplicadas localmente e no CI.
+O projeto aplica um padrão de qualidade rigoroso e previsível. Essas regras
+são aplicadas localmente e no CI.
 
 ## Regras de código
 

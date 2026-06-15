@@ -17,7 +17,7 @@ services/
 ## `config.ts` — Configuração central
 
 ```tsx
-export const NOTES_QUERY_KEY = ['notes'] as const
+export const RESOURCES_QUERY_KEY = ['resources'] as const
 export const ITEMS_PER_PAGE = 3
 export const httpClient = createHttpClient({
   baseURL: sharedEnv.NEXT_PUBLIC_API_BASE_URL
@@ -26,7 +26,7 @@ export const httpClient = createHttpClient({
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Query key | `RECURSO_QUERY_KEY` | `NOTES_QUERY_KEY` |
+| Query key | `RECURSO_QUERY_KEY` | `RESOURCES_QUERY_KEY` |
 | Items por página | `ITEMS_PER_PAGE` | `3` |
 | HTTP client | `httpClient` | instância local do Axios |
 
@@ -35,25 +35,25 @@ export const httpClient = createHttpClient({
 ## `types.ts` — Schemas e tipos de domínio
 
 ```tsx
-export const createNoteSchema = z.object({
-  title: z.string().min(1, 'Título é obrigatório'),
-  content: z.string().min(1, 'Conteúdo é obrigatório')
+export const createResourceSchema = z.object({
+  name: z.string().min(1, 'Nome é obrigatório'),
+  description: z.string().min(1, 'Descrição é obrigatória')
 })
-export const updateNoteSchema = createNoteSchema
+export const updateResourceSchema = createResourceSchema
 
-export type Note = { id: string; title: string; ... }
-export type CreateNoteInput = z.infer<typeof createNoteSchema>
-export type UpdateNoteInput = z.infer<typeof updateNoteSchema>
-export type NotesPage = { items: Note[]; total: number }
+export type Resource = { id: string; name: string; ... }
+export type CreateResourceInput = z.infer<typeof createResourceSchema>
+export type UpdateResourceInput = z.infer<typeof updateResourceSchema>
+export type ResourcesPage = { items: Resource[]; total: number }
 ```
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Schema de criação | `create<Recurso>Schema` | `createNoteSchema` |
-| Schema de edição | `update<Recurso>Schema` | `updateNoteSchema` |
-| Tipo do domínio | `<Recurso>` (PascalCase) | `Note` |
-| Tipo de input | `<Ação><Recurso>Input` | `CreateNoteInput` |
-| Tipo de página | `<Recurso>sPage` | `NotesPage` |
+| Schema de criação | `create<Recurso>Schema` | `createResourceSchema` |
+| Schema de edição | `update<Recurso>Schema` | `updateResourceSchema` |
+| Tipo do domínio | `<Recurso>` (PascalCase) | `Resource` |
+| Tipo de input | `<Ação><Recurso>Input` | `CreateResourceInput` |
+| Tipo de página | `<Recurso>sPage` | `ResourcesPage` |
 
 - Schemas Zod definem validação + inferem tipos via `z.infer`.
 - Tipos do domínio usam **camelCase** (independente da API).
@@ -63,23 +63,23 @@ export type NotesPage = { items: Note[]; total: number }
 ## `mappers.ts` — Transformação API → domínio
 
 ```tsx
-export const noteResponseSchema = z.object({
+export const resourceResponseSchema = z.object({
   id: z.string(),
-  title: z.string(),
-  content: z.string(),
+  name: z.string(),
+  description: z.string(),
   created_at: z.string(),
   updated_at: z.string()
 })
 export const paginatedResponseSchema = z.object({
-  items: z.array(noteResponseSchema),
+  items: z.array(resourceResponseSchema),
   total: z.number()
 })
-export type NoteResponse = z.infer<typeof noteResponseSchema>
+export type ResourceResponse = z.infer<typeof resourceResponseSchema>
 
-export const toNote = (raw: NoteResponse): Note => ({
+export const toResource = (raw: ResourceResponse): Resource => ({
   id: raw.id,
-  title: raw.title,
-  content: raw.content,
+  name: raw.name,
+  description: raw.description,
   createdAt: raw.created_at,
   updatedAt: raw.updated_at
 })
@@ -87,10 +87,10 @@ export const toNote = (raw: NoteResponse): Note => ({
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Schema de resposta | `<recurso>ResponseSchema` | `noteResponseSchema` |
+| Schema de resposta | `<recurso>ResponseSchema` | `resourceResponseSchema` |
 | Schema paginado | `paginatedResponseSchema` | — |
-| Tipo de resposta | `<Recurso>Response` | `NoteResponse` |
-| Função de mapeamento | `to<Recurso>` | `toNote` |
+| Tipo de resposta | `<Recurso>Response` | `ResourceResponse` |
+| Função de mapeamento | `to<Recurso>` | `toResource` |
 
 - **Separação**: `types.ts` = domínio, `mappers.ts` = contrato da API.
 - Mappers fazem `snake_case` → `camelCase` + validação Zod.
@@ -101,23 +101,26 @@ export const toNote = (raw: NoteResponse): Note => ({
 ## `queries/` — Hooks de leitura
 
 ```tsx
-export const notesQueryOptions = infiniteQueryOptions({
-  queryKey: NOTES_QUERY_KEY,
+export const resourcesQueryOptions = infiniteQueryOptions({
+  queryKey: RESOURCES_QUERY_KEY,
   meta: { persist: false },
   staleTime: 30_000,
-  queryFn: ({ pageParam, signal }) => fetchNotes(pageParam, signal),
+  queryFn: ({ pageParam, signal }) => fetchResources(pageParam, signal),
   initialPageParam: 1,
   getNextPageParam: (lastPage, allPages, lastPageParam) => { ... },
-  select: data => ({ ...data, pages: data.pages.map(p => p.items) })
+  select: data => ({
+    ...data,
+    pages: data.pages.map(page => page.items)
+  })
 })
-export const useFindNotes = () => useInfiniteQuery(notesQueryOptions)
+export const useFindResources = () => useInfiniteQuery(resourcesQueryOptions)
 ```
 
 | Item | Convenção de nome | Exemplo |
 |------|-------------------|---------|
-| Opções de query | `<recurso>QueryOptions` | `notesQueryOptions` |
-| Hook de query | `useFind<Recurso>s` | `useFindNotes` |
-| Função de fetch | `fetch<Recurso>s` | `fetchNotes` |
+| Opções de query | `<recurso>QueryOptions` | `resourcesQueryOptions` |
+| Hook de query | `useFind<Recurso>s` | `useFindResources` |
+| Função de fetch | `fetch<Recurso>s` | `fetchResources` |
 
 - `queryOptions` é exportado separado para uso em **prefetch no servidor**.
 - `meta: { persist: false }` desabilita persistência offline para dados
@@ -132,24 +135,24 @@ Padrão por operação:
 
 | Hook | Convenção | Exemplo |
 |------|-----------|---------|
-| Criar | `useCreate<Recurso>` | `useCreateNote` |
-| Atualizar | `useUpdate<Recurso>` | `useUpdateNote` |
-| Deletar | `useDelete<Recurso>` | `useDeleteNote` |
+| Criar | `useCreate<Recurso>` | `useCreateResource` |
+| Atualizar | `useUpdate<Recurso>` | `useUpdateResource` |
+| Deletar | `useDelete<Recurso>` | `useDeleteResource` |
 
 Estrutura interna de um mutation hook:
 
 ```tsx
-export const useCreateNote = () => {
+export const useCreateResource = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async (input: CreateNoteInput) => {
-      const { data } = await httpClient.post('/api/notes', input)
-      return toNote(noteResponseSchema.parse(data))
+    mutationFn: async (input: CreateResourceInput) => {
+      const { data } = await httpClient.post('/api/resources', input)
+      return toResource(resourceResponseSchema.parse(data))
     },
-    onSuccess: () => { toast.success('Nota criada com sucesso.') },
-    onError: () => { toast.error('Erro ao criar nota.') },
+    onSuccess: () => { toast.success('Recurso criado com sucesso.') },
+    onError: () => { toast.error('Erro ao criar recurso.') },
     onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: NOTES_QUERY_KEY })
+      queryClient.invalidateQueries({ queryKey: RESOURCES_QUERY_KEY })
   })
 }
 ```
@@ -167,17 +170,20 @@ Delete e update usam **optimistic updates**:
 
 ```tsx
 onMutate: async id => {
-  await queryClient.cancelQueries({ queryKey: NOTES_QUERY_KEY })
-  const previous = queryClient.getQueryData<NotesCache>(NOTES_QUERY_KEY)
-  queryClient.setQueryData<NotesCache>(NOTES_QUERY_KEY, old => { ... })
+  await queryClient.cancelQueries({ queryKey: RESOURCES_QUERY_KEY })
+  const previous = queryClient.getQueryData<ResourcesCache>(
+    RESOURCES_QUERY_KEY
+  )
+  queryClient.setQueryData<ResourcesCache>(RESOURCES_QUERY_KEY, old => { ... })
   return { previous }
 },
 onError: (_err, _vars, context) => {
-  queryClient.setQueryData(NOTES_QUERY_KEY, context?.previous)
+  queryClient.setQueryData(RESOURCES_QUERY_KEY, context?.previous)
   toast.error('Erro ao ...')
 },
 ```
 
-- `NotesCache` = `InfiniteData<NotesPage>` (definido em `mutations/types.ts`).
+- `ResourcesCache` = `InfiniteData<ResourcesPage>` (definido em
+  `mutations/types.ts`).
 - Cancela queries em andamento → salva snapshot → atualiza otimisticamente
   → reverte em caso de erro.

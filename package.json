@@ -1,11 +1,11 @@
 {
-  "name": "sass_boilerplate_next_tailwind",
+  "name": "sass_boilerplate_nextjs_tailwind",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "author": "Éverton Toffanetto",
-  "description": "This application is a boilerplate for complex and large systems, especially those that need to scale with security and code quality.",
-  "repository": "https://github.com/everton-dgn/sass_boilerplate_next_tailwind",
+  "description": "A focused SaaS boilerplate for Next.js, TypeScript, Tailwind CSS, and production-ready tooling.",
+  "repository": "https://github.com/everton-dgn/sass_boilerplate_nextjs_tailwind",
   "scripts": {
     "dev": "next dev",
     "start": "next start",

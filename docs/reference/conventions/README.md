@@ -7,10 +7,10 @@ documenta um domínio específico para facilitar consulta.
 
 | Documento | O que cobre |
 |-----------|-------------|
-| [Feature routes](./feature-routes.md) | Colocalização, Server/Client split, hooks de formulário |
-| [Services](./services.md) | Camada de serviços com React Query (config, types, mappers, queries, mutations) |
-| [State management](./state-management.md) | Zustand store (types, slice, store, facade hook) |
-| [API Routes](./api-routes.md) | Endpoints REST, validação, snake_case, store em memória |
-| [UI components](./ui-components.md) | Input, Textarea, Dialog, Topbar nav links |
+| [Feature routes](./feature-routes.md) | Colocalização, Server/Client split e hooks de formulário |
+| [Services](./services.md) | Camada de serviços com React Query |
+| [State management](./state-management.md) | Stores Zustand |
+| [API Routes](./api-routes.md) | Endpoints REST e validação |
+| [UI components](./ui-components.md) | Input, Textarea, Dialog e Topbar |
 | [Infrastructure](./infrastructure.md) | httpClient factory, queryClient configuração |
 | [Naming](./naming.md) | Tabelas de nomenclatura para arquivos, exports, tipos e funções |

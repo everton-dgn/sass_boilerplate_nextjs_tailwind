@@ -3,7 +3,7 @@
 Padrão para endpoints REST em `src/app/api/`:
 
 ```
-src/app/api/notes/
+src/app/api/resources/
 ├── route.ts            # GET (listagem paginada) + POST (criação)
 ├── store.ts            # Store em memória + seed data + toApiResponse
 └── [id]/
@@ -32,7 +32,7 @@ A API **sempre** retorna `snake_case`. O mapper no client converte para
 `camelCase`:
 
 ```
-API (snake_case) → mappers.ts (parse + toNote) → domínio (camelCase)
+API (snake_case) → mappers.ts (parse + toResource) → domínio (camelCase)
 ```
 
 ---
@@ -40,14 +40,16 @@ API (snake_case) → mappers.ts (parse + toNote) → domínio (camelCase)
 ## Store em memória (desenvolvimento)
 
 ```tsx
-export const notesStore = (() => {
+export const resourcesStore = (() => {
   const glob = globalThis as unknown as {
-    notesStore: Map<string, NoteRecord>
+    resourcesStore: Map<string, ResourceRecord>
   }
-  if (!glob.notesStore) {
-    glob.notesStore = new Map(seedNotes.map(note => [note.id, note]))
+  if (!glob.resourcesStore) {
+    glob.resourcesStore = new Map(
+      seedResources.map(resource => [resource.id, resource])
+    )
   }
-  return glob.notesStore
+  return glob.resourcesStore
 })()
 ```
 

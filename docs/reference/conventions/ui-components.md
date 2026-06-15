@@ -66,10 +66,10 @@ import {
 } from '@/components/molecules/Dialog'
 import { Root as Dialog } from '@radix-ui/react-dialog'
 
-<Dialog open={!!note} onOpenChange={open => !open && onClose()}>
+<Dialog open={isOpen} onOpenChange={onOpenChange}>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Editar Nota</DialogTitle>
+      <DialogTitle>Editar item</DialogTitle>
     </DialogHeader>
     <form>...</form>
     <DialogFooter>...</DialogFooter>
@@ -85,8 +85,7 @@ Links configurados em `constants.ts`:
 
 ```tsx
 export const NAV_LINKS: NavLink[] = [
-  { href: '/', label: 'Início' },
-  { href: '/notes', label: 'Notas' }
+  { href: '/', label: 'Início' }
 ]
 ```
 

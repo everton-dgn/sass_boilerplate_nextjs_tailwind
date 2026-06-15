@@ -1,13 +1,12 @@
 # shadcn/ui + Tailwind CSS v4 como pilha de UI
 
-**Situação**: Aceita (substitui decisão anterior sobre Mantine)
+**Situação**: Aceita
 
 ## Contexto
 
-O projeto usava Mantine + CSS Modules. A migração para shadcn/ui + Tailwind
-CSS v4 foi motivada por: melhor ecossistema, componentes mais leves (Radix),
-CSS baseado em utilitários sem runtime, e melhor integração com o
-ecossistema Next.js/React.
+O projeto precisa de uma pilha de UI leve, consistente e alinhada ao
+ecossistema Next.js/React. shadcn/ui + Tailwind CSS v4 oferece componentes
+Radix, composição por utilitários e baixa dependência de runtime.
 
 ## Decisão
 
@@ -16,8 +15,7 @@ orientada a CSS), Sonner para notificações e next-themes para modo escuro.
 
 ## Alternativas rejeitadas
 
-- **Mantine** (anterior) — substituída: bundle maior, ecossistema menor, CSS
-  Modules adicionam complexidade desnecessária.
+- **Mantine** — rejeitada: bundle maior e camada visual mais opinativa.
 - **Headless UI** — rejeitada: muito baixo nível, exige esforço significativo.
 
 ## Consequências

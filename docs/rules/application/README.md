@@ -1,7 +1,7 @@
 # Regras de Aplicação
 
-Regras técnicas que governam o comportamento da aplicação: autenticação,
-validação, tratamento de erros e segurança.
+Regras técnicas que governam o comportamento da aplicação: validação,
+tratamento de erros, segurança e integrações.
 
 ## Autenticação e autorização
 
@@ -9,25 +9,19 @@ validação, tratamento de erros e segurança.
 
 **Contexto**: Segurança do acesso ao sistema.
 
-**Regra**: O sistema deve suportar:
-- Email + senha (mínimo 8 caracteres, 1 maiúscula, 1 número)
-- OAuth via provedores sociais (Google, GitHub)
-- Magic link via email
-
-Sessões expiram após 7 dias de inatividade. Refresh tokens
-têm validade de 30 dias.
+**Regra**: Quando autenticação existir, documente métodos aceitos, duração de
+sessão, rotação de tokens, recuperação de acesso e requisitos mínimos de
+senha ou provedor externo.
 
 ### APP-002: Autorização baseada em roles
 
 **Contexto**: Controle de acesso granular dentro de uma organização.
 
-**Regra**: Três roles padrão:
-- **Owner**: acesso total, gerencia billing e membros
-- **Admin**: acesso total exceto billing e exclusão da organização
-- **Member**: acesso às funcionalidades do plano, sem gerenciamento
+**Regra**: Documente os papéis do projeto, permissões de cada papel e ações
+que exigem confirmação ou dupla autorização.
 
-**Exceções**: O Owner não pode remover a si mesmo. Deve transferir
-ownership antes.
+**Exceções**: Registre permissões temporárias, contas de suporte ou fluxos de
+emergência.
 
 ## Validação de dados
 
@@ -71,17 +65,14 @@ Erros técnicos são logados no servidor com contexto completo.
 O `global-error.tsx` é o fallback final. Error boundaries devem
 oferecer opção de "tentar novamente" e link para a home.
 
-## Rate limiting e segurança
+## Segurança
 
-### APP-007: Proteção contra brute force
+### APP-007: Proteção contra abuso
 
-**Contexto**: Endpoints de autenticação são alvos comuns.
+**Contexto**: Endpoints públicos e ações sensíveis são alvos comuns.
 
-**Regra**: Após 5 tentativas falhas de login no mesmo email
-em 15 minutos:
-- Bloquear novas tentativas por 30 minutos
-- Notificar o proprietário da conta por email
-- Logar o evento com IP e user agent
+**Regra**: Defina limites, bloqueios temporários e critérios de auditoria para
+ações repetidas, falhas ou suspeitas.
 
 ### APP-008: Headers de segurança
 
