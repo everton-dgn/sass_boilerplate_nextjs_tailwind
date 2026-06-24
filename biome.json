@@ -354,7 +354,7 @@
           "level": "error",
           "fix": "safe",
           "options": {
-            "attributes": ["classList"],
+            "attributes": ["className"],
             "functions": ["clsx", "tv", "cn"]
           }
         },
