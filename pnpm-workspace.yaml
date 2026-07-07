@@ -1,5 +1,6 @@
 allowBuilds:
   '@biomejs/biome': true
+  '@parcel/watcher': false
   '@swc/core': true
   esbuild: true
   lefthook: true
@@ -7,3 +8,5 @@ allowBuilds:
 engineStrict: true
 saveExact: true
 minimumReleaseAge: 1440
+patchedDependencies:
+  next-themes@0.4.6: patches/next-themes@0.4.6.patch

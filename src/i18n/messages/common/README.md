@@ -11,18 +11,24 @@ origin** of the string:
 ```text
 src/i18n/messages/
 ├── common/          # shared translations (this folder)
+├── generated/       # build artifacts: one merged JSON per locale (gitignored)
 ├── en/
-│   ├── index.ts     # single registration point: imports and merges JSONs
 │   ├── pages/       # page/route strings (Metadata, Home…)
 │   └── components/  # component strings (Topbar, Error, ThemeToggle…)
 ├── es/  (same shape)
 └── pt/  (same shape)
 ```
 
-The `index.ts` of each locale is the **single registration point** for
-messages: `request.ts` (runtime), `global.ts` (types), and `TestProvider`
-(tests) all derive from it and need no maintenance when new namespaces
-are added.
+There is **no manual registration point**: the codegen in
+`src/i18n/messagesCodegen` scans the locale folders and merges every JSON
+(plus `common/<locale>.json`, when present) into `generated/<locale>.json`.
+It runs when `next dev`, `next build`, `next typegen`, or Vitest starts,
+and watches for changes during development. `request.ts` (runtime),
+`global.ts` (types), and `TestProvider` (tests) all consume the generated
+files — adding a namespace is just adding one JSON file per locale.
+
+A namespace duplicated across two files of the same locale fails the
+codegen with an explicit error.
 
 The structure is extensible: when strings specific to another layer
 emerge (for example `hooks/`, `helpers/`, `actions/`), create the
@@ -45,7 +51,8 @@ translations. Prefer a TypeScript constant over putting them here.
 
 ## How to create when needed
 
-1. Add one file per locale in this folder, with the `Common` namespace at the top:
+1. Add one file per locale in this folder, with the `Common` namespace at
+   the top:
 
 ```json
 {
@@ -56,19 +63,10 @@ translations. Prefer a TypeScript constant over putting them here.
 }
 ```
 
-2. Import and merge it into each locale's `index.ts` (e.g. `en/index.ts`):
+2. Consume it in the component with `useTranslations('Common')`. Types,
+   runtime, and tests follow automatically — no manual registration.
 
-```ts
-import common from '../common/en.json' with { type: 'json' }
-
-export const messages = {
-  ...common
-  // …other namespaces
-}
-```
-
-3. Consume it in the component with `useTranslations('Common')`. Types,
-   runtime, tests, and client components follow automatically — the
-   `NextIntlClientProvider` from `src/app/[locale]/layout.tsx` inherits
-   all messages from the server, without manual registration per
-   namespace.
+3. If the consumer is a **client component**, also add `Common` to the
+   `clientMessages` object in `src/app/[locale]/layout.tsx`: only the
+   namespaces listed there are sent to the browser (`Home` and `Metadata`
+   stay server-only).

@@ -1,6 +1,6 @@
-import { messages as enMessages } from '@/i18n/messages/en'
-import { messages as esMessages } from '@/i18n/messages/es'
-import { messages as ptMessages } from '@/i18n/messages/pt'
+import enMessages from '@/i18n/messages/generated/en.json' with { type: 'json' }
+import esMessages from '@/i18n/messages/generated/es.json' with { type: 'json' }
+import ptMessages from '@/i18n/messages/generated/pt.json' with { type: 'json' }
 
 const collectKeyPaths = (node: unknown, prefix = ''): string[] => {
   if (typeof node !== 'object' || node === null) {

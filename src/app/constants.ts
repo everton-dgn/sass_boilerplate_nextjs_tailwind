@@ -17,16 +17,19 @@ import ptMetadata from '@/i18n/messages/pt/pages/Metadata.json' with {
   type: 'json'
 }
 
-import type { Locale } from 'next-intl'
+import type { AppConfig, Locale } from 'next-intl'
 
-export const ERROR_MESSAGES: Record<Locale, typeof enMessages> = {
+type GlobalErrorMessages = Pick<AppConfig['Messages'], 'Error'>
+type GlobalMetadataMessages = Pick<AppConfig['Messages'], 'Metadata'>
+
+export const ERROR_MESSAGES = {
   en: enMessages,
   es: esMessages,
   pt: ptMessages
-}
+} as Record<Locale, GlobalErrorMessages>
 
-export const METADATA_MESSAGES: Record<Locale, typeof enMetadata> = {
+export const METADATA_MESSAGES = {
   en: enMetadata,
   es: esMetadata,
   pt: ptMetadata
-}
+} as Record<Locale, GlobalMetadataMessages>

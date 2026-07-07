@@ -8,7 +8,11 @@ import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
 
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale
+} from 'next-intl/server'
 
 import '@/theme/globals.css'
 
@@ -45,6 +49,14 @@ const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
 
   setRequestLocale(locale)
 
+  const messages = await getMessages({ locale })
+  const clientMessages = {
+    Error: messages.Error,
+    LocaleSwitcher: messages.LocaleSwitcher,
+    ThemeToggle: messages.ThemeToggle,
+    Topbar: messages.Topbar
+  }
+
   return (
     <html
       lang={locale}
@@ -53,7 +65,7 @@ const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
     >
       <body>
         <MainProvider>
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={clientMessages}>
             <Topbar />
             {children}
           </NextIntlClientProvider>

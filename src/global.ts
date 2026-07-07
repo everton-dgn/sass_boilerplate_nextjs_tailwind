@@ -1,9 +1,10 @@
-import type { messages } from '@/i18n/messages/en'
 import type { routing } from '@/i18n/routing'
+
+type EnMessages = typeof import('@/i18n/messages/generated/en.json')
 
 declare module 'next-intl' {
   interface AppConfig {
     Locale: (typeof routing.locales)[number]
-    Messages: typeof messages
+    Messages: EnMessages['default']
   }
 }
