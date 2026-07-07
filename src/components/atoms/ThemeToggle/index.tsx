@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { Moon, Sun } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 
 import { Button } from '../Button'
@@ -12,6 +13,7 @@ import type { ThemeToggleProps } from './types'
 export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
+  const t = useTranslations('ThemeToggle')
 
   useEffect(() => {
     setMounted(true)
@@ -37,11 +39,7 @@ export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
 
   return (
     <Button
-      aria-label={
-        theme === 'dark'
-          ? 'Mudar para o modo claro'
-          : 'Mudar para o modo escuro'
-      }
+      aria-label={theme === 'dark' ? t('toLight') : t('toDark')}
       className={className}
       onClick={toggleTheme}
       size="icon"

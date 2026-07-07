@@ -12,7 +12,7 @@ import { geistSans } from '@/theme/fontFamily'
 
 import { type Locale, NextIntlClientProvider } from 'next-intl'
 
-import { ERROR_MESSAGES } from './constants'
+import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 import type { ErrorPageProps } from './types'
 
 const GlobalError = ({ error, reset }: ErrorPageProps) => {
@@ -38,7 +38,10 @@ const GlobalError = ({ error, reset }: ErrorPageProps) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
           name="viewport"
         />
-        <meta content="Project frontend with nextjs" name="description" />
+        <meta
+          content={METADATA_MESSAGES[locale].Metadata.description}
+          name="description"
+        />
         <meta content="#fff" name="theme-color" />
         <link href="/favicon.png" rel="icon" type="image/png" />
         <link href="/favicon.png" rel="apple-touch-icon" />
