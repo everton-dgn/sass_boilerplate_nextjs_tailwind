@@ -1,0 +1,9 @@
+{
+  "Error": {
+    "title": "Erro!",
+    "notFound": "Página não encontrada!",
+    "somethingWrong": "Algo deu errado!",
+    "tryAgain": "Tentar novamente",
+    "backToHome": "Voltar ao início"
+  }
+}
