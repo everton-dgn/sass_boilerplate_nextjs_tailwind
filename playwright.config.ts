@@ -59,7 +59,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'E2E_TEST_MODE=true pnpm dev',
-    url: process.env.BASE_URL_TEST,
+    url: `${process.env.BASE_URL_TEST}/en`,
     reuseExistingServer: !process.env.CI
   }
 })

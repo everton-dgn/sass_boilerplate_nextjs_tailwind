@@ -398,6 +398,17 @@
   },
   "overrides": [
     {
+      "includes": ["src/global.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off",
+            "useConsistentTypeDefinitions": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "src/**/__tests__/**/*.{ts,tsx}",
         "src/**/__tests__/*.{ts,tsx}",

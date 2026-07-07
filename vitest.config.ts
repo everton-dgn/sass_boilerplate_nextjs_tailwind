@@ -14,7 +14,12 @@ const shared = {
   globals: true,
   passWithNoTests: true,
   clearMocks: true,
-  exclude: ['**/node_modules/**', '**/playwright/**']
+  exclude: ['**/node_modules/**', '**/playwright/**'],
+  server: {
+    deps: {
+      inline: ['next-intl']
+    }
+  }
 }
 
 export default defineConfig({
@@ -28,8 +33,8 @@ export default defineConfig({
       exclude: [
         '**/tests/**',
         '**/theme/**',
-        '**/src/app/error.tsx',
-        '**/src/app/not-found.tsx',
+        '**/src/app/**/error.tsx',
+        '**/src/app/**/not-found.tsx',
         '**/src/app/global-error.tsx',
         '**/src/**/layout.tsx',
         '**/src/**/page.tsx',
@@ -73,7 +78,7 @@ export default defineConfig({
           environment: 'happy-dom',
           deps: {
             optimizer: {
-              client: { enabled: true }
+              client: { enabled: false }
             }
           },
           setupFiles: ['./vitest.setup.ts'],
