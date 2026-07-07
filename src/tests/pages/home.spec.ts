@@ -5,7 +5,7 @@ import { test } from '../helpers/testSession'
 test.describe('home page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
   })
 
   test('should have correct page title', async ({ page }) => {
@@ -17,19 +17,19 @@ test.describe('home page', () => {
     await expect(topbar).toBeVisible()
     await expect(topbar.getByText('SaaS Boilerplate')).toBeVisible()
 
-    await expect(topbar.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(topbar.getByRole('link', { name: 'Home' })).toBeVisible()
   })
 
   test('should highlight active nav link', async ({ page }) => {
-    const inicioLink = page.getByRole('link', { name: 'Início' })
-    await expect(inicioLink).toHaveAttribute('aria-current', 'page')
+    const homeLink = page.getByRole('link', { name: 'Home' })
+    await expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
   test('should render logos and subtitle', async ({ page }) => {
-    await expect(page.getByAltText('Logo Nextjs')).toBeVisible()
+    await expect(page.getByAltText('Next.js logo')).toBeVisible()
     await expect(page.getByTestId('logo-tailwind')).toBeVisible()
     await expect(
-      page.getByRole('heading', { name: 'Nextjs + Tailwind CSS' })
+      page.getByRole('heading', { name: 'Next.js + Tailwind CSS' })
     ).toBeVisible()
   })
 
@@ -39,7 +39,7 @@ test.describe('home page', () => {
 
   test('should toggle theme between light and dark', async ({ page }) => {
     const themeButton = page.getByRole('button', {
-      name: /Mudar para o modo/
+      name: /Switch to (light|dark) mode/
     })
     await expect(themeButton).toBeVisible()
 
@@ -47,9 +47,9 @@ test.describe('home page', () => {
     await themeButton.click()
 
     const expectedLabel =
-      initialLabel === 'Mudar para o modo escuro'
-        ? 'Mudar para o modo claro'
-        : 'Mudar para o modo escuro'
+      initialLabel === 'Switch to dark mode'
+        ? 'Switch to light mode'
+        : 'Switch to dark mode'
 
     await expect(
       page.getByRole('button', { name: expectedLabel })
@@ -57,9 +57,9 @@ test.describe('home page', () => {
   })
 
   test('should keep home navigation on the current page', async ({ page }) => {
-    await page.getByRole('link', { name: 'Início' }).click()
+    await page.getByRole('link', { name: 'Home' }).click()
 
-    await expect(page).toHaveURL('/')
+    await expect(page).toHaveURL(/\/en$/)
     await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
   })
 })
