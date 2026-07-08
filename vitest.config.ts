@@ -36,7 +36,7 @@ export default defineConfig({
       include: ['**/src/**/*.ts', '**/src/**/*.tsx'],
       exclude: [
         '**/tests/**',
-        '**/theme/**',
+        '**/src/theme/fontFamily.ts',
         '**/src/app/**/error.tsx',
         '**/src/app/**/not-found.tsx',
         '**/src/app/global-error.tsx',
