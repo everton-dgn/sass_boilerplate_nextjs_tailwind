@@ -9,8 +9,8 @@ import {
   THEME_BROADCAST_CHANNEL,
   THEMES
 } from '@/constants/theme'
-import { applyThemeToDOM, getSystemTheme } from '@/helpers/applyThemeToDOM'
 
+import { applyThemeToDOM, getSystemTheme } from './applyThemeToDOM'
 import {
   readInitialTheme,
   readThemeCookie,
@@ -28,18 +28,18 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     readInitialSystemTheme
   )
   const channelRef = useRef<BroadcastChannel | null>(null)
+  const themeRef = useRef(theme)
+  themeRef.current = theme
 
-  const setTheme = useCallback(
-    (nextTheme: Theme) => {
-      if (nextTheme === theme) return
+  const setTheme = useCallback((nextTheme: Theme) => {
+    if (nextTheme === themeRef.current) return
 
-      setThemeState(nextTheme)
-      writeThemeCookie(nextTheme)
-      applyThemeToDOM(nextTheme)
-      channelRef.current?.postMessage(nextTheme)
-    },
-    [theme]
-  )
+    themeRef.current = nextTheme
+    setThemeState(nextTheme)
+    writeThemeCookie(nextTheme)
+    applyThemeToDOM(nextTheme)
+    channelRef.current?.postMessage(nextTheme)
+  }, [])
 
   useEffect(() => {
     applyThemeToDOM(readThemeCookie())

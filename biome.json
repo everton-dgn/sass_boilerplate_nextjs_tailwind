@@ -277,7 +277,7 @@
         "noConfusingVoidType": "error",
         "noControlCharactersInRegex": "error",
         "noDebugger": "error",
-        "noDocumentCookie": "off",
+        "noDocumentCookie": "error",
         "noDoubleEquals": "error",
         "noDuplicateCase": "error",
         "noDuplicateClassMembers": "error",
@@ -373,6 +373,16 @@
   },
   "overrides": [
     {
+      "includes": ["src/components/atoms/ThemeProvider/themeCookie.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDocumentCookie": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["src/global.ts"],
       "linter": {
         "rules": {
@@ -406,7 +416,8 @@
         "rules": {
           "suspicious": {
             "noSkippedTests": "off",
-            "useAwait": "off"
+            "useAwait": "off",
+            "noDocumentCookie": "off"
           },
           "style": {
             "useNamingConvention": "off"

@@ -1,3 +1,5 @@
+import 'client-only'
+
 import { hasLocale, type Locale } from 'next-intl'
 
 import { routing } from '@/i18n/routing'

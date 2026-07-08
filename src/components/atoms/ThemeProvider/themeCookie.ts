@@ -8,6 +8,14 @@ import { resolveTheme } from '@/helpers/resolveTheme'
 
 const themeCookiePrefix = `${THEME_COOKIE_NAME}=`
 
+const decodeCookieValue = (rawValue: string): string | undefined => {
+  try {
+    return decodeURIComponent(rawValue)
+  } catch {
+    return undefined
+  }
+}
+
 export const readThemeCookie = (): Theme => {
   const cookieRow = document.cookie
     .split('; ')
@@ -15,7 +23,7 @@ export const readThemeCookie = (): Theme => {
 
   return resolveTheme(
     cookieRow
-      ? decodeURIComponent(cookieRow.slice(themeCookiePrefix.length))
+      ? decodeCookieValue(cookieRow.slice(themeCookiePrefix.length))
       : undefined
   )
 }

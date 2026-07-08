@@ -14,6 +14,8 @@ import { geistSans } from '@/theme/fontFamily'
 import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 import type { ErrorPageProps } from './types'
 
+import '@/theme/globals.css'
+
 const GlobalError = ({ error, reset }: ErrorPageProps) => {
   const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
   const messages = ERROR_MESSAGES[locale]

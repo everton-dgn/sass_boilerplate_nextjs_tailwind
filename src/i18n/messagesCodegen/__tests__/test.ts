@@ -4,8 +4,11 @@ import path from 'node:path'
 
 import { generateMessages, mergeMessageFiles } from '..'
 
+const createdRoots: string[] = []
+
 const createFixtureRoot = () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'messages-codegen-'))
+  createdRoots.push(root)
   const messagesDir = path.join(root, 'src/i18n/messages')
 
   const write = (relativePath: string, content: object) => {
@@ -23,6 +26,12 @@ const readGenerated = (messagesDir: string, locale: string) => {
 }
 
 describe('[i18n] messagesCodegen', () => {
+  afterAll(() => {
+    for (const root of createdRoots) {
+      fs.rmSync(root, { recursive: true, force: true })
+    }
+  })
+
   it('should merge namespaces from multiple files', () => {
     const merged = mergeMessageFiles([
       { file: 'a.json', content: { Home: { title: 'Home' } } },
