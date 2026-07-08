@@ -93,5 +93,5 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     [theme, systemTheme, setTheme]
   )
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  return <ThemeContext value={value}>{children}</ThemeContext>
 }
