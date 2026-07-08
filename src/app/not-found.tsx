@@ -7,6 +7,7 @@ import { cn } from '@/helpers/cn'
 import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
 import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
+
 import { ERROR_MESSAGES } from './constants'
 
 import '@/theme/globals.css'

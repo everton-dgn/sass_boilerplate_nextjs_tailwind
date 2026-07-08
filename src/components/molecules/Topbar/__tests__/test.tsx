@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react'
 import type { ComponentProps } from 'react'
 
 import { renderWithProviders } from '@/tests/providers/component'
+
 import { Topbar } from '..'
 
 const mockUsePathname = vi.fn()

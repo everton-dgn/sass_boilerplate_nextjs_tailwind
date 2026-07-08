@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/atoms/Button'
+
 import type { ErrorFallbackProps } from './types'
 
 export const ErrorFallback = ({

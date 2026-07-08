@@ -32,13 +32,13 @@
             "groups": [
               [":NODE:"],
               ":BLANK_LINE:",
-              [":PACKAGE:", "!@jusdocs/**"],
-              ":BLANK_LINE:",
-              ["@jusdocs/**"],
+              [":PACKAGE:"],
               ":BLANK_LINE:",
               [":PACKAGE_WITH_PROTOCOL:"],
               ":BLANK_LINE:",
-              [":ALIAS:", ":PATH:"]
+              [":ALIAS:"],
+              ":BLANK_LINE:",
+              [":PATH:"]
             ]
           }
         }
@@ -57,7 +57,8 @@
     "domains": {
       "next": "all",
       "react": "all",
-      "project": "all"
+      "project": "all",
+      "types": "all"
     },
     "rules": {
       "preset": "recommended",
@@ -383,6 +384,19 @@
       }
     },
     {
+      "includes": ["src/**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "src/**/__tests__/**/*.{ts,tsx}",
         "src/**/__tests__/*.{ts,tsx}",
@@ -461,21 +475,7 @@
     {
       "includes": ["src/**/*.spec.ts"],
       "linter": {
-        "rules": {
-          "nursery": {
-            "noPlaywrightElementHandle": "error",
-            "noPlaywrightEval": "error",
-            "noPlaywrightForceOption": "error",
-            "noPlaywrightMissingAwait": "error",
-            "noPlaywrightNetworkidle": "error",
-            "noPlaywrightPagePause": "error",
-            "noPlaywrightUselessAwait": "error",
-            "noPlaywrightWaitForNavigation": "error",
-            "noPlaywrightWaitForSelector": "error",
-            "noPlaywrightWaitForTimeout": "error",
-            "usePlaywrightValidDescribeCallback": "error"
-          }
-        }
+        "domains": { "playwright": "all" }
       }
     }
   ]

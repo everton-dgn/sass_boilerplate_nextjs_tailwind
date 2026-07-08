@@ -5,6 +5,7 @@ import { use } from 'react'
 
 import LogoTailwind from '@/assets/logo-tailwind.svg'
 import { cn } from '@/helpers/cn'
+
 import type { HomePageProps } from './types'
 
 const Home = ({ params }: HomePageProps) => {

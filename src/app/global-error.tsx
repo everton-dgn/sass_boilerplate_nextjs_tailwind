@@ -10,6 +10,7 @@ import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
 import { reportRuntimeError } from '@/helpers/reportRuntimeError'
 import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
+
 import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 import type { ErrorPageProps } from './types'
 

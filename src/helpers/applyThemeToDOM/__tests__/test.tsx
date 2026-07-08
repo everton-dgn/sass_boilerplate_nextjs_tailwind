@@ -1,4 +1,5 @@
 import { THEME_COLORS } from '@/constants/theme'
+
 import { applyThemeToDOM, getSystemTheme } from '..'
 
 const mockMatchMedia = (matches: boolean) =>

@@ -6,6 +6,7 @@ import { ThemeToggle } from '@/components/atoms/ThemeToggle'
 import { LocaleSwitcher } from '@/components/molecules/LocaleSwitcher'
 import { cn } from '@/helpers/cn'
 import { Link, usePathname } from '@/i18n/navigation'
+
 import { NAV_LINKS } from './constants'
 import type { TopbarProps } from './types'
 

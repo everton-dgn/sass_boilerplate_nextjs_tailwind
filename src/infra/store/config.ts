@@ -3,6 +3,7 @@ import { type DevtoolsOptions, devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import { IS_CLIENT, IS_DEVELOPMENT } from '@/constants/sharedEnv'
+
 import type { MiddlewaresProvider } from './types'
 
 export const devtoolsOptions = (name: string): DevtoolsOptions => ({

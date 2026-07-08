@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
 import { reportRuntimeError } from '@/helpers/reportRuntimeError'
+
 import type { ErrorPageProps } from '../types'
 
 const ErrorPage = ({ error, reset }: ErrorPageProps) => {

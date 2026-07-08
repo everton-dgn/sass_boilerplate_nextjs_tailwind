@@ -10,6 +10,7 @@ import {
   THEMES
 } from '@/constants/theme'
 import { applyThemeToDOM, getSystemTheme } from '@/helpers/applyThemeToDOM'
+
 import {
   readInitialTheme,
   readThemeCookie,
