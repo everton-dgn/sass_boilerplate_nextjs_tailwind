@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react'
 
 import { Moon, Sun } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useTheme } from 'next-themes'
 
 import { Button } from '../Button'
+import { useTheme } from '../ThemeProvider'
 
 import type { ThemeToggleProps } from './types'
 
 export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const t = useTranslations('ThemeToggle')
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
   }, [])
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
   }
 
   if (!mounted) {
@@ -39,14 +39,14 @@ export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
 
   return (
     <Button
-      aria-label={theme === 'dark' ? t('toLight') : t('toDark')}
+      aria-label={resolvedTheme === 'dark' ? t('toLight') : t('toDark')}
       className={className}
       onClick={toggleTheme}
       size="icon"
       variant="ghost"
       {...props}
     >
-      {theme === 'dark' ? (
+      {resolvedTheme === 'dark' ? (
         <Sun className="size-5" />
       ) : (
         <Moon className="size-5" />

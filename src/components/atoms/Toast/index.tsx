@@ -9,8 +9,9 @@ import {
   TriangleAlert,
   XCircle
 } from 'lucide-react'
-import { useTheme } from 'next-themes'
 import { Toaster, type ToasterProps } from 'sonner'
+
+import { useTheme } from '../ThemeProvider'
 
 export const Toast = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme()
