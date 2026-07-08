@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { MainProvider } from '@/components/atoms/MainProvider'
+import { ThemeScript } from '@/components/atoms/ThemeScript'
 import { Topbar } from '@/components/molecules/Topbar'
 import { cn } from '@/helpers/cn'
 import { routing } from '@/i18n/routing'
@@ -64,6 +65,7 @@ const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
       suppressHydrationWarning
     >
       <body>
+        <ThemeScript />
         <MainProvider>
           <NextIntlClientProvider messages={clientMessages}>
             <Topbar />
