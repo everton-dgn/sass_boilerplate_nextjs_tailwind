@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { Toaster, type ToasterProps } from 'sonner'
 
-import { useTheme } from '../ThemeProvider'
+import { useTheme } from '../ThemeProvider/useTheme'
 
 export const Toast = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme()

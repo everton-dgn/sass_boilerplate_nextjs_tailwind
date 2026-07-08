@@ -6,7 +6,7 @@ import { Moon, Sun } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '../Button'
-import { useTheme } from '../ThemeProvider'
+import { useTheme } from '../ThemeProvider/useTheme'
 
 import type { ThemeToggleProps } from './types'
 
