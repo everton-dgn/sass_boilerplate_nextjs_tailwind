@@ -11,8 +11,6 @@
     "includes": [
       "src/**",
       "!src/i18n/messages/generated",
-      ".commitlintrc",
-      "README.md",
       "next.config.ts",
       "postcss.config.js",
       "playwright.config.ts",
@@ -292,6 +290,9 @@
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",
+        "noImportCycles": "error",
+        "noDeprecatedImports": "error",
+        "noLeakedRender": "error",
         "noMisleadingCharacterClass": "off",
         "noMisleadingInstantiator": "error",
         "noPrototypeBuiltins": "error",
@@ -318,11 +319,13 @@
         "noUnnecessaryConditions": "error"
       },
       "performance": {
-        "noDelete": "off",
+        "noDelete": "error",
+        "noImgElement": "error",
         "noReExportAll": "error",
         "noBarrelFile": "error",
         "noAccumulatingSpread": "error",
-        "noJsxPropsBind": "off"
+        "noJsxPropsBind": "off",
+        "useTopLevelRegex": "error"
       },
       "nursery": {
         "useSortedClasses": {
@@ -369,6 +372,19 @@
       "bracketSameLine": false,
       "quoteStyle": "single",
       "attributePosition": "auto"
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "expand": "auto",
+      "trailingCommas": "none",
+      "lineWidth": 80,
+      "indentStyle": "space",
+      "indentWidth": 2
+    },
+    "linter": {
+      "enabled": true
     }
   },
   "overrides": [
@@ -479,6 +495,9 @@
             "noIdenticalTestTitle": "error",
             "useTestHooksInOrder": "error",
             "useTestHooksOnTop": "error"
+          },
+          "performance": {
+            "useTopLevelRegex": "off"
           }
         }
       }
