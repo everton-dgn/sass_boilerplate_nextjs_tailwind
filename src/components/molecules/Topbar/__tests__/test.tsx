@@ -44,7 +44,7 @@ describe('[Component] Topbar', () => {
 
     expect(screen.getByRole('button', { name: 'Language' })).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'Switch to light mode' })
+      screen.getByRole('button', { name: 'Select theme' })
     ).toBeInTheDocument()
   })
 

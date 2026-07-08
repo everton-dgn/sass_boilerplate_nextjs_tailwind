@@ -2,26 +2,31 @@
 
 import { useEffect, useState } from 'react'
 
-import { Moon, Sun } from 'lucide-react'
+import { DEFAULT_THEME, THEMES } from '@/constants/theme'
+
+import { Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '../Button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '../DropdownMenu'
 import { useTheme } from '../ThemeProvider/useTheme'
 
+import { THEME_ICONS } from './constants'
 import type { ThemeToggleProps } from './types'
 
 export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
   const [mounted, setMounted] = useState(false)
-  const { resolvedTheme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const t = useTranslations('ThemeToggle')
 
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-  }
 
   if (!mounted) {
     return (
@@ -37,20 +42,40 @@ export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
     )
   }
 
+  const activeTheme = theme ?? DEFAULT_THEME
+  const ActiveIcon = THEME_ICONS[activeTheme]
+
   return (
-    <Button
-      aria-label={resolvedTheme === 'dark' ? t('toLight') : t('toDark')}
-      className={className}
-      onClick={toggleTheme}
-      size="icon"
-      variant="ghost"
-      {...props}
-    >
-      {resolvedTheme === 'dark' ? (
-        <Sun className="size-5" />
-      ) : (
-        <Moon className="size-5" />
-      )}
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          aria-label={t('label')}
+          className={className}
+          size="icon"
+          variant="ghost"
+          {...props}
+        >
+          <ActiveIcon className="size-5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {THEMES.map(availableTheme => {
+          const Icon = THEME_ICONS[availableTheme]
+          const isActive = availableTheme === activeTheme
+
+          return (
+            <DropdownMenuItem
+              aria-current={isActive ? 'true' : undefined}
+              key={availableTheme}
+              onSelect={() => setTheme(availableTheme)}
+            >
+              <Icon className="size-4" />
+              <span className="flex-1">{t(availableTheme)}</span>
+              {isActive && <Check className="size-4" />}
+            </DropdownMenuItem>
+          )
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

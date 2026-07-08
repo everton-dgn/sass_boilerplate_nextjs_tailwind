@@ -1,6 +1,8 @@
 {
   "ThemeToggle": {
-    "toLight": "Switch to light mode",
-    "toDark": "Switch to dark mode"
+    "label": "Select theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

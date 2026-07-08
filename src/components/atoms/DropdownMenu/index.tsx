@@ -1,6 +1,6 @@
 'use client'
 
-import type { ComponentProps } from 'react'
+import { type ComponentProps, useRef } from 'react'
 
 import { cn } from '@/helpers/cn'
 
@@ -15,29 +15,58 @@ export const DropdownMenuContent = ({
   align = 'end',
   sideOffset = 4,
   ref,
+  onCloseAutoFocus,
+  onInteractOutside,
+  onKeyDown,
+  onPointerDown,
   ...props
-}: ComponentProps<typeof DropdownMenuPrimitive.Content>) => (
-  <DropdownMenuPrimitive.Portal>
-    <DropdownMenuPrimitive.Content
-      align={align}
-      className={cn(
-        'z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1',
-        'text-popover-foreground shadow-md',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[state=closed]:animate-out data-[state=open]:animate-in',
-        'data-[side=bottom]:slide-in-from-top-2',
-        'data-[side=left]:slide-in-from-right-2',
-        'data-[side=right]:slide-in-from-left-2',
-        'data-[side=top]:slide-in-from-bottom-2',
-        className
-      )}
-      ref={ref}
-      sideOffset={sideOffset}
-      {...props}
-    />
-  </DropdownMenuPrimitive.Portal>
-)
+}: ComponentProps<typeof DropdownMenuPrimitive.Content>) => {
+  const lastInputWasPointer = useRef(false)
+
+  return (
+    <DropdownMenuPrimitive.Portal>
+      <DropdownMenuPrimitive.Content
+        align={align}
+        className={cn(
+          'z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1',
+          'text-popover-foreground shadow-md',
+          'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+          'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+          'data-[state=closed]:animate-out data-[state=open]:animate-in',
+          'data-[side=bottom]:slide-in-from-top-2',
+          'data-[side=left]:slide-in-from-right-2',
+          'data-[side=right]:slide-in-from-left-2',
+          'data-[side=top]:slide-in-from-bottom-2',
+          className
+        )}
+        onCloseAutoFocus={event => {
+          if (lastInputWasPointer.current) {
+            lastInputWasPointer.current = false
+            event.preventDefault()
+          }
+          onCloseAutoFocus?.(event)
+        }}
+        onInteractOutside={event => {
+          onInteractOutside?.(event)
+          if (!event.defaultPrevented) {
+            lastInputWasPointer.current = true
+          }
+        }}
+        onKeyDown={event => {
+          lastInputWasPointer.current = false
+          onKeyDown?.(event)
+        }}
+        onPointerDown={event => {
+          lastInputWasPointer.current = true
+          onPointerDown?.(event)
+        }}
+        ref={ref}
+        sideOffset={sideOffset}
+        {...props}
+      />
+    </DropdownMenuPrimitive.Portal>
+  )
+}
 
 export const DropdownMenuItem = ({
   className,

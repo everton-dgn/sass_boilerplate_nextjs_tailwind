@@ -1,6 +1,8 @@
 {
   "ThemeToggle": {
-    "toLight": "Mudar para o modo claro",
-    "toDark": "Mudar para o modo escuro"
+    "label": "Selecionar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
   }
 }
