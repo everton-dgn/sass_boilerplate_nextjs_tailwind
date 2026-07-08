@@ -20,24 +20,16 @@ test.describe('navigation flow', () => {
     await page.goto('/')
     await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
 
-    const themeButton = page.getByRole('button', {
-      name: /Switch to (light|dark) mode/
-    })
+    const themeButton = page.getByRole('button', { name: 'Select theme' })
     await expect(themeButton).toBeVisible()
 
-    const initialLabel = await themeButton.getAttribute('aria-label')
     await themeButton.click()
-
-    const toggledLabel =
-      initialLabel === 'Switch to dark mode'
-        ? 'Switch to light mode'
-        : 'Switch to dark mode'
-
-    await expect(page.getByRole('button', { name: toggledLabel })).toBeVisible()
+    await page.getByRole('menuitem', { name: 'Light' }).click()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
     await page.reload()
 
-    await expect(page.getByRole('button', { name: toggledLabel })).toBeVisible()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
   })
 
   test('should maintain topbar visible on home', async ({ page }) => {

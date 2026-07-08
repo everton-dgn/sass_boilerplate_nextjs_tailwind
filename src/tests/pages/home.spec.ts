@@ -38,22 +38,16 @@ test.describe('home page', () => {
   })
 
   test('should toggle theme between light and dark', async ({ page }) => {
-    const themeButton = page.getByRole('button', {
-      name: /Switch to (light|dark) mode/
-    })
+    const themeButton = page.getByRole('button', { name: 'Select theme' })
     await expect(themeButton).toBeVisible()
 
-    const initialLabel = await themeButton.getAttribute('aria-label')
     await themeButton.click()
+    await page.getByRole('menuitem', { name: 'Light' }).click()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
-    const expectedLabel =
-      initialLabel === 'Switch to dark mode'
-        ? 'Switch to light mode'
-        : 'Switch to dark mode'
-
-    await expect(
-      page.getByRole('button', { name: expectedLabel })
-    ).toBeVisible()
+    await themeButton.click()
+    await page.getByRole('menuitem', { name: 'Dark' }).click()
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/)
   })
 
   test('should keep home navigation on the current page', async ({ page }) => {
