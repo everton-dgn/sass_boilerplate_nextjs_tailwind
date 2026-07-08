@@ -4,6 +4,10 @@ import { defineConfig } from 'vitest/config'
 
 import react from '@vitejs/plugin-react'
 
+import { generateMessages } from './src/i18n/messagesCodegen'
+
+generateMessages()
+
 const alias = {
   '@': fileURLToPath(new URL('./src', import.meta.url))
 }

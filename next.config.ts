@@ -2,6 +2,18 @@ import type { NextConfig } from 'next'
 
 import createNextIntlPlugin from 'next-intl/plugin'
 
+import { generateMessages, watchMessages } from './src/i18n/messagesCodegen'
+
+const shouldSkipMessagesCodegen = ['info', 'start'].some(command =>
+  process.argv.includes(command)
+)
+
+if (!shouldSkipMessagesCodegen && !process.env.MESSAGES_CODEGEN_ONCE) {
+  process.env.MESSAGES_CODEGEN_ONCE = 'true'
+  generateMessages()
+  if (process.env.NODE_ENV === 'development') watchMessages()
+}
+
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -48,6 +60,11 @@ const nextConfig: NextConfig = {
   devIndicators: false
 }
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: './src/i18n/request.ts',
+  experimental: {
+    createMessagesDeclaration: './src/i18n/messages/generated/en.json'
+  }
+})
 
 export default withNextIntl(nextConfig)

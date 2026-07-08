@@ -4,6 +4,7 @@
     "ignoreUnknown": true,
     "includes": [
       "src/**",
+      "!src/i18n/messages/generated",
       ".commitlintrc",
       "README.md",
       "next.config.ts",

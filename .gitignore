@@ -40,6 +40,9 @@ pnpm-debug.log*
 # typescript incremental features
 tsconfig.tsbuildinfo
 
+# i18n generated messages
+/src/i18n/messages/generated/
+
 # linters
 .husky
 
