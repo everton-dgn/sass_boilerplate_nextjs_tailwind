@@ -1,7 +1,7 @@
-import { IS_SERVER } from '@/constants/sharedEnv'
-
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { defaultShouldDehydrateQuery, QueryClient } from '@tanstack/react-query'
+
+import { IS_SERVER } from '@/constants/sharedEnv'
 
 const FIVE_MINUTES = 1000 * 60 * 5
 const TWENTY_FOUR_HOURS = 1000 * 60 * 60 * 24

@@ -1,5 +1,6 @@
 'use client'
 
+import { type Locale, NextIntlClientProvider } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
@@ -9,9 +10,6 @@ import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
 import { reportRuntimeError } from '@/helpers/reportRuntimeError'
 import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
-
-import { type Locale, NextIntlClientProvider } from 'next-intl'
-
 import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 import type { ErrorPageProps } from './types'
 

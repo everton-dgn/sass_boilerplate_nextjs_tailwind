@@ -1,5 +1,11 @@
 {
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main",
+    "useIgnoreFile": true
+  },
   "files": {
     "ignoreUnknown": true,
     "includes": [
@@ -17,14 +23,6 @@
       "components.json"
     ]
   },
-  "formatter": {
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 80,
-    "attributePosition": "auto"
-  },
   "assist": {
     "actions": {
       "source": {
@@ -32,54 +30,28 @@
           "level": "on",
           "options": {
             "groups": [
-              ":NODE:",
+              [":NODE:"],
               ":BLANK_LINE:",
-              "next",
-              "next/**",
-              "react",
+              [":PACKAGE:", "!@jusdocs/**"],
               ":BLANK_LINE:",
-              ["npm:*", "npm:*/**", "vitest/*"],
+              ["@jusdocs/**"],
               ":BLANK_LINE:",
-              ":ALIAS:",
+              [":PACKAGE_WITH_PROTOCOL:"],
               ":BLANK_LINE:",
-              ":PACKAGE_WITH_PROTOCOL:",
-              ":BLANK_LINE:",
-              "@testing-library/react",
-              ":BLANK_LINE:",
-              "@/assets/**",
-              ":BLANK_LINE:",
-              "@/tests/**",
-              ":BLANK_LINE:",
-              "@/theme/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/constants/**"] },
-              "@/constants/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/helpers/**"] },
-              "@/helpers/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/infra/**"] },
-              "@/infra/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/hooks/**"] },
-              "@/hooks/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/components/**"] },
-              "@/components/**",
-              ":BLANK_LINE:",
-              ":PACKAGE:",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["../**"] },
-              "../**",
-              ":BLANK_LINE:",
-              [":PATH:", "!./*"],
-              ":BLANK_LINE:",
-              { "type": false }
+              [":ALIAS:", ":PATH:"]
             ]
           }
         }
       }
     }
+  },
+  "formatter": {
+    "formatWithErrors": false,
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "lineEnding": "lf",
+    "indentStyle": "space",
+    "attributePosition": "auto"
   },
   "linter": {
     "domains": {

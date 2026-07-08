@@ -1,7 +1,5 @@
 'use client'
 
-import type { CSSProperties } from 'react'
-
 import {
   CircleCheck,
   Info,
@@ -9,6 +7,7 @@ import {
   TriangleAlert,
   XCircle
 } from 'lucide-react'
+import type { CSSProperties } from 'react'
 import { Toaster, type ToasterProps } from 'sonner'
 
 import { useTheme } from '../ThemeProvider/useTheme'

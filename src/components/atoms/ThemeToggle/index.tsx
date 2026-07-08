@@ -1,12 +1,10 @@
 'use client'
 
+import { Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { DEFAULT_THEME, THEMES } from '@/constants/theme'
-
-import { Check } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-
 import { Button } from '../Button'
 import {
   DropdownMenu,
@@ -15,7 +13,6 @@ import {
   DropdownMenuTrigger
 } from '../DropdownMenu'
 import { useTheme } from '../ThemeProvider/useTheme'
-
 import { THEME_ICONS } from './constants'
 import type { ThemeToggleProps } from './types'
 

@@ -1,5 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale
+} from 'next-intl/server'
 
 import { MainProvider } from '@/components/atoms/MainProvider'
 import { ThemeScript } from '@/components/atoms/ThemeScript'
@@ -7,13 +13,6 @@ import { Topbar } from '@/components/molecules/Topbar'
 import { cn } from '@/helpers/cn'
 import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
-
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import {
-  getMessages,
-  getTranslations,
-  setRequestLocale
-} from 'next-intl/server'
 
 import '@/theme/globals.css'
 

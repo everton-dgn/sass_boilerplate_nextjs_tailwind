@@ -1,9 +1,5 @@
 'use client'
 
-import type { ComponentProps } from 'react'
-
-import { cn } from '@/helpers/cn'
-
 import {
   Close,
   Content,
@@ -13,7 +9,9 @@ import {
   Title
 } from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
+import type { ComponentProps } from 'react'
 
+import { cn } from '@/helpers/cn'
 import type {
   DialogContentProps,
   DialogFooterProps,

@@ -1,12 +1,10 @@
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { use } from 'react'
 
 import LogoTailwind from '@/assets/logo-tailwind.svg'
 import { cn } from '@/helpers/cn'
-
-import { useTranslations } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
-
 import type { HomePageProps } from './types'
 
 const Home = ({ params }: HomePageProps) => {

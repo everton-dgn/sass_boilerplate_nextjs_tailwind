@@ -1,5 +1,7 @@
 'use client'
 
+import { Check, Languages } from 'lucide-react'
+import { type Locale, useLocale, useTranslations } from 'next-intl'
 import { useTransition } from 'react'
 
 import { Button } from '@/components/atoms/Button'
@@ -11,10 +13,6 @@ import {
 } from '@/components/atoms/DropdownMenu'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
-
-import { Check, Languages } from 'lucide-react'
-import { type Locale, useLocale, useTranslations } from 'next-intl'
-
 import { LOCALE_LABELS } from './constants'
 
 export const LocaleSwitcher = () => {

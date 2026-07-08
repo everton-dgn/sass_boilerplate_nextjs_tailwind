@@ -1,5 +1,4 @@
 import type { NextConfig } from 'next'
-
 import createNextIntlPlugin from 'next-intl/plugin'
 
 import { generateMessages, watchMessages } from './src/i18n/messagesCodegen'

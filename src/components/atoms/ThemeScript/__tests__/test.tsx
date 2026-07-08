@@ -1,9 +1,8 @@
 import { runInNewContext } from 'node:vm'
 
+import { render } from '@testing-library/react'
 import { useServerInsertedHTML } from 'next/navigation'
 import type { ReactElement } from 'react'
-
-import { render } from '@testing-library/react'
 
 import { buildThemeScript, ThemeScript } from '..'
 

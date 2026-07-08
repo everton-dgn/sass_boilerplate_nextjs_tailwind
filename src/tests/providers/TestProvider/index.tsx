@@ -1,10 +1,9 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { NextIntlClientProvider } from 'next-intl'
 import { type ReactNode, useState } from 'react'
 
 import { ThemeSetup } from '@/components/atoms/MainProvider/ThemeSetup'
 import messages from '@/i18n/messages/generated/en.json' with { type: 'json' }
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { NextIntlClientProvider } from 'next-intl'
 
 const createTestQueryClient = () =>
   new QueryClient({

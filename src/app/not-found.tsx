@@ -1,14 +1,12 @@
 'use client'
 
+import type { Locale } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { cn } from '@/helpers/cn'
 import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
 import { routing } from '@/i18n/routing'
 import { geistSans } from '@/theme/fontFamily'
-
-import type { Locale } from 'next-intl'
-
 import { ERROR_MESSAGES } from './constants'
 
 import '@/theme/globals.css'

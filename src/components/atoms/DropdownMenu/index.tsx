@@ -1,10 +1,9 @@
 'use client'
 
+import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui'
 import { type ComponentProps, useRef } from 'react'
 
 import { cn } from '@/helpers/cn'
-
-import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui'
 
 export const DropdownMenu = DropdownMenuPrimitive.Root
 

@@ -1,12 +1,11 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { ThemeToggle } from '@/components/atoms/ThemeToggle'
 import { LocaleSwitcher } from '@/components/molecules/LocaleSwitcher'
 import { cn } from '@/helpers/cn'
 import { Link, usePathname } from '@/i18n/navigation'
-
-import { useTranslations } from 'next-intl'
-
 import { NAV_LINKS } from './constants'
 import type { TopbarProps } from './types'
 

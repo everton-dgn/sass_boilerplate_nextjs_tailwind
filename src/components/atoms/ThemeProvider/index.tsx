@@ -10,14 +10,13 @@ import {
   THEMES
 } from '@/constants/theme'
 import { applyThemeToDOM, getSystemTheme } from '@/helpers/applyThemeToDOM'
-
 import {
   readInitialTheme,
   readThemeCookie,
   writeThemeCookie
 } from './themeCookie'
-import { ThemeContext } from './useTheme'
 import type { ThemeProviderProps } from './types'
+import { ThemeContext } from './useTheme'
 
 const readInitialSystemTheme = (): ResolvedTheme | undefined =>
   IS_SERVER ? undefined : getSystemTheme()

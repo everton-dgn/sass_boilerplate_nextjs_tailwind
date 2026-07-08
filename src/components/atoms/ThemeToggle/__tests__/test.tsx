@@ -1,8 +1,7 @@
-import { event } from '@/tests/helpers'
-import { renderWithProviders } from '@/tests/providers/component'
-
 import { screen } from '@testing-library/react'
 
+import { event } from '@/tests/helpers'
+import { renderWithProviders } from '@/tests/providers/component'
 import { ThemeToggle } from '..'
 
 const openMenu = async () => {
