@@ -11,7 +11,9 @@ const shouldSkipMessagesCodegen = ['info', 'start'].some(command =>
 if (!shouldSkipMessagesCodegen && !process.env.MESSAGES_CODEGEN_ONCE) {
   process.env.MESSAGES_CODEGEN_ONCE = 'true'
   generateMessages()
-  if (process.env.NODE_ENV === 'development') watchMessages()
+  if (process.env.NODE_ENV === 'development') {
+    watchMessages()
+  }
 }
 
 const securityHeaders = [
