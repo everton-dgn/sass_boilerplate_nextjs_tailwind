@@ -1,0 +1,56 @@
+name: MiniMax Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+jobs:
+  minimax-review:
+    # Gate de segurança: só o owner dispara e o PR precisa vir do próprio
+    # repositório (não fork). Evita consumo da API key e prompt injection
+    # via código malicioso em PR externo.
+    if: |
+      github.actor == 'everton-dgn' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 1
+
+      - name: Run MiniMax Code Review
+        id: minimax-review
+        uses: anthropics/claude-code-action@80b31826338489861333dc17217865dfe8085cdc # v1.0.155
+        env:
+          # MiniMax Token Plan — endpoint Anthropic-compatible.
+          # Doc: https://platform.minimax.io/docs/token-plan/claude-code
+          ANTHROPIC_BASE_URL: https://api.minimax.io/anthropic
+          ANTHROPIC_AUTH_TOKEN: ${{ secrets.MINIMAX_API_KEY }}
+          ANTHROPIC_API_KEY: ""
+          DISABLE_COMPACT: "1"
+          CLAUDE_CODE_MAX_CONTEXT_TOKENS: "1000000"
+          API_TIMEOUT_MS: "3000000"
+          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
+          ANTHROPIC_DEFAULT_OPUS_MODEL: MiniMax-M3
+          ANTHROPIC_DEFAULT_SONNET_MODEL: MiniMax-M3
+          ANTHROPIC_DEFAULT_HAIKU_MODEL: MiniMax-M3
+          ANTHROPIC_MODEL: MiniMax-M3
+          ANTHROPIC_SMALL_FAST_MODEL: MiniMax-M3
+          CLAUDE_CODE_SUBAGENT_MODEL: MiniMax-M3
+        with:
+          claude_args: |
+            --model "MiniMax-M3"
+          prompt: |
+            Use a skill em .claude/skills/skill-code-review/SKILL.md para revisar
+            o PR #${{ github.event.pull_request.number }} do repositório ${{ github.repository }}.
+            Siga todas as regras definidas no CLAUDE.md do projeto.
+            Comente com o prefixo `[MiniMax]` no início da revisão para diferenciar dos demais revisores.
+          track_progress: true
