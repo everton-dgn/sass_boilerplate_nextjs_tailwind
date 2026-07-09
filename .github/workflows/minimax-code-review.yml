@@ -1,4 +1,4 @@
-name: Claude Code Review
+name: MiniMax Code Review
 
 on:
   pull_request:
@@ -12,6 +12,6 @@ permissions:
   actions: read
 
 jobs:
-  claude-review:
-    uses: everton-dgn/ci-shared/.github/workflows/claude-code-review.yml@main
+  minimax-review:
+    uses: everton-dgn/ci-shared/.github/workflows/minimax-code-review.yml@main
     secrets: inherit
