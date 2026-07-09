@@ -6,7 +6,12 @@ on:
 
 jobs:
   claude-review:
-
+    # Gate de segurança: só o owner dispara e o PR precisa vir do próprio
+    # repositório (não fork). Evita consumo do OAuth token e prompt
+    # injection via código malicioso em PR externo.
+    if: |
+      github.actor == 'everton-dgn' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,7 +32,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: |
-            --model "claude-opus-4-6[1m]"
+            --model "claude-opus-4-7[1m]"
           prompt: |
             Use a skill em .claude/skills/skill-code-review/SKILL.md para revisar
             o PR #${{ github.event.pull_request.number }} do repositório ${{ github.repository }}.

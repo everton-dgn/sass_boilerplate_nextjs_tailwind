@@ -9,14 +9,22 @@ on:
     types: [opened, assigned]
   pull_request_review:
     types: [submitted]
+  pull_request:
+    types: [opened]
 
 jobs:
   claude:
+    # Gate de segurança: só o owner (github.actor) dispara. Nos eventos de PR
+    # também exige head.repo == repository, evitando prompt injection via
+    # código de fork mesmo se o owner comentar @claude num PR externo.
+    # issue_comment não tem head.repo no payload — mantém só o gate do actor.
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      github.actor == 'everton-dgn' &&
+      ((github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') && github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude'))) ||
+      (github.event_name == 'pull_request' && (contains(github.event.pull_request.body, '@claude') || contains(github.event.pull_request.title, '@claude')) && github.event.pull_request.head.repo.full_name == github.repository))
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -36,7 +44,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: |
-            --model "claude-opus-4-6[1m]"
+            --model "claude-opus-4-7[1m]"
             --append-system-prompt "Responda sempre em português (PT-BR). Código permanece em inglês."
           track_progress: true
 
