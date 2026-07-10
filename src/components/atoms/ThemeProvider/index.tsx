@@ -73,7 +73,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const handleChange = () => {
       setSystemTheme(getSystemTheme())
 
-      if (readThemeCookie() === 'system') applyThemeToDOM('system')
+      if (themeRef.current === 'system') applyThemeToDOM('system')
     }
 
     mediaQuery.addEventListener('change', handleChange)
