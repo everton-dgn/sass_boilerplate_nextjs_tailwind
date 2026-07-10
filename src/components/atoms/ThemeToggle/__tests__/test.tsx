@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { event } from '@/tests/helpers'
+import { installCookieMock } from '@/tests/helpers/cookieMock'
 import { renderWithProviders } from '@/tests/providers/component'
 
 import { ThemeToggle } from '..'
@@ -9,12 +10,15 @@ const openMenu = async () => {
   await event().click(screen.getByRole('button', { name: 'Select theme' }))
 }
 
+let cookieMock: ReturnType<typeof installCookieMock>
+
 beforeEach(() => {
-  document.cookie = 'theme=; path=/; max-age=0'
+  cookieMock = installCookieMock()
   document.documentElement.classList.remove('light', 'dark')
 })
 
 afterEach(() => {
+  cookieMock.restore()
   vi.restoreAllMocks()
 })
 
@@ -53,7 +57,7 @@ describe('[Component] ThemeToggle', () => {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn()
     } as unknown as MediaQueryList)
-    document.cookie = 'theme=light; path=/'
+    cookieMock.setCookie('theme', 'light')
 
     renderWithProviders(<ThemeToggle />)
 
@@ -65,7 +69,7 @@ describe('[Component] ThemeToggle', () => {
   })
 
   it('should mark the active theme option', async () => {
-    document.cookie = 'theme=light; path=/'
+    cookieMock.setCookie('theme', 'light')
 
     renderWithProviders(<ThemeToggle />)
 

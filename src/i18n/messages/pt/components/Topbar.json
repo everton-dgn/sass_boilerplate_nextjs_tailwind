@@ -1,6 +1,7 @@
 {
   "Topbar": {
     "brand": "SaaS Boilerplate",
-    "home": "Início"
+    "home": "Início",
+    "notFound": "404"
   }
 }

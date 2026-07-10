@@ -26,10 +26,10 @@ describe('[Component] LocaleSwitcher', () => {
       screen.getByRole('menuitem', { name: 'English' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('menuitem', { name: 'Español' })
+      screen.getByRole('menuitem', { name: 'Spanish' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('menuitem', { name: 'Português' })
+      screen.getByRole('menuitem', { name: 'Portuguese' })
     ).toBeInTheDocument()
   })
 
@@ -48,7 +48,7 @@ describe('[Component] LocaleSwitcher', () => {
     renderWithProviders(<LocaleSwitcher />)
 
     await event().click(screen.getByRole('button', { name: 'Language' }))
-    await event().click(screen.getByRole('menuitem', { name: 'Português' }))
+    await event().click(screen.getByRole('menuitem', { name: 'Portuguese' }))
 
     expect(mockReplace).toHaveBeenCalledWith('/', { locale: 'pt' })
   })

@@ -1,7 +1,9 @@
 {
   "Home": {
-    "heading": "Boilerplate",
-    "subtitle": "Next.js + Tailwind CSS",
+    "eyebrow": "SaaS Boilerplate",
+    "heading": "Una base limpia para productos modernos.",
+    "description": "Next.js, React y Tailwind CSS, configurados para un inicio rápido y consistente.",
+    "subtitle": "Next.js 16 · React 19 · Tailwind CSS 4",
     "logoNextjsAlt": "Logo de Next.js"
   }
 }

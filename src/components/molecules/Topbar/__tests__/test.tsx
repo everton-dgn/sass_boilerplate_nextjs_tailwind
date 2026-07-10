@@ -32,10 +32,11 @@ describe('[Component] Topbar', () => {
     expect(screen.getByText('My App')).toBeInTheDocument()
   })
 
-  it('should render the home navigation link', () => {
+  it('should render the navigation links', () => {
     renderWithProviders(<Topbar />)
 
     expect(screen.getByText('Home')).toBeInTheDocument()
+    expect(screen.getByText('404')).toBeInTheDocument()
   })
 
   it('should render the locale switcher and theme toggle', () => {
@@ -56,12 +57,15 @@ describe('[Component] Topbar', () => {
     expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
-  it('should render the home link as inactive outside home', () => {
-    mockUsePathname.mockReturnValue('/settings')
+  it('should highlight the 404 link outside home', () => {
+    mockUsePathname.mockReturnValue('/404')
     renderWithProviders(<Topbar />)
 
     const homeLink = screen.getByText('Home')
+    const notFoundLink = screen.getByText('404')
     expect(homeLink).toHaveClass('text-muted-foreground')
     expect(homeLink).not.toHaveAttribute('aria-current')
+    expect(notFoundLink).toHaveClass('text-foreground')
+    expect(notFoundLink).toHaveAttribute('aria-current', 'page')
   })
 })

@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+import { parseMessageFile } from '../parseMessageFile'
 import type { LocaleMessages, MessageFile } from './types'
 
 const MESSAGES_DIR = 'src/i18n/messages'
@@ -41,10 +42,7 @@ const readMessageFiles = (
     .map(file => path.join(localeDir, file))
 
   if (fs.existsSync(commonFile)) files.push(commonFile)
-  return files.map(file => ({
-    file,
-    content: JSON.parse(fs.readFileSync(file, 'utf-8')) as LocaleMessages
-  }))
+  return files.map(file => ({ file, content: parseMessageFile(file) }))
 }
 
 const writeIfChanged = (filePath: string, content: string) => {

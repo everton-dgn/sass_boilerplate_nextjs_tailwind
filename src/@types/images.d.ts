@@ -2,8 +2,8 @@ declare module '*.svg' {
   import type { FunctionComponent, SVGProps } from 'react'
   export const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>
 
-  const src: string
-  export default src
+  const Component: FunctionComponent<SVGProps<SVGSVGElement>>
+  export default Component
 }
 
 declare module '*.jpg'

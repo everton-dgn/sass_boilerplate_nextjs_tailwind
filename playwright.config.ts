@@ -21,7 +21,8 @@ export default defineConfig({
     // video: 'on',
     // screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    baseURL: process.env.BASE_URL_TEST
+    baseURL: process.env.BASE_URL_TEST,
+    locale: 'en-US'
   },
   projects: [
     // {

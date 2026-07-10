@@ -38,6 +38,7 @@ export default defineConfig({
         '**/src/theme/fontFamily.ts',
         '**/src/app/**/error.tsx',
         '**/src/app/**/not-found.tsx',
+        '**/src/app/global-not-found.tsx',
         '**/src/app/global-error.tsx',
         '**/src/**/layout.tsx',
         '**/src/**/page.tsx',

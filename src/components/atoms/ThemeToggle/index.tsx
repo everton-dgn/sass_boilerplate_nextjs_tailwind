@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { DEFAULT_THEME, THEMES } from '@/constants/theme'
+import { useTheme } from '@/hooks/useTheme'
 
 import { Button } from '../Button'
 import {
@@ -13,7 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '../DropdownMenu'
-import { useTheme } from '../ThemeProvider/useTheme'
 import { THEME_ICONS } from './constants'
 import type { ThemeToggleProps } from './types'
 

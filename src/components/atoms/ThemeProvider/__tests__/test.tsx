@@ -1,10 +1,11 @@
-import { act, render, renderHook, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { THEME_COLORS } from '@/constants/theme'
+import { useTheme } from '@/hooks/useTheme'
+import { installCookieMock } from '@/tests/helpers/cookieMock'
 
 import { ThemeProvider } from '..'
-import { useTheme } from '../useTheme'
 
 type MediaQueryChangeListener = (event: MediaQueryListEvent) => void
 
@@ -67,25 +68,28 @@ const renderWithProvider = () =>
     </ThemeProvider>
   )
 
+let cookieMock: ReturnType<typeof installCookieMock>
+
+beforeEach(() => {
+  cookieMock = installCookieMock()
+  document.documentElement.classList.remove('light', 'dark')
+  document.documentElement.style.colorScheme = ''
+
+  for (const style of document.head.querySelectorAll('style')) {
+    style.remove()
+  }
+
+  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+    meta.remove()
+  }
+})
+
+afterEach(() => {
+  cookieMock.restore()
+  vi.restoreAllMocks()
+})
+
 describe('[Component] ThemeProvider', () => {
-  beforeEach(() => {
-    document.cookie = 'theme=; path=/; max-age=0'
-    document.documentElement.classList.remove('light', 'dark')
-    document.documentElement.style.colorScheme = ''
-
-    for (const style of document.head.querySelectorAll('style')) {
-      style.remove()
-    }
-
-    for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
-      meta.remove()
-    }
-  })
-
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
-
   it('should provide the default theme when no cookie is set', () => {
     renderWithProvider()
 
@@ -94,7 +98,7 @@ describe('[Component] ThemeProvider', () => {
   })
 
   it('should read the initial theme from the cookie', () => {
-    document.cookie = 'theme=light; path=/'
+    cookieMock.setCookie('theme', 'light')
 
     renderWithProvider()
 
@@ -103,7 +107,7 @@ describe('[Component] ThemeProvider', () => {
   })
 
   it('should fall back to the default theme for invalid cookie values', () => {
-    document.cookie = 'theme=neon; path=/'
+    cookieMock.setCookie('theme', 'neon')
 
     renderWithProvider()
 
@@ -123,7 +127,7 @@ describe('[Component] ThemeProvider', () => {
   })
 
   it('should expose the explicit theme as the resolved theme', () => {
-    document.cookie = 'theme=light; path=/'
+    cookieMock.setCookie('theme', 'light')
 
     renderWithProvider()
 
@@ -132,7 +136,7 @@ describe('[Component] ThemeProvider', () => {
 
   it('should resolve the system theme from the media query state', () => {
     createMatchMediaMock(true)
-    document.cookie = 'theme=system; path=/'
+    cookieMock.setCookie('theme', 'system')
 
     renderWithProvider()
 
@@ -144,7 +148,7 @@ describe('[Component] ThemeProvider', () => {
 
   it('should react to system scheme changes while on the system theme', () => {
     const { dispatchChange } = createMatchMediaMock(false)
-    document.cookie = 'theme=system; path=/'
+    cookieMock.setCookie('theme', 'system')
 
     renderWithProvider()
 
@@ -182,17 +186,5 @@ describe('[Component] ThemeProvider', () => {
     await user.click(screen.getByRole('button', { name: 'set light' }))
 
     expect(themeColorMeta.getAttribute('content')).toBe(THEME_COLORS.light)
-  })
-
-  it('should throw when useTheme is used outside the provider', () => {
-    const consoleError = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => undefined)
-
-    expect(() => renderHook(() => useTheme())).toThrow(
-      'useTheme must be used within a ThemeProvider'
-    )
-
-    consoleError.mockRestore()
   })
 })

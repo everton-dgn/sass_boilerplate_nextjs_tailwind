@@ -14,8 +14,6 @@ import {
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 
-import { LOCALE_LABELS } from './constants'
-
 export const LocaleSwitcher = () => {
   const t = useTranslations('LocaleSwitcher')
   const locale = useLocale()
@@ -55,7 +53,7 @@ export const LocaleSwitcher = () => {
             key={availableLocale}
             onSelect={() => onLocaleSelect(availableLocale)}
           >
-            <span className="flex-1">{LOCALE_LABELS[availableLocale]}</span>
+            <span className="flex-1">{t(`locales.${availableLocale}`)}</span>
             {availableLocale === locale && <Check className="size-4" />}
           </DropdownMenuItem>
         ))}

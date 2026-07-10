@@ -25,7 +25,7 @@ test.describe('localization flow', () => {
     await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
 
     await page.getByRole('button', { name: 'Language' }).click()
-    await page.getByRole('menuitem', { name: 'Português' }).click()
+    await page.getByRole('menuitem', { name: 'Portuguese' }).click()
 
     await expect(page).toHaveURL(/\/pt$/)
     await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()

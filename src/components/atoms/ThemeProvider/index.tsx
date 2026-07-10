@@ -2,30 +2,22 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { IS_SERVER } from '@/constants/sharedEnv'
 import type { ResolvedTheme, Theme } from '@/constants/theme'
 import {
   DARK_MEDIA_QUERY,
   THEME_BROADCAST_CHANNEL,
   THEMES
 } from '@/constants/theme'
+import { ThemeContext } from '@/hooks/useTheme'
 
 import { applyThemeToDOM, getSystemTheme } from './applyThemeToDOM'
-import {
-  readInitialTheme,
-  readThemeCookie,
-  writeThemeCookie
-} from './themeCookie'
+import { readThemeCookie, writeThemeCookie } from './themeCookie'
 import type { ThemeProviderProps } from './types'
-import { ThemeContext } from './useTheme'
-
-const readInitialSystemTheme = (): ResolvedTheme | undefined =>
-  IS_SERVER ? undefined : getSystemTheme()
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setThemeState] = useState<Theme | undefined>(readInitialTheme)
+  const [theme, setThemeState] = useState<Theme | undefined>(undefined)
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme | undefined>(
-    readInitialSystemTheme
+    undefined
   )
   const channelRef = useRef<BroadcastChannel | null>(null)
   const themeRef = useRef(theme)
@@ -42,7 +34,12 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [])
 
   useEffect(() => {
-    applyThemeToDOM(readThemeCookie())
+    const cookieTheme = readThemeCookie()
+
+    themeRef.current = cookieTheme
+    setThemeState(cookieTheme)
+    setSystemTheme(getSystemTheme())
+    applyThemeToDOM(cookieTheme)
 
     if (!('BroadcastChannel' in window)) return
 

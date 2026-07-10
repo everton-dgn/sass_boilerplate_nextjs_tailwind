@@ -1,10 +1,11 @@
-import { IS_SERVER } from '@/constants/sharedEnv'
 import type { Theme } from '@/constants/theme'
 import {
   THEME_COOKIE_MAX_AGE_IN_SECONDS,
   THEME_COOKIE_NAME
 } from '@/constants/theme'
 import { resolveTheme } from '@/helpers/resolveTheme'
+
+const MILLISECONDS_IN_SECOND = 1000
 
 const themeCookiePrefix = `${THEME_COOKIE_NAME}=`
 
@@ -28,14 +29,17 @@ export const readThemeCookie = (): Theme => {
   )
 }
 
-export const readInitialTheme = (): Theme | undefined =>
-  IS_SERVER ? undefined : readThemeCookie()
-
 export const writeThemeCookie = (theme: Theme) => {
-  document.cookie = [
-    `${THEME_COOKIE_NAME}=${encodeURIComponent(theme)}`,
-    'path=/',
-    `max-age=${THEME_COOKIE_MAX_AGE_IN_SECONDS}`,
-    'samesite=lax'
-  ].join('; ')
+  if (!('cookieStore' in window)) return
+
+  window.cookieStore
+    .set({
+      name: THEME_COOKIE_NAME,
+      value: encodeURIComponent(theme),
+      path: '/',
+      expires:
+        Date.now() + THEME_COOKIE_MAX_AGE_IN_SECONDS * MILLISECONDS_IN_SECOND,
+      sameSite: 'lax'
+    })
+    .catch(() => undefined)
 }

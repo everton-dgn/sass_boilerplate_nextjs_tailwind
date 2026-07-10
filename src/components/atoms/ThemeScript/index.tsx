@@ -14,9 +14,14 @@ export const buildThemeScript = (): string => `(() => {
     const cookieRow = document.cookie
       .split('; ')
       .find(row => row.startsWith('${THEME_COOKIE_NAME}='))
-    const cookieValue = cookieRow
-      ? decodeURIComponent(cookieRow.split('=')[1])
-      : ''
+    let cookieValue = ''
+    if (cookieRow) {
+      try {
+        cookieValue = decodeURIComponent(cookieRow.split('=')[1])
+      } catch {
+        cookieValue = ''
+      }
+    }
     const theme = ${JSON.stringify(THEMES)}.includes(cookieValue)
       ? cookieValue
       : '${DEFAULT_THEME}'

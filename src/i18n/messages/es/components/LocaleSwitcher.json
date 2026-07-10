@@ -1,5 +1,10 @@
 {
   "LocaleSwitcher": {
-    "label": "Idioma"
+    "label": "Idioma",
+    "locales": {
+      "en": "Inglés",
+      "es": "Español",
+      "pt": "Portugués"
+    }
   }
 }

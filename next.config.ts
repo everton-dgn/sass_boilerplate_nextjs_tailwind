@@ -31,7 +31,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   headers: () => [{ source: '/(.*)', headers: securityHeaders }],
   experimental: {
-    turbopackFileSystemCacheForDev: true
+    turbopackFileSystemCacheForDev: true,
+    globalNotFound: true
   },
   turbopack: {
     rules: {

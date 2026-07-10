@@ -389,16 +389,6 @@
   },
   "overrides": [
     {
-      "includes": ["src/components/atoms/ThemeProvider/themeCookie.ts"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noDocumentCookie": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": ["src/global.ts"],
       "linter": {
         "rules": {
@@ -432,8 +422,7 @@
         "rules": {
           "suspicious": {
             "noSkippedTests": "off",
-            "useAwait": "off",
-            "noDocumentCookie": "off"
+            "useAwait": "off"
           },
           "style": {
             "useNamingConvention": "off"

@@ -10,7 +10,7 @@ import {
 import type { CSSProperties } from 'react'
 import { Toaster, type ToasterProps } from 'sonner'
 
-import { useTheme } from '../ThemeProvider/useTheme'
+import { useTheme } from '@/hooks/useTheme'
 
 export const Toast = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme()
