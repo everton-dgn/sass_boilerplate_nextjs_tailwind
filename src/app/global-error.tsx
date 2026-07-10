@@ -22,7 +22,9 @@ import type { ErrorPageProps } from './types'
 
 import '@/theme/globals.css'
 
-const GlobalError = ({ error, reset }: ErrorPageProps) => {
+const GlobalError = (props: ErrorPageProps) => {
+  const { error } = props
+  const unstableRetry = props.unstable_retry
   const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
   const messages = ERROR_MESSAGES[locale]
 
@@ -67,7 +69,7 @@ const GlobalError = ({ error, reset }: ErrorPageProps) => {
 
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ErrorFallback messageKey="somethingWrong" reset={reset} />
+          <ErrorFallback messageKey="somethingWrong" reset={unstableRetry} />
         </NextIntlClientProvider>
         {IS_DEVELOPMENT ? (
           <p
