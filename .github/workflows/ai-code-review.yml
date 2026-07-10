@@ -20,6 +20,7 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
+      actions: read
     concurrency:
       group: ai-code-review-claude-pr-${{ github.event.pull_request.number }}
       cancel-in-progress: true
@@ -42,6 +43,7 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
+      actions: read
     concurrency:
       group: ai-code-review-glm-pr-${{ github.event.pull_request.number }}
       cancel-in-progress: true
@@ -62,6 +64,7 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
+      actions: read
     concurrency:
       group: ai-code-review-minimax-pr-${{ github.event.pull_request.number }}
       cancel-in-progress: true
