@@ -3,10 +3,6 @@ import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 
-import { generateMessages } from './src/i18n/messagesCodegen'
-
-generateMessages()
-
 const alias = {
   '@': fileURLToPath(new URL('./src', import.meta.url))
 }
@@ -29,6 +25,7 @@ export default defineConfig({
   resolve: { alias },
   plugins: [react()],
   test: {
+    globalSetup: './src/tests/globalSetup/index.ts',
     ...shared,
     coverage: {
       provider: 'v8',

@@ -155,6 +155,16 @@ describe('[Component] ThemeProvider', () => {
     expect(document.cookie).toContain('theme=light')
   })
 
+  it('should persist the theme without Cookie Store support', async () => {
+    cookieMock.restore()
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    await user.click(screen.getByRole('button', { name: 'set light' }))
+
+    expect(document.cookie).toContain('theme=light')
+  })
+
   it('should expose the explicit theme as the resolved theme', () => {
     cookieMock.setCookie('theme', 'light')
 

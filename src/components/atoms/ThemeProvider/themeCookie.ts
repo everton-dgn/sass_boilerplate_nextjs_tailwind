@@ -17,6 +17,15 @@ const decodeCookieValue = (rawValue: string): string | undefined => {
   }
 }
 
+const writeThemeCookieWithDocument = (theme: Theme) => {
+  document.cookie = [
+    `${THEME_COOKIE_NAME}=${encodeURIComponent(theme)}`,
+    'path=/',
+    `max-age=${THEME_COOKIE_MAX_AGE_IN_SECONDS}`,
+    'samesite=lax'
+  ].join('; ')
+}
+
 export const readThemeCookie = (): Theme => {
   const cookieRow = document.cookie
     .split('; ')
@@ -30,7 +39,10 @@ export const readThemeCookie = (): Theme => {
 }
 
 export const writeThemeCookie = (theme: Theme) => {
-  if (!('cookieStore' in window)) return
+  if (!('cookieStore' in window)) {
+    writeThemeCookieWithDocument(theme)
+    return
+  }
 
   window.cookieStore
     .set({
@@ -41,5 +53,5 @@ export const writeThemeCookie = (theme: Theme) => {
         Date.now() + THEME_COOKIE_MAX_AGE_IN_SECONDS * MILLISECONDS_IN_SECOND,
       sameSite: 'lax'
     })
-    .catch(() => undefined)
+    .catch(() => writeThemeCookieWithDocument(theme))
 }

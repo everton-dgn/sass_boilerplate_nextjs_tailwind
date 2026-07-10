@@ -430,6 +430,16 @@
       }
     },
     {
+      "includes": ["src/components/atoms/ThemeProvider/themeCookie.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDocumentCookie": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "src/**/*.ts",
         "src/**/*.tsx",
