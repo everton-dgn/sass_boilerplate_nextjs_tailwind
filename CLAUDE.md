@@ -236,6 +236,9 @@ Detalhes: `docs/reference/styleguide.md` e
 - **Números mágicos**: extrair para `const` nomeada (exceções: 0, 1, -1)
 - **Nomes descritivos**: nomes de uma letra proibidos em variáveis e
   callbacks. Detalhes: `docs/reference/quality-constraints.md`
+- **Traduções**: use `t` para a função retornada por `useTranslations` e
+  `getTranslations`. Esta é uma exceção explícita à regra de nomes de uma
+  letra; não renomeie para `translate`.
 
 ### Estrutura de componente
 

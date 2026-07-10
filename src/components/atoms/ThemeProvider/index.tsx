@@ -49,6 +49,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const handleMessage = (event: MessageEvent<Theme>) => {
       if (!THEMES.includes(event.data)) return
 
+      themeRef.current = event.data
       setThemeState(event.data)
       applyThemeToDOM(event.data)
     }

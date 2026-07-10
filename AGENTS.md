@@ -115,6 +115,9 @@ src/
   Exceções: `(a, b)` em `.sort()`, `_` para parâmetros ignorados,
   `i`/`j` em loops `for` tradicionais.
   Detalhes: `docs/reference/quality-constraints.md`
+- **Traduções**: use `t` para a função retornada por `useTranslations` e
+  `getTranslations`. Esta é uma exceção explícita à regra de nomes de uma
+  letra; não renomeie para `translate`.
 - NUNCA crie barrel files (`index.ts` que apenas re-exporta de subpastas)
 - NUNCA sobrescreva regras do Biome
 

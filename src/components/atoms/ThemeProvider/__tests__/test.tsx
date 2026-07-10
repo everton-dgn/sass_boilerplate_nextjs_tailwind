@@ -1,13 +1,39 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { THEME_COLORS } from '@/constants/theme'
+import { THEME_COLORS, type Theme } from '@/constants/theme'
 import { useTheme } from '@/hooks/useTheme'
 import { installCookieMock } from '@/tests/helpers/cookieMock'
 
 import { ThemeProvider } from '..'
 
 type MediaQueryChangeListener = (event: MediaQueryListEvent) => void
+type BroadcastMessageListener = (event: MessageEvent<Theme>) => void
+
+const installBroadcastChannelMock = () => {
+  let messageListener: BroadcastMessageListener | undefined
+
+  class BroadcastChannelMock {
+    addEventListener = (
+      eventName: string,
+      listener: BroadcastMessageListener
+    ) => {
+      if (eventName === 'message') messageListener = listener
+    }
+
+    removeEventListener = () => undefined
+    close = () => undefined
+    postMessage = () => undefined
+  }
+
+  vi.stubGlobal('BroadcastChannel', BroadcastChannelMock)
+
+  return {
+    dispatchMessage: (theme: Theme) => {
+      messageListener?.({ data: theme } as MessageEvent<Theme>)
+    }
+  }
+}
 
 const createMatchMediaMock = (initialMatches: boolean) => {
   const listeners = new Set<MediaQueryChangeListener>()
@@ -53,6 +79,9 @@ const ThemeConsumer = () => {
       <span data-testid="system-theme">{systemTheme}</span>
       <button type="button" onClick={() => setTheme('light')}>
         set light
+      </button>
+      <button type="button" onClick={() => setTheme('dark')}>
+        set dark
       </button>
       <button type="button" onClick={() => setTheme('system')}>
         set system
@@ -171,6 +200,20 @@ describe('[Component] ThemeProvider', () => {
     expect(['light', 'dark']).toContain(
       document.documentElement.style.colorScheme
     )
+  })
+
+  it('should update the theme ref after receiving a channel message', async () => {
+    const { dispatchMessage } = installBroadcastChannelMock()
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    act(() => dispatchMessage('light'))
+
+    await user.click(screen.getByRole('button', { name: 'set dark' }))
+
+    expect(screen.getByTestId('current-theme')).toHaveTextContent('dark')
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
+    expect(document.cookie).toContain('theme=dark')
   })
 
   it('should sync theme-color metas with the resolved theme', async () => {

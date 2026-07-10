@@ -4,6 +4,10 @@ import { defineConfig, devices } from '@playwright/test'
 
 loadEnvFile('.env.test')
 
+const e2eHost = '127.0.0.1'
+const e2ePort = 3100
+const e2eBaseUrl = `http://${e2eHost}:${e2ePort}`
+
 export default defineConfig({
   testDir: './src/tests',
   fullyParallel: true,
@@ -21,7 +25,7 @@ export default defineConfig({
     // video: 'on',
     // screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    baseURL: process.env.BASE_URL_TEST,
+    baseURL: e2eBaseUrl,
     locale: 'en-US'
   },
   projects: [
@@ -59,8 +63,8 @@ export default defineConfig({
     // }
   ],
   webServer: {
-    command: 'E2E_TEST_MODE=true pnpm dev',
-    url: `${process.env.BASE_URL_TEST}/en`,
+    command: `E2E_TEST_MODE=true pnpm dev --hostname ${e2eHost} --port ${e2ePort}`,
+    url: `${e2eBaseUrl}/en`,
     reuseExistingServer: !process.env.CI
   }
 })

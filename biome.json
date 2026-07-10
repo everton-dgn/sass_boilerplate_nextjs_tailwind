@@ -421,8 +421,7 @@
       "linter": {
         "rules": {
           "suspicious": {
-            "noSkippedTests": "off",
-            "useAwait": "off"
+            "noSkippedTests": "off"
           },
           "style": {
             "useNamingConvention": "off"

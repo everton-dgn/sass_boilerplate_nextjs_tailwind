@@ -70,7 +70,13 @@ const GlobalError = ({ error, reset }: ErrorPageProps) => {
           <ErrorFallback messageKey="somethingWrong" reset={reset} />
         </NextIntlClientProvider>
         {IS_DEVELOPMENT ? (
-          <p className="fixed inset-x-4 bottom-4 z-10 mx-auto max-h-24 max-w-2xl overflow-auto break-words px-4 py-2 text-center font-mono text-muted-foreground text-xs">
+          <p
+            className={cn(
+              'fixed inset-x-4 bottom-4 z-10 mx-auto max-h-24 max-w-2xl',
+              'overflow-auto break-words px-4 py-2 text-center font-mono',
+              'text-muted-foreground text-xs'
+            )}
+          >
             {error.message}
           </p>
         ) : null}

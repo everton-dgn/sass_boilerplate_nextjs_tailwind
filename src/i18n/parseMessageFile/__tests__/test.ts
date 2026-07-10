@@ -4,23 +4,14 @@ import path from 'node:path'
 
 import { parseMessageFile } from '..'
 
-const createdRoots: string[] = []
-
 const writeFixture = (content: string) => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'parse-message-file-'))
-  createdRoots.push(root)
   const filePath = path.join(root, 'Home.json')
   fs.writeFileSync(filePath, content)
   return filePath
 }
 
 describe('[i18n] parseMessageFile', () => {
-  afterAll(() => {
-    for (const root of createdRoots) {
-      fs.rmSync(root, { recursive: true, force: true })
-    }
-  })
-
   it('should parse a valid messages file', () => {
     const filePath = writeFixture('{"Home":{"title":"Home"}}')
 

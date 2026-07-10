@@ -25,16 +25,27 @@ test.describe('home page', () => {
     await expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
-  test('should render logos and subtitle', async ({ page }) => {
-    await expect(page.getByAltText('Next.js logo')).toBeVisible()
-    await expect(page.getByTestId('logo-tailwind')).toBeVisible()
+  test('should render localized home content', async ({ page }) => {
+    const homePage = page.locator('main[data-page="home"]')
+
+    await expect(homePage.getByAltText('Next.js logo')).toBeVisible()
+    await expect(homePage.getByTestId('logo-tailwind')).toBeVisible()
     await expect(
-      page.getByRole('heading', { name: 'Next.js + Tailwind CSS' })
+      homePage.getByRole('heading', {
+        name: 'A clean foundation for modern products.'
+      })
+    ).toBeVisible()
+    await expect(
+      homePage.getByText('Next.js 16 · React 19 · Tailwind CSS 4')
     ).toBeVisible()
   })
 
-  test('should render header text', async ({ page }) => {
-    await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
+  test('should render the localized eyebrow', async ({ page }) => {
+    const homePage = page.locator('main[data-page="home"]')
+
+    await expect(
+      homePage.getByText('SaaS Boilerplate', { exact: true })
+    ).toBeVisible()
   })
 
   test('should toggle theme between light and dark', async ({ page }) => {
@@ -54,6 +65,10 @@ test.describe('home page', () => {
     await page.getByRole('link', { name: 'Home' }).click()
 
     await expect(page).toHaveURL(/\/en$/)
-    await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
+    await expect(
+      page.locator('main[data-page="home"]').getByRole('heading', {
+        name: 'A clean foundation for modern products.'
+      })
+    ).toBeVisible()
   })
 })
