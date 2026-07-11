@@ -4,14 +4,15 @@ import { Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
-import { DEFAULT_THEME, THEMES } from '@/constants/theme'
+import { DEFAULT_THEME, THEMES, type Theme } from '@/constants/theme'
 import { useTheme } from '@/hooks/useTheme'
 
 import { Button } from '../Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger
 } from '../DropdownMenu'
 import { THEME_ICONS } from './constants'
@@ -57,22 +58,26 @@ export const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {THEMES.map(availableTheme => {
-          const Icon = THEME_ICONS[availableTheme]
-          const isActive = availableTheme === activeTheme
+        <DropdownMenuRadioGroup
+          onValueChange={nextTheme => setTheme(nextTheme as Theme)}
+          value={activeTheme}
+        >
+          {THEMES.map(availableTheme => {
+            const Icon = THEME_ICONS[availableTheme]
+            const isActive = availableTheme === activeTheme
 
-          return (
-            <DropdownMenuItem
-              aria-current={isActive ? 'true' : undefined}
-              key={availableTheme}
-              onSelect={() => setTheme(availableTheme)}
-            >
-              <Icon className="size-4" />
-              <span className="flex-1">{t(availableTheme)}</span>
-              {isActive && <Check className="size-4" />}
-            </DropdownMenuItem>
-          )
-        })}
+            return (
+              <DropdownMenuRadioItem
+                key={availableTheme}
+                value={availableTheme}
+              >
+                <Icon className="size-4" />
+                <span className="flex-1">{t(availableTheme)}</span>
+                {isActive && <Check className="size-4" />}
+              </DropdownMenuRadioItem>
+            )
+          })}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

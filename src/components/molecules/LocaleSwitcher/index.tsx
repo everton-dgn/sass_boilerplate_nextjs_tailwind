@@ -8,7 +8,8 @@ import { Button } from '@/components/atoms/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger
 } from '@/components/atoms/DropdownMenu'
 import { usePathname, useRouter } from '@/i18n/navigation'
@@ -46,17 +47,21 @@ export const LocaleSwitcher = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {routing.locales.map(availableLocale => (
-          <DropdownMenuItem
-            aria-current={availableLocale === locale ? 'true' : undefined}
-            disabled={isPending}
-            key={availableLocale}
-            onSelect={() => onLocaleSelect(availableLocale)}
-          >
-            <span className="flex-1">{t(`locales.${availableLocale}`)}</span>
-            {availableLocale === locale && <Check className="size-4" />}
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuRadioGroup
+          onValueChange={nextLocale => onLocaleSelect(nextLocale as Locale)}
+          value={locale}
+        >
+          {routing.locales.map(availableLocale => (
+            <DropdownMenuRadioItem
+              disabled={isPending}
+              key={availableLocale}
+              value={availableLocale}
+            >
+              <span className="flex-1">{t(`locales.${availableLocale}`)}</span>
+              {availableLocale === locale && <Check className="size-4" />}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

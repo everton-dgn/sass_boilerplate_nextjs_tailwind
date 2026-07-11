@@ -36,16 +36,22 @@ describe('[Component] ThemeToggle', () => {
 
     await openMenu()
 
-    expect(screen.getByRole('menuitem', { name: 'Light' })).toBeInTheDocument()
-    expect(screen.getByRole('menuitem', { name: 'Dark' })).toBeInTheDocument()
-    expect(screen.getByRole('menuitem', { name: 'System' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('menuitemradio', { name: 'Light' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('menuitemradio', { name: 'Dark' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('menuitemradio', { name: 'System' })
+    ).toBeInTheDocument()
   })
 
   it('should apply the selected theme when an option is chosen', async () => {
     renderWithProviders(<ThemeToggle />)
 
     await openMenu()
-    await event().click(screen.getByRole('menuitem', { name: 'Light' }))
+    await event().click(screen.getByRole('menuitemradio', { name: 'Light' }))
 
     expect(document.cookie).toContain('theme=light')
     expect(document.documentElement.classList.contains('light')).toBe(true)
@@ -62,7 +68,7 @@ describe('[Component] ThemeToggle', () => {
     renderWithProviders(<ThemeToggle />)
 
     await openMenu()
-    await event().click(screen.getByRole('menuitem', { name: 'System' }))
+    await event().click(screen.getByRole('menuitemradio', { name: 'System' }))
 
     expect(document.cookie).toContain('theme=system')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
@@ -75,9 +81,8 @@ describe('[Component] ThemeToggle', () => {
 
     await openMenu()
 
-    expect(screen.getByRole('menuitem', { name: 'Light' })).toHaveAttribute(
-      'aria-current',
-      'true'
-    )
+    expect(
+      screen.getByRole('menuitemradio', { name: 'Light' })
+    ).toHaveAttribute('aria-checked', 'true')
   })
 })

@@ -41,7 +41,7 @@ export const ErrorFallback = ({
             aria-hidden
             className="size-1.5 rounded-full bg-foreground ring-4 ring-foreground/10 dark:bg-foreground/60 dark:ring-foreground/5"
           />
-          {isNotFound ? '404' : t('title')}
+          {isNotFound ? t('badge') : t('title')}
         </p>
         <h1
           className="max-w-2xl text-balance font-semibold text-4xl tracking-tight sm:text-6xl"

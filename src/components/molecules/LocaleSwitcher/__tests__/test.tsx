@@ -23,13 +23,13 @@ describe('[Component] LocaleSwitcher', () => {
     await event().click(screen.getByRole('button', { name: 'Language' }))
 
     expect(
-      screen.getByRole('menuitem', { name: 'English' })
+      screen.getByRole('menuitemradio', { name: 'English' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('menuitem', { name: 'Spanish' })
+      screen.getByRole('menuitemradio', { name: 'Spanish' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('menuitem', { name: 'Portuguese' })
+      screen.getByRole('menuitemradio', { name: 'Portuguese' })
     ).toBeInTheDocument()
   })
 
@@ -38,17 +38,18 @@ describe('[Component] LocaleSwitcher', () => {
 
     await event().click(screen.getByRole('button', { name: 'Language' }))
 
-    expect(screen.getByRole('menuitem', { name: 'English' })).toHaveAttribute(
-      'aria-current',
-      'true'
-    )
+    expect(
+      screen.getByRole('menuitemradio', { name: 'English' })
+    ).toHaveAttribute('aria-checked', 'true')
   })
 
   it('should navigate to the selected locale', async () => {
     renderWithProviders(<LocaleSwitcher />)
 
     await event().click(screen.getByRole('button', { name: 'Language' }))
-    await event().click(screen.getByRole('menuitem', { name: 'Portuguese' }))
+    await event().click(
+      screen.getByRole('menuitemradio', { name: 'Portuguese' })
+    )
 
     expect(mockReplace).toHaveBeenCalledWith('/', { locale: 'pt' })
   })

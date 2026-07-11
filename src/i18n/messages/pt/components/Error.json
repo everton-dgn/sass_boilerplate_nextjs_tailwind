@@ -1,6 +1,7 @@
 {
   "Error": {
     "title": "Erro!",
+    "badge": "404",
     "notFound": "Página não encontrada!",
     "notFoundDescription": "A página que você procura não existe ou pode ter sido movida.",
     "somethingWrong": "Algo deu errado!",
