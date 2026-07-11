@@ -18,12 +18,18 @@ const decodeCookieValue = (rawValue: string): string | undefined => {
 }
 
 const writeThemeCookieWithDocument = (theme: Theme) => {
-  document.cookie = [
+  const attributes = [
     `${THEME_COOKIE_NAME}=${encodeURIComponent(theme)}`,
     'path=/',
     `max-age=${THEME_COOKIE_MAX_AGE_IN_SECONDS}`,
     'samesite=lax'
-  ].join('; ')
+  ]
+
+  if (window.location.protocol === 'https:') {
+    attributes.push('secure')
+  }
+
+  document.cookie = attributes.join('; ')
 }
 
 export const readThemeCookie = (): Theme => {

@@ -17,7 +17,9 @@ export const buildThemeScript = (): string => `(() => {
     let cookieValue = ''
     if (cookieRow) {
       try {
-        cookieValue = decodeURIComponent(cookieRow.split('=')[1])
+        cookieValue = decodeURIComponent(
+          cookieRow.slice('${THEME_COOKIE_NAME}='.length)
+        )
       } catch {
         cookieValue = ''
       }
