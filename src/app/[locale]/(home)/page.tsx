@@ -1,20 +1,14 @@
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { hasLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { use } from 'react'
 
 import LogoTailwind from '@/assets/logo-tailwind.svg'
-import { routing } from '@/i18n/routing'
 
 import type { HomePageProps } from './types'
 
 const Home = ({ params }: HomePageProps) => {
   const { locale } = use(params)
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
 
   setRequestLocale(locale)
   const translate = useTranslations('Home')

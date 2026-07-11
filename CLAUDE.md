@@ -107,6 +107,12 @@ Exemplos:
 - **NUNCA** crie barrel files (`index.ts` que apenas re-exporta de subpastas)
 - **NUNCA** sobrescreva ou desabilite regras do Biome (nem via overrides, nem
   via `biome-ignore`)
+  - **Exceção única autorizada**: `noDocumentCookie` desligada via override
+    apenas para `src/components/atoms/ThemeProvider/themeCookie.ts`. A
+    leitura síncrona de `document.cookie` é o que permite resolver o tema
+    sem flash no primeiro paint (a Cookie Store API é assíncrona); a
+    escrita usa `cookieStore.set` com `document.cookie` como fallback.
+    O restante do projeto permanece protegido pela regra global (`error`)
 
 ### Limites de tamanho de arquivo
 

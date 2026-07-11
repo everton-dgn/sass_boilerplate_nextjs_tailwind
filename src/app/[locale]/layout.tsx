@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import { NextIntlClientProvider } from 'next-intl'
+import { notFound } from 'next/navigation'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import {
   getMessages,
   getTranslations,
@@ -59,8 +60,11 @@ export const generateMetadata = async ({
 }
 
 const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
-  const { locale: localeParam } = await params
-  const locale = resolveLocale(localeParam)
+  const { locale } = await params
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
 
   setRequestLocale(locale)
 

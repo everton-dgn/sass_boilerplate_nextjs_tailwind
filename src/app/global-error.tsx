@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { buildThemeScript } from '@/components/atoms/ThemeScript'
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
-import { IS_DEVELOPMENT } from '@/constants/sharedEnv'
+import { IS_CLIENT, IS_DEVELOPMENT } from '@/constants/sharedEnv'
 import {
   DARK_MEDIA_QUERY,
   LIGHT_MEDIA_QUERY,
@@ -25,12 +25,10 @@ import '@/theme/globals.css'
 const GlobalError = (props: ErrorPageProps) => {
   const { error } = props
   const unstableRetry = props.unstable_retry
-  const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
+  const [locale] = useState<Locale>(() =>
+    IS_CLIENT ? getLocaleFromPathname() : routing.defaultLocale
+  )
   const messages = ERROR_MESSAGES[locale]
-
-  useEffect(() => {
-    setLocale(getLocaleFromPathname())
-  }, [])
 
   useEffect(() => {
     reportRuntimeError(error)

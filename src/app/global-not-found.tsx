@@ -2,9 +2,10 @@
 
 import { ArrowLeft } from 'lucide-react'
 import type { Locale } from 'next-intl'
-import { useEffect, useId, useState } from 'react'
+import { useId, useState } from 'react'
 
 import { buildThemeScript } from '@/components/atoms/ThemeScript'
+import { IS_CLIENT } from '@/constants/sharedEnv'
 import {
   DARK_MEDIA_QUERY,
   LIGHT_MEDIA_QUERY,
@@ -20,14 +21,12 @@ import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 import '@/theme/globals.css'
 
 const GlobalNotFound = () => {
-  const [locale, setLocale] = useState<Locale>(routing.defaultLocale)
+  const [locale] = useState<Locale>(() =>
+    IS_CLIENT ? getLocaleFromPathname() : routing.defaultLocale
+  )
   const titleId = useId()
   const descriptionId = useId()
   const messages = ERROR_MESSAGES[locale]
-
-  useEffect(() => {
-    setLocale(getLocaleFromPathname())
-  }, [])
 
   return (
     <html
