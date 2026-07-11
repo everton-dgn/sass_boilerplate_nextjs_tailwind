@@ -56,7 +56,8 @@ Se qualquer comando falhar, corrija e repita até todos passarem.
 - **Formulários**: React Hook Form + Zod
 - **HTTP**: Axios
 - **Toast**: Sonner
-- **Tema**: next-themes (`attribute="class"`)
+- **Tema**: `ThemeProvider` próprio (classe `.dark` + cookie `theme` +
+  `useTheme`)
 - **Ícones**: lucide-react
 - **Linter/Formatter**: Biome (não ESLint/Prettier)
 - **Testes**: Vitest + Testing Library (unitário), Playwright (E2E)
@@ -115,8 +116,13 @@ src/
   Exceções: `(a, b)` em `.sort()`, `_` para parâmetros ignorados,
   `i`/`j` em loops `for` tradicionais.
   Detalhes: `docs/reference/quality-constraints.md`
+- **Traduções**: use `t` para a função retornada por `useTranslations` e
+  `getTranslations`. Esta é uma exceção explícita à regra de nomes de uma
+  letra; não renomeie para `translate`.
 - NUNCA crie barrel files (`index.ts` que apenas re-exporta de subpastas)
-- NUNCA sobrescreva regras do Biome
+- Overrides do Biome: proibidos para silenciar regras em código de produto.
+  Permitidos apenas nas categorias técnicas declaradas em `biome.json` e na
+  exceção funcional `noDocumentCookie` (detalhes no CLAUDE.md)
 
 ### Nomes de arquivos
 
@@ -164,7 +170,7 @@ moduleName/
 - Cores semânticas: tokens shadcn (`text-muted-foreground`, `bg-destructive`)
 - Tamanho de fonte mínimo: `text-xs` (12px)
 - Contraste WCAG AA: 4.5:1 texto normal, 3:1 texto grande
-- Modo escuro via `next-themes` + variáveis CSS (`:root` / `.dark`)
+- Modo escuro via `ThemeProvider` próprio + variáveis CSS (`:root` / `.dark`)
 - **CSS customizado no globals.css**: SEMPRE usar `@layer base { ... }`
   para regras CSS que não são classes utilitárias. O Lightning CSS
   (engine do Tailwind v4) remove propriedades que não reconhece quando

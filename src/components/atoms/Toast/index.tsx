@@ -1,7 +1,5 @@
 'use client'
 
-import type { CSSProperties } from 'react'
-
 import {
   CircleCheck,
   Info,
@@ -9,15 +7,17 @@ import {
   TriangleAlert,
   XCircle
 } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import type { CSSProperties } from 'react'
 import { Toaster, type ToasterProps } from 'sonner'
 
+import { useTheme } from '@/hooks/useTheme'
+
 export const Toast = ({ ...props }: ToasterProps) => {
-  const { theme = 'system' } = useTheme()
+  const { resolvedTheme } = useTheme()
 
   return (
     <Toaster
-      theme={theme as ToasterProps['theme']}
+      theme={resolvedTheme ?? 'system'}
       className="toaster group"
       icons={{
         success: <CircleCheck className="size-4" />,

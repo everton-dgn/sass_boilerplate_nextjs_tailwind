@@ -1,0 +1,12 @@
+{
+  "Error": {
+    "title": "¡Error!",
+    "badge": "404",
+    "notFound": "¡Página no encontrada!",
+    "notFoundDescription": "La página que buscas no existe o puede haberse movido.",
+    "somethingWrong": "¡Algo salió mal!",
+    "somethingWrongDescription": "No pudimos completar tu solicitud. Inténtalo de nuevo.",
+    "tryAgain": "Intentar de nuevo",
+    "backToHome": "Volver al inicio"
+  }
+}

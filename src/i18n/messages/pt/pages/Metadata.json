@@ -1,0 +1,10 @@
+{
+  "Metadata": {
+    "title": "SaaS Boilerplate",
+    "description": "Projeto frontend construído com Next.js",
+    "home": {
+      "title": "Início",
+      "description": "Boilerplate SaaS com Next.js e Tailwind CSS"
+    }
+  }
+}

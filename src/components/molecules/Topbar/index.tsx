@@ -1,16 +1,18 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { ThemeToggle } from '@/components/atoms/ThemeToggle'
+import { LocaleSwitcher } from '@/components/molecules/LocaleSwitcher'
 import { cn } from '@/helpers/cn'
+import { Link, usePathname } from '@/i18n/navigation'
 
 import { NAV_LINKS } from './constants'
 import type { TopbarProps } from './types'
 
 export const Topbar = ({ children, className }: TopbarProps) => {
   const pathname = usePathname()
+  const t = useTranslations('Topbar')
 
   return (
     <header
@@ -23,10 +25,10 @@ export const Topbar = ({ children, className }: TopbarProps) => {
       )}
     >
       <span className="font-semibold text-sm tracking-tight">
-        {children ?? 'SaaS Boilerplate'}
+        {children ?? t('brand')}
       </span>
       <nav className="flex items-center gap-6">
-        {NAV_LINKS.map(({ href, label }) => {
+        {NAV_LINKS.map(({ href, labelKey }) => {
           const isActive = pathname === href
 
           return (
@@ -41,7 +43,7 @@ export const Topbar = ({ children, className }: TopbarProps) => {
               href={href}
               key={href}
             >
-              {label}
+              {t(labelKey)}
               <span
                 className={cn(
                   'absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-foreground',
@@ -53,7 +55,10 @@ export const Topbar = ({ children, className }: TopbarProps) => {
           )
         })}
       </nav>
-      <ThemeToggle />
+      <div className="flex items-center gap-2">
+        <LocaleSwitcher />
+        <ThemeToggle />
+      </div>
     </header>
   )
 }

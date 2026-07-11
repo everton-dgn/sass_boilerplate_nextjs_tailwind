@@ -1,11 +1,16 @@
 {
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main",
+    "useIgnoreFile": true
+  },
   "files": {
     "ignoreUnknown": true,
     "includes": [
       "src/**",
-      ".commitlintrc",
-      "README.md",
+      "!src/i18n/messages/generated",
       "next.config.ts",
       "postcss.config.js",
       "playwright.config.ts",
@@ -16,14 +21,6 @@
       "components.json"
     ]
   },
-  "formatter": {
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 80,
-    "attributePosition": "auto"
-  },
   "assist": {
     "actions": {
       "source": {
@@ -31,60 +28,35 @@
           "level": "on",
           "options": {
             "groups": [
-              ":NODE:",
+              [":NODE:"],
               ":BLANK_LINE:",
-              "next",
-              "next/**",
-              "react",
+              [":PACKAGE:"],
               ":BLANK_LINE:",
-              ["npm:*", "npm:*/**", "vitest/*"],
+              [":PACKAGE_WITH_PROTOCOL:"],
               ":BLANK_LINE:",
-              ":ALIAS:",
+              [":ALIAS:"],
               ":BLANK_LINE:",
-              ":PACKAGE_WITH_PROTOCOL:",
-              ":BLANK_LINE:",
-              "@testing-library/react",
-              ":BLANK_LINE:",
-              "@/assets/**",
-              ":BLANK_LINE:",
-              "@/tests/**",
-              ":BLANK_LINE:",
-              "@/theme/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/constants/**"] },
-              "@/constants/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/helpers/**"] },
-              "@/helpers/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/infra/**"] },
-              "@/infra/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/hooks/**"] },
-              "@/hooks/**",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@/components/**"] },
-              "@/components/**",
-              ":BLANK_LINE:",
-              ":PACKAGE:",
-              ":BLANK_LINE:",
-              { "type": false, "source": ["../**"] },
-              "../**",
-              ":BLANK_LINE:",
-              [":PATH:", "!./*"],
-              ":BLANK_LINE:",
-              { "type": false }
+              [":PATH:"]
             ]
           }
         }
       }
     }
   },
+  "formatter": {
+    "formatWithErrors": false,
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "lineEnding": "lf",
+    "indentStyle": "space",
+    "attributePosition": "auto"
+  },
   "linter": {
     "domains": {
       "next": "all",
       "react": "all",
-      "project": "all"
+      "project": "all",
+      "types": "all"
     },
     "rules": {
       "preset": "recommended",
@@ -303,6 +275,7 @@
         "noConfusingVoidType": "error",
         "noControlCharactersInRegex": "error",
         "noDebugger": "error",
+        "noDocumentCookie": "error",
         "noDoubleEquals": "error",
         "noDuplicateCase": "error",
         "noDuplicateClassMembers": "error",
@@ -317,6 +290,9 @@
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",
+        "noImportCycles": "error",
+        "noDeprecatedImports": "error",
+        "noLeakedRender": "error",
         "noMisleadingCharacterClass": "off",
         "noMisleadingInstantiator": "error",
         "noPrototypeBuiltins": "error",
@@ -334,7 +310,7 @@
         "noSuspiciousSemicolonInJsx": "error",
         "noWith": "error",
         "noVar": "error",
-        "noConsole": { "level": "error", "options": { "allow": ["log"] } },
+        "noConsole": { "level": "error", "options": { "allow": ["error"] } },
         "noThenProperty": "error",
         "noApproximativeNumericConstant": "error",
         "noMisrefactoredShorthandAssign": "error",
@@ -343,11 +319,13 @@
         "noUnnecessaryConditions": "error"
       },
       "performance": {
-        "noDelete": "off",
+        "noDelete": "error",
+        "noImgElement": "error",
         "noReExportAll": "error",
         "noBarrelFile": "error",
         "noAccumulatingSpread": "error",
-        "noJsxPropsBind": "off"
+        "noJsxPropsBind": "off",
+        "useTopLevelRegex": "error"
       },
       "nursery": {
         "useSortedClasses": {
@@ -396,7 +374,44 @@
       "attributePosition": "auto"
     }
   },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "expand": "auto",
+      "trailingCommas": "none",
+      "lineWidth": 80,
+      "indentStyle": "space",
+      "indentWidth": 2
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
   "overrides": [
+    {
+      "includes": ["src/global.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off",
+            "useConsistentTypeDefinitions": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
     {
       "includes": [
         "src/**/__tests__/**/*.{ts,tsx}",
@@ -406,11 +421,20 @@
       "linter": {
         "rules": {
           "suspicious": {
-            "noSkippedTests": "off",
-            "useAwait": "off"
+            "noSkippedTests": "off"
           },
           "style": {
             "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/components/atoms/ThemeProvider/themeCookie.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDocumentCookie": "off"
           }
         }
       }
@@ -469,6 +493,9 @@
             "noIdenticalTestTitle": "error",
             "useTestHooksInOrder": "error",
             "useTestHooksOnTop": "error"
+          },
+          "performance": {
+            "useTopLevelRegex": "off"
           }
         }
       }
@@ -476,21 +503,7 @@
     {
       "includes": ["src/**/*.spec.ts"],
       "linter": {
-        "rules": {
-          "nursery": {
-            "noPlaywrightElementHandle": "error",
-            "noPlaywrightEval": "error",
-            "noPlaywrightForceOption": "error",
-            "noPlaywrightMissingAwait": "error",
-            "noPlaywrightNetworkidle": "error",
-            "noPlaywrightPagePause": "error",
-            "noPlaywrightUselessAwait": "error",
-            "noPlaywrightWaitForNavigation": "error",
-            "noPlaywrightWaitForSelector": "error",
-            "noPlaywrightWaitForTimeout": "error",
-            "usePlaywrightValidDescribeCallback": "error"
-          }
-        }
+        "domains": { "playwright": "all" }
       }
     }
   ]

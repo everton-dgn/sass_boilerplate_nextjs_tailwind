@@ -1,4 +1,19 @@
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
+
+import { generateMessages, watchMessages } from './src/i18n/messagesCodegen'
+
+const shouldSkipMessagesCodegen = ['info', 'start'].some(command =>
+  process.argv.includes(command)
+)
+
+if (!shouldSkipMessagesCodegen && !process.env.MESSAGES_CODEGEN_ONCE) {
+  process.env.MESSAGES_CODEGEN_ONCE = 'true'
+  generateMessages()
+  if (process.env.NODE_ENV === 'development') {
+    watchMessages()
+  }
+}
 
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -16,7 +31,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   headers: () => [{ source: '/(.*)', headers: securityHeaders }],
   experimental: {
-    turbopackFileSystemCacheForDev: true
+    turbopackFileSystemCacheForDev: true,
+    globalNotFound: true
   },
   turbopack: {
     rules: {
@@ -46,4 +62,11 @@ const nextConfig: NextConfig = {
   devIndicators: false
 }
 
-export default nextConfig
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: './src/i18n/request.ts',
+  experimental: {
+    createMessagesDeclaration: './src/i18n/messages/generated/en.json'
+  }
+})
+
+export default withNextIntl(nextConfig)

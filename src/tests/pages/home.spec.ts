@@ -5,7 +5,7 @@ import { test } from '../helpers/testSession'
 test.describe('home page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
   })
 
   test('should have correct page title', async ({ page }) => {
@@ -17,49 +17,58 @@ test.describe('home page', () => {
     await expect(topbar).toBeVisible()
     await expect(topbar.getByText('SaaS Boilerplate')).toBeVisible()
 
-    await expect(topbar.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(topbar.getByRole('link', { name: 'Home' })).toBeVisible()
   })
 
   test('should highlight active nav link', async ({ page }) => {
-    const inicioLink = page.getByRole('link', { name: 'Início' })
-    await expect(inicioLink).toHaveAttribute('aria-current', 'page')
+    const homeLink = page.getByRole('link', { name: 'Home' })
+    await expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
-  test('should render logos and subtitle', async ({ page }) => {
-    await expect(page.getByAltText('Logo Nextjs')).toBeVisible()
-    await expect(page.getByTestId('logo-tailwind')).toBeVisible()
+  test('should render localized home content', async ({ page }) => {
+    const homePage = page.locator('main[data-page="home"]')
+
+    await expect(homePage.getByAltText('Next.js logo')).toBeVisible()
+    await expect(homePage.getByTestId('logo-tailwind')).toBeVisible()
     await expect(
-      page.getByRole('heading', { name: 'Nextjs + Tailwind CSS' })
+      homePage.getByRole('heading', {
+        name: 'A clean foundation for modern products.'
+      })
+    ).toBeVisible()
+    await expect(
+      homePage.getByText('Next.js 16 · React 19 · Tailwind CSS 4')
     ).toBeVisible()
   })
 
-  test('should render header text', async ({ page }) => {
-    await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
+  test('should render the localized eyebrow', async ({ page }) => {
+    const homePage = page.locator('main[data-page="home"]')
+
+    await expect(
+      homePage.getByText('SaaS Boilerplate', { exact: true })
+    ).toBeVisible()
   })
 
   test('should toggle theme between light and dark', async ({ page }) => {
-    const themeButton = page.getByRole('button', {
-      name: /Mudar para o modo/
-    })
+    const themeButton = page.getByRole('button', { name: 'Select theme' })
     await expect(themeButton).toBeVisible()
 
-    const initialLabel = await themeButton.getAttribute('aria-label')
     await themeButton.click()
+    await page.getByRole('menuitemradio', { name: 'Light' }).click()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
-    const expectedLabel =
-      initialLabel === 'Mudar para o modo escuro'
-        ? 'Mudar para o modo claro'
-        : 'Mudar para o modo escuro'
-
-    await expect(
-      page.getByRole('button', { name: expectedLabel })
-    ).toBeVisible()
+    await themeButton.click()
+    await page.getByRole('menuitemradio', { name: 'Dark' }).click()
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/)
   })
 
   test('should keep home navigation on the current page', async ({ page }) => {
-    await page.getByRole('link', { name: 'Início' }).click()
+    await page.getByRole('link', { name: 'Home' }).click()
 
-    await expect(page).toHaveURL('/')
-    await expect(page.getByText('Boilerplate', { exact: true })).toBeVisible()
+    await expect(page).toHaveURL(/\/en$/)
+    await expect(
+      page.locator('main[data-page="home"]').getByRole('heading', {
+        name: 'A clean foundation for modern products.'
+      })
+    ).toBeVisible()
   })
 })

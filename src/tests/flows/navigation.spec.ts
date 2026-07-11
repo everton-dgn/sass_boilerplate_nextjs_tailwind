@@ -5,44 +5,36 @@ import { test } from '../helpers/testSession'
 test.describe('navigation flow', () => {
   test('should render home navigation as the active link', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
 
-    const inicioLink = page.getByRole('link', { name: 'Início' })
+    const homeLink = page.getByRole('link', { name: 'Home' })
 
-    await expect(inicioLink).toHaveAttribute('aria-current', 'page')
+    await expect(homeLink).toHaveAttribute('aria-current', 'page')
 
-    await inicioLink.click()
-    await expect(page).toHaveURL('/')
-    await expect(inicioLink).toHaveAttribute('aria-current', 'page')
+    await homeLink.click()
+    await expect(page).toHaveURL(/\/en$/)
+    await expect(homeLink).toHaveAttribute('aria-current', 'page')
   })
 
   test('should persist theme across page reloads', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
 
-    const themeButton = page.getByRole('button', {
-      name: /Mudar para o modo/
-    })
+    const themeButton = page.getByRole('button', { name: 'Select theme' })
     await expect(themeButton).toBeVisible()
 
-    const initialLabel = await themeButton.getAttribute('aria-label')
     await themeButton.click()
-
-    const toggledLabel =
-      initialLabel === 'Mudar para o modo escuro'
-        ? 'Mudar para o modo claro'
-        : 'Mudar para o modo escuro'
-
-    await expect(page.getByRole('button', { name: toggledLabel })).toBeVisible()
+    await page.getByRole('menuitemradio', { name: 'Light' }).click()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
     await page.reload()
 
-    await expect(page.getByRole('button', { name: toggledLabel })).toBeVisible()
+    await expect(page.locator('html')).toHaveClass(/\blight\b/)
   })
 
   test('should maintain topbar visible on home', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('link', { name: 'Início' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
 
     const topbar = page.locator('header').first()
     await expect(topbar.getByText('SaaS Boilerplate')).toBeVisible()

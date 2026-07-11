@@ -1,5 +1,6 @@
 allowBuilds:
   '@biomejs/biome': true
+  '@parcel/watcher': false
   '@swc/core': true
   esbuild: true
   lefthook: true

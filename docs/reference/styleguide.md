@@ -7,7 +7,8 @@ com tokens semânticos do shadcn/ui e propriedades CSS customizadas.
 
 ## Cores
 
-Paleta shadcn/ui com modo escuro via `next-themes`. Tokens definidos como
+Paleta shadcn/ui com modo escuro via `ThemeProvider` próprio. Tokens
+definidos como
 variáveis CSS em `src/theme/globals.css`.
 
 | Uso | Token Tailwind |

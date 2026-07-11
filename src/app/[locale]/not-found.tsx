@@ -1,13 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
+import { useRouter } from '@/i18n/navigation'
 
 const NotFound = () => {
   const { replace } = useRouter()
 
-  return <ErrorFallback reset={() => replace('/')} />
+  return <ErrorFallback actionKey="backToHome" reset={() => replace('/')} />
 }
 
 export default NotFound

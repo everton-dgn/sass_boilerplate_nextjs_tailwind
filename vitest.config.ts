@@ -1,8 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vitest/config'
-
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vitest/config'
 
 const alias = {
   '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -14,22 +13,29 @@ const shared = {
   globals: true,
   passWithNoTests: true,
   clearMocks: true,
-  exclude: ['**/node_modules/**', '**/playwright/**']
+  exclude: ['**/node_modules/**', '**/playwright/**'],
+  server: {
+    deps: {
+      inline: ['next-intl']
+    }
+  }
 }
 
 export default defineConfig({
   resolve: { alias },
   plugins: [react()],
   test: {
+    globalSetup: './src/tests/globalSetup/index.ts',
     ...shared,
     coverage: {
       provider: 'v8',
       include: ['**/src/**/*.ts', '**/src/**/*.tsx'],
       exclude: [
         '**/tests/**',
-        '**/theme/**',
-        '**/src/app/error.tsx',
-        '**/src/app/not-found.tsx',
+        '**/src/theme/fontFamily.ts',
+        '**/src/app/**/error.tsx',
+        '**/src/app/**/not-found.tsx',
+        '**/src/app/global-not-found.tsx',
         '**/src/app/global-error.tsx',
         '**/src/**/layout.tsx',
         '**/src/**/page.tsx',
@@ -73,7 +79,7 @@ export default defineConfig({
           environment: 'happy-dom',
           deps: {
             optimizer: {
-              client: { enabled: true }
+              client: { enabled: false }
             }
           },
           setupFiles: ['./vitest.setup.ts'],

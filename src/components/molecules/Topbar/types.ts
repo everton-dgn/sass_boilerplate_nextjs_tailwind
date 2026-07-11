@@ -7,5 +7,5 @@ export type TopbarProps = {
 
 export type NavLink = {
   href: string
-  label: string
+  labelKey: 'home' | 'notFound'
 }

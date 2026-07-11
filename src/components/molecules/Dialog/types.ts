@@ -1,6 +1,5 @@
-import type { ComponentProps, ReactNode } from 'react'
-
 import type { Content } from '@radix-ui/react-dialog'
+import type { ComponentProps, ReactNode } from 'react'
 
 export type DialogContentProps = ComponentProps<typeof Content>
 

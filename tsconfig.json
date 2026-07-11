@@ -11,6 +11,7 @@
     "module": "ESNEXT",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "allowArbitraryExtensions": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,

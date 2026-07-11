@@ -1,0 +1,8 @@
+{
+  "ThemeToggle": {
+    "label": "Selecionar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  }
+}

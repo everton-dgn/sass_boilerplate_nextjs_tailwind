@@ -32,7 +32,7 @@ sem trazer uma aplicação de produto pronta.
 | Busca de dados          | TanStack React Query                     |
 | Formulários             | React Hook Form + Zod                    |
 | Cliente HTTP            | Axios                                    |
-| Modo escuro             | next-themes                              |
+| Modo escuro             | ThemeProvider próprio (cookie + `.dark`) |
 | Notificações            | Sonner (toast)                           |
 | Ícones                  | lucide-react                             |
 | Testes                  | Vitest + Testing Library                 |
@@ -46,7 +46,8 @@ sem trazer uma aplicação de produto pronta.
 
 # :triangular_flag_on_post: Funcionalidades
 
-- [x] Modo escuro com next-themes
+- [x] Modo escuro com ThemeProvider próprio (cookie, BroadcastChannel e
+  script anti-flash)
 - [x] Notificações toast com Sonner
 - [x] Fronteiras de erro (ErrorFallback + global-error)
 - [x] Validação de variáveis de ambiente com schemas Zod (server-only /
