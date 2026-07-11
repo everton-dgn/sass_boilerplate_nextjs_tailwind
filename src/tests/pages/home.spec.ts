@@ -53,11 +53,11 @@ test.describe('home page', () => {
     await expect(themeButton).toBeVisible()
 
     await themeButton.click()
-    await page.getByRole('menuitem', { name: 'Light' }).click()
+    await page.getByRole('menuitemradio', { name: 'Light' }).click()
     await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
     await themeButton.click()
-    await page.getByRole('menuitem', { name: 'Dark' }).click()
+    await page.getByRole('menuitemradio', { name: 'Dark' }).click()
     await expect(page.locator('html')).toHaveClass(/\bdark\b/)
   })
 

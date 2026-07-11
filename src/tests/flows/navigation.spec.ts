@@ -24,7 +24,7 @@ test.describe('navigation flow', () => {
     await expect(themeButton).toBeVisible()
 
     await themeButton.click()
-    await page.getByRole('menuitem', { name: 'Light' }).click()
+    await page.getByRole('menuitemradio', { name: 'Light' }).click()
     await expect(page.locator('html')).toHaveClass(/\blight\b/)
 
     await page.reload()
