@@ -24,7 +24,7 @@
     "check:update": "pnpm update --interactive --latest",
     "update:pnpm": "corepack use pnpm@latest",
     "detect:duplicates": "pnpx jscpd ./src/**/*.ts",
-    "postinstall": "if [ -d .git ]; then pnpx lefthook install; fi && next typegen"
+    "postinstall": "if [ -d .git ]; then pnpx lefthook install && next typegen; fi"
   },
   "type": "module",
   "engines": {
