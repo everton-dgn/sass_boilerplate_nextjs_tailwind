@@ -7,7 +7,9 @@ validar layout, assets, tema e configuração do App Router.
 
 ## Modo escuro
 
-Suporte a modo escuro via `next-themes` com `attribute="class"`. Tokens de cor
+Suporte a modo escuro via `ThemeProvider` próprio: classe `.dark` no
+`<html>`, cookie `theme`, sincronização entre abas via `BroadcastChannel` e
+script anti-flash. Tokens de cor
 são definidos como variáveis CSS em `src/theme/globals.css` com valores
 distintos para `:root` e `.dark`. O toggle de tema está disponível na Topbar
 via componente `ThemeToggle`.

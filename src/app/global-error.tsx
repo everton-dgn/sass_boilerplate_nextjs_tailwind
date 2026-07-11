@@ -1,11 +1,11 @@
 'use client'
 
-import { type Locale, NextIntlClientProvider } from 'next-intl'
-import { useEffect, useState } from 'react'
+import { NextIntlClientProvider } from 'next-intl'
+import { useEffect, useSyncExternalStore } from 'react'
 
 import { buildThemeScript } from '@/components/atoms/ThemeScript'
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
-import { IS_CLIENT, IS_DEVELOPMENT } from '@/constants/sharedEnv'
+import { IS_DEVELOPMENT } from '@/constants/sharedEnv'
 import {
   DARK_MEDIA_QUERY,
   LIGHT_MEDIA_QUERY,
@@ -22,11 +22,17 @@ import type { ErrorPageProps } from './types'
 
 import '@/theme/globals.css'
 
+const subscribeToLocale = () => () => undefined
+
+const getServerLocale = () => routing.defaultLocale
+
 const GlobalError = (props: ErrorPageProps) => {
   const { error } = props
   const unstableRetry = props.unstable_retry
-  const [locale] = useState<Locale>(() =>
-    IS_CLIENT ? getLocaleFromPathname() : routing.defaultLocale
+  const locale = useSyncExternalStore(
+    subscribeToLocale,
+    getLocaleFromPathname,
+    getServerLocale
   )
   const messages = ERROR_MESSAGES[locale]
 

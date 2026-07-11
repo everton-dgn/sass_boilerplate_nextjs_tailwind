@@ -13,7 +13,7 @@ export const ErrorFallback = ({
   messageKey = 'notFound',
   actionKey = 'tryAgain'
 }: ErrorFallbackProps) => {
-  const translate = useTranslations('Error')
+  const t = useTranslations('Error')
   const titleId = useId()
   const descriptionId = useId()
   const isNotFound = messageKey === 'notFound'
@@ -41,19 +41,19 @@ export const ErrorFallback = ({
             aria-hidden
             className="size-1.5 rounded-full bg-foreground ring-4 ring-foreground/10 dark:bg-foreground/60 dark:ring-foreground/5"
           />
-          {isNotFound ? '404' : translate('title')}
+          {isNotFound ? '404' : t('title')}
         </p>
         <h1
           className="max-w-2xl text-balance font-semibold text-4xl tracking-tight sm:text-6xl"
           id={titleId}
         >
-          {translate(messageKey)}
+          {t(messageKey)}
         </h1>
         <p
           className="mt-5 max-w-xl text-balance text-base text-muted-foreground leading-7 sm:text-lg"
           id={descriptionId}
         >
-          {translate(descriptionKey)}
+          {t(descriptionKey)}
         </p>
         <Button
           className="mt-10 min-w-40 rounded-full"
@@ -61,7 +61,7 @@ export const ErrorFallback = ({
           size="lg"
         >
           <ActionIcon aria-hidden className="size-4" />
-          <span>{translate(actionKey)}</span>
+          <span>{t(actionKey)}</span>
         </Button>
       </section>
     </main>

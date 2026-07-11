@@ -72,7 +72,7 @@ export const watchMessages = (rootDir = process.cwd()) => {
     try {
       generateMessages(rootDir)
     } catch (error) {
-      console.log(error)
+      console.error('[messages codegen]', error)
     }
   })
 }

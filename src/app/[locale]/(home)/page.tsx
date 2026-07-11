@@ -11,7 +11,7 @@ const Home = ({ params }: HomePageProps) => {
   const { locale } = use(params)
 
   setRequestLocale(locale)
-  const translate = useTranslations('Home')
+  const t = useTranslations('Home')
 
   return (
     <main
@@ -28,18 +28,18 @@ const Home = ({ params }: HomePageProps) => {
             aria-hidden
             className="size-1.5 rounded-full bg-foreground ring-4 ring-foreground/10 dark:bg-foreground/60 dark:ring-foreground/5"
           />
-          {translate('eyebrow')}
+          {t('eyebrow')}
         </p>
         <h1 className="max-w-2xl text-balance font-semibold text-4xl tracking-tight sm:text-6xl">
-          {translate('heading')}
+          {t('heading')}
         </h1>
         <p className="mt-5 max-w-xl text-balance text-base text-muted-foreground leading-7 sm:text-lg">
-          {translate('description')}
+          {t('description')}
         </p>
         <div className="mt-10 flex items-center justify-center gap-5 sm:gap-7">
           <Image
             className="size-16 sm:size-20"
-            alt={translate('logoNextjsAlt')}
+            alt={t('logoNextjsAlt')}
             height={80}
             priority
             src="/images/logo-nextjs.webp"
@@ -57,7 +57,7 @@ const Home = ({ params }: HomePageProps) => {
           />
         </div>
         <p className="mt-6 font-medium text-muted-foreground text-xs uppercase tracking-[0.16em]">
-          {translate('subtitle')}
+          {t('subtitle')}
         </p>
       </section>
     </main>

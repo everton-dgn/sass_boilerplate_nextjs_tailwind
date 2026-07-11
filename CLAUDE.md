@@ -105,9 +105,12 @@ Exemplos:
 ### Barrel files e sobrescritas
 
 - **NUNCA** crie barrel files (`index.ts` que apenas re-exporta de subpastas)
-- **NUNCA** sobrescreva ou desabilite regras do Biome (nem via overrides, nem
-  via `biome-ignore`)
-  - **Exceção única autorizada**: `noDocumentCookie` desligada via override
+- **Overrides do Biome e `biome-ignore`**: proibidos para silenciar regras
+  em código de produto. Permitidos apenas nas categorias técnicas já
+  declaradas em `biome.json` (contratos externos em `src/global.ts` e
+  `src/**/*.d.ts`, regras redundantes com o TypeScript estrito, domínios e
+  regras de teste) — sempre no menor escopo possível e com justificativa
+  - **Exceção funcional única**: `noDocumentCookie` desligada via override
     apenas para `src/components/atoms/ThemeProvider/themeCookie.ts`. A
     leitura síncrona de `document.cookie` é o que permite resolver o tema
     sem flash no primeiro paint (a Cookie Store API é assíncrona); a
@@ -151,7 +154,9 @@ Exemplos:
 - **Formulários**: React Hook Form + Zod.
 - **HTTP**: Axios.
 - **Notificações**: Sonner (toast).
-- **Modo escuro**: next-themes (`attribute="class"`).
+- **Modo escuro**: `ThemeProvider` próprio (classe `.dark`, cookie `theme`,
+  sincronização entre abas via `BroadcastChannel` e script anti-flash),
+  consumido via `useTheme` de `@/hooks/useTheme`.
 - **Ícones**: lucide-react.
 - **React Compiler**: habilitado via `reactCompiler: true` no
   `next.config.ts` — otimizações automáticas de memoização.
@@ -281,7 +286,7 @@ Detalhes: `docs/reference/styleguide.md`
 - Cores semânticas (tokens shadcn) para UI, Tailwind direto para status
 - Fonte mínima: `text-xs` (12px). Contraste WCAG AA: 4.5:1 / 3:1
 - Biome `useSortedClasses` ordena classes automaticamente
-- Modo escuro: `next-themes` + variáveis CSS (`:root` / `.dark`)
+- Modo escuro: `ThemeProvider` próprio + variáveis CSS (`:root` / `.dark`)
 - **Gotcha**: CSS customizado em `globals.css` requer `@layer base { ... }`
   — Lightning CSS remove propriedades fora de `@layer`
 

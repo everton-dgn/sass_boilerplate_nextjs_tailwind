@@ -310,7 +310,7 @@
         "noSuspiciousSemicolonInJsx": "error",
         "noWith": "error",
         "noVar": "error",
-        "noConsole": { "level": "error", "options": { "allow": ["log"] } },
+        "noConsole": { "level": "error", "options": { "allow": ["error"] } },
         "noThenProperty": "error",
         "noApproximativeNumericConstant": "error",
         "noMisrefactoredShorthandAssign": "error",
