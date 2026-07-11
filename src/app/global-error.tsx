@@ -1,7 +1,7 @@
 'use client'
 
 import { NextIntlClientProvider } from 'next-intl'
-import { useEffect, useSyncExternalStore } from 'react'
+import { useEffect } from 'react'
 
 import { buildThemeScript } from '@/components/atoms/ThemeScript'
 import { ErrorFallback } from '@/components/organisms/ErrorFallback'
@@ -12,9 +12,8 @@ import {
   THEME_COLORS
 } from '@/constants/theme'
 import { cn } from '@/helpers/cn'
-import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
 import { reportRuntimeError } from '@/helpers/reportRuntimeError'
-import { routing } from '@/i18n/routing'
+import { useBoundaryLocale } from '@/hooks/useBoundaryLocale'
 import { geistSans } from '@/theme/fontFamily'
 
 import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
@@ -22,18 +21,10 @@ import type { ErrorPageProps } from './types'
 
 import '@/theme/globals.css'
 
-const subscribeToLocale = () => () => undefined
-
-const getServerLocale = () => routing.defaultLocale
-
 const GlobalError = (props: ErrorPageProps) => {
   const { error } = props
   const unstableRetry = props.unstable_retry
-  const locale = useSyncExternalStore(
-    subscribeToLocale,
-    getLocaleFromPathname,
-    getServerLocale
-  )
+  const locale = useBoundaryLocale()
   const messages = ERROR_MESSAGES[locale]
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowLeft } from 'lucide-react'
-import { useId, useSyncExternalStore } from 'react'
+import { useId } from 'react'
 
 import { buildThemeScript } from '@/components/atoms/ThemeScript'
 import {
@@ -10,24 +10,15 @@ import {
   THEME_COLORS
 } from '@/constants/theme'
 import { cn } from '@/helpers/cn'
-import { getLocaleFromPathname } from '@/helpers/getLocaleFromPathname'
-import { routing } from '@/i18n/routing'
+import { useBoundaryLocale } from '@/hooks/useBoundaryLocale'
 import { geistSans } from '@/theme/fontFamily'
 
 import { ERROR_MESSAGES, METADATA_MESSAGES } from './constants'
 
 import '@/theme/globals.css'
 
-const subscribeToLocale = () => () => undefined
-
-const getServerLocale = () => routing.defaultLocale
-
 const GlobalNotFound = () => {
-  const locale = useSyncExternalStore(
-    subscribeToLocale,
-    getLocaleFromPathname,
-    getServerLocale
-  )
+  const locale = useBoundaryLocale()
   const titleId = useId()
   const descriptionId = useId()
   const messages = ERROR_MESSAGES[locale]
