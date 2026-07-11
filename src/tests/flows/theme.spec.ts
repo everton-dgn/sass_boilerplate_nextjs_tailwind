@@ -8,7 +8,7 @@ const openThemeMenu = (page: Page) =>
 
 const selectTheme = async (page: Page, name: string) => {
   await openThemeMenu(page)
-  await page.getByRole('menuitem', { name }).click()
+  await page.getByRole('menuitemradio', { name }).click()
 }
 
 test.describe('theme flow', () => {
@@ -16,9 +16,15 @@ test.describe('theme flow', () => {
     await page.goto('/en')
     await openThemeMenu(page)
 
-    await expect(page.getByRole('menuitem', { name: 'Light' })).toBeVisible()
-    await expect(page.getByRole('menuitem', { name: 'Dark' })).toBeVisible()
-    await expect(page.getByRole('menuitem', { name: 'System' })).toBeVisible()
+    await expect(
+      page.getByRole('menuitemradio', { name: 'Light' })
+    ).toBeVisible()
+    await expect(
+      page.getByRole('menuitemradio', { name: 'Dark' })
+    ).toBeVisible()
+    await expect(
+      page.getByRole('menuitemradio', { name: 'System' })
+    ).toBeVisible()
   })
 
   test('should apply the dark theme to the document', async ({ page }) => {
@@ -35,10 +41,9 @@ test.describe('theme flow', () => {
 
     await openThemeMenu(page)
 
-    await expect(page.getByRole('menuitem', { name: 'Light' })).toHaveAttribute(
-      'aria-current',
-      'true'
-    )
+    await expect(
+      page.getByRole('menuitemradio', { name: 'Light' })
+    ).toHaveAttribute('aria-checked', 'true')
   })
 
   test('should persist the theme across locale navigation', async ({
