@@ -2,10 +2,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import { parseMessageFile } from '../parseMessageFile'
+import { warnLocaleParity } from '../warnLocaleParity'
 import type { LocaleMessages, MessageFile } from './types'
 
-const MESSAGES_DIR = 'src/i18n/messages'
-const GENERATED_DIR_NAME = 'generated'
+export const MESSAGES_DIR = 'src/i18n/messages'
+export const GENERATED_DIR_NAME = 'generated'
 const NON_LOCALE_DIRS = new Set([GENERATED_DIR_NAME, 'common', '__tests__'])
 const JSON_INDENT = 2
 
@@ -57,22 +58,14 @@ export const generateMessages = (rootDir = process.cwd()) => {
   const generatedDir = path.join(messagesDir, GENERATED_DIR_NAME)
   fs.mkdirSync(generatedDir, { recursive: true })
 
-  for (const locale of listLocales(messagesDir)) {
+  const byLocale = listLocales(messagesDir).map(locale => {
     const merged = mergeMessageFiles(readMessageFiles(messagesDir, locale))
+    return [locale, merged] as const
+  })
+  warnLocaleParity(byLocale)
+
+  for (const [locale, merged] of byLocale) {
     const json = `${JSON.stringify(merged, null, JSON_INDENT)}\n`
     writeIfChanged(path.join(generatedDir, `${locale}.json`), json)
   }
-}
-
-export const watchMessages = (rootDir = process.cwd()) => {
-  const messagesDir = path.join(rootDir, MESSAGES_DIR)
-  fs.watch(messagesDir, { recursive: true }, (_event, filename) => {
-    if (!filename?.endsWith('.json')) return
-    if (filename.startsWith(GENERATED_DIR_NAME)) return
-    try {
-      generateMessages(rootDir)
-    } catch (error) {
-      console.error('[messages codegen]', error)
-    }
-  })
 }
