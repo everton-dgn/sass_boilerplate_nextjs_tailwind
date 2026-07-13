@@ -10,12 +10,15 @@ pre-commit:
 
   jobs:
     - name: format
+      glob: '*.{ts,tsx,js,json,css}'
       run: pnpm format && git add {staged_files}
 
     - name: lint
+      glob: '*.{ts,tsx,js,json,css}'
       run: pnpm lint
 
     - name: typecheck
+      glob: '*.{ts,tsx,json}'
       run: pnpm typecheck
 
 pre-push:
@@ -23,6 +26,7 @@ pre-push:
 
   jobs:
     - name: test
+      glob: '*.{ts,tsx,json}'
       run: pnpm test
 
 #    - name: packages-audit
