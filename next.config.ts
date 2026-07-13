@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
-import { generateMessages, watchMessages } from './src/i18n/messagesCodegen'
+import { generateMessages } from './src/i18n/messagesCodegen'
+import { watchMessages } from './src/i18n/watchMessages'
 
 const shouldSkipMessagesCodegen = ['info', 'start'].some(command =>
   process.argv.includes(command)

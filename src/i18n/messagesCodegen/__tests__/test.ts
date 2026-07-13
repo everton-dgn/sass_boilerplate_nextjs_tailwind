@@ -49,6 +49,7 @@ describe('[i18n] messagesCodegen', () => {
     write('en/pages/Home.json', { Home: { title: 'Home' } })
     write('pt/pages/Home.json', { Home: { title: 'Início' } })
     write('common/en.json', { Common: { save: 'Save' } })
+    write('common/pt.json', { Common: { save: 'Salvar' } })
     write('__tests__/fake.json', { Fake: {} })
 
     generateMessages(root)
@@ -58,7 +59,8 @@ describe('[i18n] messagesCodegen', () => {
       Common: { save: 'Save' }
     })
     expect(readGenerated(messagesDir, 'pt')).toEqual({
-      Home: { title: 'Início' }
+      Home: { title: 'Início' },
+      Common: { save: 'Salvar' }
     })
     expect(fs.readdirSync(path.join(messagesDir, 'generated'))).toEqual([
       'en.json',
