@@ -11,6 +11,7 @@
     "includes": [
       "src/**",
       "!src/i18n/messages/generated",
+      "knip.ts",
       "next.config.ts",
       "postcss.config.js",
       "playwright.config.ts",

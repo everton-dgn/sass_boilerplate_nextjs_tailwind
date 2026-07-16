@@ -13,6 +13,12 @@
     "lint": "biome check",
     "format": "biome check --write",
     "biome:ci": "biome ci --no-errors-on-unmatched --files-ignore-unknown=true",
+    "audit:dead-code": "pnpm audit:dead-code:full && pnpm audit:dead-code:strict && pnpm audit:dead-code:cycles",
+    "audit:dead-code:full": "knip",
+    "audit:dead-code:strict": "knip --strict",
+    "audit:dead-code:cycles": "knip --cycles",
+    "audit:dead-code:entrypoints": "knip --include-entry-exports --exports --no-exit-code",
+    "commitlint": "commitlint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:c": "vitest run --coverage",
@@ -76,6 +82,7 @@
     "@vitest/coverage-v8": "4.1.9",
     "babel-plugin-react-compiler": "1.0.0",
     "happy-dom": "20.10.6",
+    "knip": "6.26.0",
     "lefthook": "2.1.9",
     "postcss": "8.5.16",
     "tailwindcss": "4.3.2",
@@ -84,5 +91,5 @@
     "vite": "8.1.3",
     "vitest": "4.1.9"
   },
-  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8"
+  "packageManager": "pnpm@11.13.1+sha512.b2fc7683b8a6525414e7d13e1ba28caaddde96bf66ec540bfaeb7e702b81f3e0be4d1f295edf7f9fe0396740a8dce4509c582ddf79891f4543fea32d37645f25"
 }
