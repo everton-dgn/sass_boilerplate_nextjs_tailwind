@@ -37,7 +37,7 @@ sem trazer uma aplicação de produto pronta.
 | Ícones                  | lucide-react                             |
 | Testes                  | Vitest + Testing Library                 |
 | Testes E2E              | Playwright                               |
-| Análise estática        | Biome                                    |
+| Análise estática        | Biome + Knip                             |
 | Hooks do Git            | Lefthook + Commitlint                    |
 
 <br />
@@ -148,6 +148,7 @@ Disponível em http://localhost:3000
 | `pnpm start`        | Iniciar servidor de produção           |
 | `pnpm lint`         | Executar linting do Biome              |
 | `pnpm format`       | Formatar código com Biome              |
+| `pnpm audit:dead-code` | Auditar código e dependências com Knip |
 | `pnpm typecheck`    | Verificação de tipos TypeScript        |
 | `pnpm test`         | Executar testes unitários (Vitest)     |
 | `pnpm test:w`       | Executar testes em modo de observação  |
@@ -159,7 +160,8 @@ Disponível em http://localhost:3000
 **Pipeline completo de qualidade:**
 
 ```bash
-pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
+pnpm format && pnpm lint && pnpm typecheck && \
+  pnpm audit:dead-code && pnpm test && pnpm build
 ```
 
 <br />
@@ -222,6 +224,7 @@ pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
 - React Hook Form: https://react-hook-form.com
 - Zod: https://zod.dev
 - Biome: https://biomejs.dev
+- Knip: https://knip.dev
 - Commitlint: https://commitlint.js.org
 - Lefthook: https://github.com/evilmartians/lefthook
 - Vitest: https://vitest.dev

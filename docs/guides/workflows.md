@@ -12,13 +12,15 @@ pnpm dev
 pnpm format
 pnpm lint
 pnpm typecheck
+pnpm audit:dead-code
 pnpm test
 ```
 
 ## Pipeline completo
 
 ```bash
-pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
+pnpm format && pnpm lint && pnpm typecheck && \
+  pnpm audit:dead-code && pnpm test && pnpm build
 ```
 
 ## Variantes de teste
@@ -63,6 +65,13 @@ src/tests/
 pnpm detect:duplicates
 ```
 
+## Auditoria de código morto
+
+`pnpm audit:dead-code` executa três gates bloqueantes do Knip: análise completa,
+análise estrita do grafo de produção e ciclos de dependência.
+`pnpm audit:dead-code:entrypoints` é um diagnóstico não bloqueante das
+exportações mantidas como superfícies públicas do boilerplate.
+
 ## Atualização de dependências
 
 ```bash
@@ -74,7 +83,7 @@ pnpm update:pnpm
 
 - Instalados automaticamente no `pnpm install` quando `.git` está presente.
 - `pre-commit`: `pnpm format`, `pnpm lint`, `pnpm typecheck`.
-- `pre-push`: `pnpm test`.
+- `pre-push`: `pnpm test` e `pnpm audit:dead-code` em paralelo.
 
 ## Adicionando um novo componente
 
@@ -98,9 +107,11 @@ pnpm update:pnpm
    useHookName/
    ├── index.ts
    ├── types.ts
-   └── __tests__/test.ts
+   └── __tests__/test.tsx
    ```
 2. Use `renderHook` do Testing Library nos testes.
+3. Hooks testados com `renderHook` usam `.tsx` para executar no projeto DOM do
+   Vitest. Reserve `.ts` para módulos e funções puras executados em Node.
 
 ## Adicionando um novo módulo/auxiliar
 
@@ -113,7 +124,8 @@ Todo `.ts` com funções exportadas segue a mesma estrutura de pasta:
    ├── types.ts          (se necessário)
    └── __tests__/test.ts
    ```
-2. **1 pasta = 1 `index.ts` = 1 `__tests__/test.ts`** — relação 1:1 sempre.
+2. **1 pasta = 1 `index.ts` = 1 teste em `__tests__/test.ts` ou
+   `__tests__/test.tsx`** — relação 1:1 sempre.
 3. Arquivos só com tipos (`types.ts`) ou constantes (`constants.ts`) podem
    ficar soltos — não precisam de pasta própria.
 4. Se o `index.ts` ultrapassar 80 linhas, crie pastas-irmãs (novos módulos).

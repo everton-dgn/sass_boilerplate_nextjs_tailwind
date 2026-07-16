@@ -56,12 +56,17 @@ Exceção: convenções Next.js (`not-found.tsx`, `global-error.tsx`).
     terminações de linha LF.
   - Linting inclui regras recomendadas mais verificações de a11y e
     complexidade.
+- **Knip** (código e dependências sem uso):
+  - `pnpm audit:dead-code` executa análise completa, análise estrita do grafo
+    de produção e detecção de ciclos.
+  - Hints de configuração são erros para evitar grafos incompletos.
+  - `pnpm audit:dead-code:entrypoints` audita superfícies públicas sem bloquear.
 - **Commitlint** (formato de commit):
   - Conventional Commits são obrigatórios.
   - Tamanho máximo do header é 120 caracteres.
 - **Lefthook** (gates locais):
   - `pre-commit`: `pnpm format`, `pnpm lint`, `pnpm typecheck`.
-  - `pre-push`: `pnpm test`.
+  - `pre-push`: `pnpm test` e `pnpm audit:dead-code` em paralelo.
 - **TypeScript** (modo estrito):
   - `strict: true`, `noImplicitAny`, `noUnusedLocals`,
     `noUncheckedIndexedAccess`.

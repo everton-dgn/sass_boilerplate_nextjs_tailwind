@@ -271,7 +271,8 @@ moduleName/
 └── __tests__/test.ts   (testes unitários)
 ```
 
-- **1 pasta = 1 `index.ts` = 1 `__tests__/test.ts`** — relação 1:1 sempre
+- **1 pasta = 1 `index.ts` = 1 teste em `__tests__/test.ts` ou
+  `__tests__/test.tsx`** — relação 1:1 sempre
 - Arquivos só com tipos ou constantes podem ficar soltos
 - Todo `.ts` com `export const`/`export function` requer pasta própria
 - Para decompor: criar pastas-irmãs (não 2+ arquivos de lógica na mesma
@@ -306,7 +307,13 @@ Detalhes: `docs/reference/styleguide.md`
 - **Globais**: Vitest globals estão habilitados. NUNCA importe `describe`,
   `it`, `expect`, `vi`, `beforeEach` etc. de `'vitest'` — eles já existem
   no escopo global
-- **Arquivo**: SEMPRE `__tests__/test.ts` (não `__tests__/<nome>.test.ts`)
+- **Ambiente Node**: `__tests__/test.ts` para módulos e funções puras
+- **Ambiente DOM**: `__tests__/test.tsx` para componentes e hooks que usam
+  Testing Library, `renderHook`, `window` ou `document`
+- **Seleção**: a extensão define o projeto Vitest (`.ts` → Node, `.tsx` →
+  happy-dom). NUNCA altere a configuração para executar teste DOM como `.ts`
+- **Nome**: NUNCA `__tests__/<nome>.test.ts` nem
+  `__tests__/<nome>.test.tsx`
 - **Nomenclatura**: Verifique 2-3 testes existentes antes de criar novos:
   - `describe`: `[tipo] nome` (ex: `[hooks] useHook`, `[Component] Button`)
   - `it`: inglês, prefixo `should` (ex: `should return true when active`)
@@ -315,7 +322,8 @@ Detalhes: `docs/reference/styleguide.md`
 
 - Biome: `pnpm format` e `pnpm lint`
 - TypeScript modo estrito: `pnpm typecheck`
-- Lefthook: pré-commit (format, lint, typecheck), pré-push (test)
+- Knip: `pnpm audit:dead-code`
+- Lefthook: pré-commit (format, lint, typecheck), pré-push (test, dead-code)
 - Commitlint: Conventional Commits (max 120 chars)
 
 ### Verificação de APIs
@@ -335,6 +343,7 @@ pnpm dev                # Servidor de desenvolvimento (localhost:3000)
 pnpm test               # Testes unitários (Vitest)
 pnpm test:e2e           # Testes E2E (Playwright)
 pnpm typecheck          # Verificação de tipos
+pnpm audit:dead-code    # Auditoria de código e dependências sem uso
 pnpm format             # Formatação Biome
 pnpm lint               # Linting Biome
 pnpm build              # Build de produção
@@ -343,7 +352,8 @@ pnpm build              # Build de produção
 Pipeline completo:
 
 ```bash
-pnpm format && pnpm lint && pnpm typecheck && pnpm test && pnpm build
+pnpm format && pnpm lint && pnpm typecheck && \
+  pnpm audit:dead-code && pnpm test && pnpm build
 ```
 
 Comandos auxiliares:
