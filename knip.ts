@@ -33,6 +33,8 @@ const config = {
     'tw-animate-css!',
     'uuid'
   ],
+  ignoreExportsUsedInFile: true,
+  includeEntryExports: true,
   rules: {
     cycles: 'error'
   },
