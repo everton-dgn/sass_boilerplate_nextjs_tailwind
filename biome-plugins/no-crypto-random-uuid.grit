@@ -1,0 +1,14 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `crypto.randomUUID()`,
+  `window.crypto.randomUUID()`,
+  `globalThis.crypto.randomUUID()`
+} as $call where {
+  register_diagnostic(
+    span = $call,
+    message = "crypto.randomUUID() é proibido para IDs. Usar uuidv7 do pacote uuid: import { v7 as uuidv7 } from 'uuid' (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

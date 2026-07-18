@@ -1,0 +1,26 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `export { $items } from $src` as $reexport where {
+    register_diagnostic(
+      span = $reexport,
+      message = "Re-export nomeado é proibido (barrel). O consumidor importa do módulo de origem (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  `export type { $items } from $src` as $reexport where {
+    register_diagnostic(
+      span = $reexport,
+      message = "Re-export de tipo é proibido. O consumidor importa direto de ./types (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  JsExportNamedClause() as $lone where {
+    register_diagnostic(
+      span = $lone,
+      message = "Export separado da declaração é proibido. Exportar na declaração: export const nome = ... (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  }
+}

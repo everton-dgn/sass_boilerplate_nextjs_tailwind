@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme | undefined>(
     undefined
   )
-  const channelRef = useRef<BroadcastChannel | null>(null)
+  const channelRef = useRef<BroadcastChannel>(null)
   const themeRef = useRef(theme)
   themeRef.current = theme
 

@@ -22,6 +22,55 @@
       "components.json"
     ]
   },
+  "plugins": [
+    "./biome-plugins/no-jsx-ternary-null.grit",
+    "./biome-plugins/no-nested-render-function.grit",
+    "./biome-plugins/no-nullable-useref-generic.grit",
+    "./biome-plugins/no-qualified-react-types.grit",
+    "./biome-plugins/no-inline-typed-event-handler.grit",
+    "./biome-plugins/no-classname-template-literal.grit",
+    "./biome-plugins/hook-conventions.grit",
+    "./biome-plugins/no-crypto-random-uuid.grit",
+    "./biome-plugins/no-reduced-motion-in-js.grit",
+    "./biome-plugins/no-structural-ref-type.grit",
+    {
+      "path": "./biome-plugins/no-raw-process-env.grit",
+      "includes": [
+        "src/**",
+        "!src/**/__tests__/**",
+        "!src/tests/**",
+        "!src/constants/clientEnv.ts",
+        "!src/constants/serverEnv.ts",
+        "!src/constants/sharedEnv.ts",
+        "!src/constants/testMode/**",
+        "!src/**/*.d.ts"
+      ]
+    },
+    {
+      "path": "./biome-plugins/no-reduced-motion-in-css.grit",
+      "includes": ["src/**/*.css", "!src/theme/globals.css"]
+    },
+    {
+      "path": "./biome-plugins/no-named-reexport.grit",
+      "includes": ["src/**", "!src/tests/**"]
+    },
+    {
+      "path": "./biome-plugins/no-context-api.grit",
+      "includes": ["src/**", "!src/hooks/useTheme/index.ts"]
+    },
+    {
+      "path": "./biome-plugins/metadata-in-layout-only.grit",
+      "includes": ["src/app/**/page.tsx"]
+    },
+    {
+      "path": "./biome-plugins/test-naming.grit",
+      "includes": ["src/**/__tests__/**"]
+    },
+    {
+      "path": "./biome-plugins/css-module-import.grit",
+      "includes": ["src/**"]
+    }
+  ],
   "assist": {
     "actions": {
       "source": {
@@ -293,7 +342,7 @@
         "noImportAssign": "error",
         "noImportCycles": "error",
         "noDeprecatedImports": "error",
-        "noLeakedRender": "error",
+        "noLeakedRender": "off",
         "noMisleadingCharacterClass": "off",
         "noMisleadingInstantiator": "error",
         "noPrototypeBuiltins": "error",

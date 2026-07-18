@@ -1,0 +1,10 @@
+language css;
+
+CssMediaAtRule() as $media where {
+  $media <: r"(?s).*prefers-reduced-motion.*",
+  register_diagnostic(
+    span = $media,
+    message = "@media (prefers-reduced-motion) em CSS local é proibido. src/theme/styles.css é a única implementação permitida (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

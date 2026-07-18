@@ -1,0 +1,13 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `useRef<$t | null>(null)`,
+  `useRef<null | $t>(null)`
+} as $call where {
+  register_diagnostic(
+    span = $call,
+    message = "useRef inicializado com null já inclui null no tipo retornado (React 19). Usar useRef<T>(null), sem repetir | null no genérico (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

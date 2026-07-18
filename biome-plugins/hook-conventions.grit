@@ -1,0 +1,41 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsVariableDeclarator(
+    id = r"use[A-Z]\w*",
+    initializer = JsInitializerClause(
+      expression = JsArrowFunctionExpression(
+        return_type_annotation = TsReturnTypeAnnotation() as $ret
+      )
+    )
+  ) where {
+    register_diagnostic(
+      span = $ret,
+      message = "Retorno de hook anotado. Deixar o TypeScript inferir; usar as const em tuplas e ReturnType<typeof useHook> no consumidor (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  TsTypeAliasDeclaration(binding_identifier = r"Use\w+Return") as $alias where {
+    register_diagnostic(
+      span = $alias,
+      message = "Tipo Use<Nome>Return é proibido. Deixar o TypeScript inferir o retorno do hook (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  JsDirective() as $directive where {
+    $directive <: r"['\"]use client['\"]",
+    $directive <: within JsModule() as $mod,
+    $mod <: contains JsVariableDeclarator(
+      id = r"use[A-Z]\w*",
+      initializer = JsInitializerClause(
+        expression = JsArrowFunctionExpression()
+      )
+    ),
+    register_diagnostic(
+      span = $directive,
+      message = "'use client' em arquivo de hook. Hook herda o contexto do consumidor; a diretiva pertence ao componente que o usa (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  }
+}

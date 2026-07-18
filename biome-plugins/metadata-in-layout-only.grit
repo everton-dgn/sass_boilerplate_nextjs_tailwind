@@ -1,0 +1,15 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsVariableDeclarator(id = `metadata`) as $decl,
+  JsVariableDeclarator(id = `generateMetadata`) as $decl,
+  JsFunctionDeclaration(id = `generateMetadata`) as $decl
+} where {
+  $decl <: within JsExport(),
+  register_diagnostic(
+    span = $decl,
+    message = "metadata/generateMetadata em page.tsx é proibido. Definir no layout.tsx da rota (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

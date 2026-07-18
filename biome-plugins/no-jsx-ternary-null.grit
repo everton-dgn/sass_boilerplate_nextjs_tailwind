@@ -1,0 +1,30 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsxExpressionChild(expression = $ternary),
+  JsInitializerClause(expression = $ternary)
+} where {
+  $ternary <: JsConditionalExpression(consequent = $cons, alternate = $alt),
+  or {
+    and {
+      $cons <: or {
+        JsxTagExpression(),
+        JsParenthesizedExpression(expression = JsxTagExpression())
+      },
+      $alt <: or { `null`, `undefined` }
+    },
+    and {
+      $cons <: or { `null`, `undefined` },
+      $alt <: or {
+        JsxTagExpression(),
+        JsParenthesizedExpression(expression = JsxTagExpression())
+      }
+    }
+  },
+  register_diagnostic(
+    span = $ternary,
+    message = "JSX sem ramo alternativo usa `cond && <Jsx />` — em children e em atribuição a variável. Ternário com null só em prop com contrato `| null` ou valor não-JSX (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

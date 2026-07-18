@@ -66,7 +66,7 @@ const GlobalError = (props: ErrorPageProps) => {
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ErrorFallback messageKey="somethingWrong" reset={unstableRetry} />
         </NextIntlClientProvider>
-        {IS_DEVELOPMENT ? (
+        {IS_DEVELOPMENT && (
           <p
             className={cn(
               'fixed inset-x-4 bottom-4 z-10 mx-auto max-h-24 max-w-2xl',
@@ -76,7 +76,7 @@ const GlobalError = (props: ErrorPageProps) => {
           >
             {error.message}
           </p>
-        ) : null}
+        )}
       </body>
     </html>
   )
