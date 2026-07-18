@@ -1,0 +1,23 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `import $binding from $source` where {
+    $source <: r"['\"].*\.module\.css['\"]",
+    not $binding <: `S`,
+    register_diagnostic(
+      span = $binding,
+      message = "Import de CSS Module deve se chamar S: import S from './styles.module.css' (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  `import $binding from $source` where {
+    $source <: r"['\"].*\.module\.css['\"]",
+    not $source <: r"['\"]\./styles\.module\.css['\"]",
+    register_diagnostic(
+      span = $source,
+      message = "CSS Module deve ser o ./styles.module.css do próprio componente. Nome customizado e import de ancestral (../) são proibidos (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  }
+}

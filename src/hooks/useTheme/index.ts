@@ -6,7 +6,7 @@ export const ThemeContext = createContext<ThemeContextValue | undefined>(
   undefined
 )
 
-export const useTheme = (): ThemeContextValue => {
+export const useTheme = () => {
   const themeContext = useContext(ThemeContext)
 
   if (!themeContext) {

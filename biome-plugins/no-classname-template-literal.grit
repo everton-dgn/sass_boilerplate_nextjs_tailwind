@@ -1,0 +1,17 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsxAttribute(
+  name = `className`,
+  initializer = JsxAttributeInitializerClause(
+    value = JsxExpressionAttributeValue(
+      expression = JsTemplateExpression() as $tpl
+    )
+  )
+) where {
+  register_diagnostic(
+    span = $tpl,
+    message = "Template literal em className é proibido. Usar clsx para múltiplas classes: clsx(S.a, S.b) (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

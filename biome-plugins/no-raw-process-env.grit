@@ -1,0 +1,10 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+`process.env` as $env where {
+  register_diagnostic(
+    span = $env,
+    message = "Acesso direto a process.env é proibido. Usar clientEnv/serverEnv de constants/envConfig (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

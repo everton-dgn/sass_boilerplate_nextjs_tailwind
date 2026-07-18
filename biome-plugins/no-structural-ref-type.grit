@@ -1,0 +1,20 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `useRef<$t>($init)` as $ref,
+  TsReferenceType(name = `RefObject`) as $ref where {
+    $ref <: contains TsTypeArguments() as $t
+  }
+} where {
+  $t <: contains or {
+    TsObjectType(),
+    TsFunctionType(),
+    TsIntersectionType()
+  },
+  register_diagnostic(
+    span = $ref,
+    message = "Tipo estrutural inline em ref (objeto, callback ou interseção) é proibido. Extrair um tipo nomeado em types.ts colocalizado (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

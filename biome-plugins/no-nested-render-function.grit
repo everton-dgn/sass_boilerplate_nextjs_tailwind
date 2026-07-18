@@ -1,0 +1,17 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsVariableDeclarator(
+  id = r"render[A-Z]\w*",
+  initializer = JsInitializerClause(
+    expression = JsArrowFunctionExpression() as $arrow
+  )
+) as $decl where {
+  $arrow <: contains JsxTagExpression(),
+  $decl <: within or { JsArrowFunctionExpression(), JsFunctionDeclaration() },
+  register_diagnostic(
+    span = $decl,
+    message = "Render function aninhada em componente. Resolver a condição direto no JSX ou extrair componente em pasta própria (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}

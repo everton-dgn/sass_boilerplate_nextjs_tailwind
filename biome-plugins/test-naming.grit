@@ -1,0 +1,24 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `describe($desc, $fn)` as $call where {
+    not $call <: within JsFunctionBody(),
+    $desc <: JsStringLiteralExpression(),
+    not $desc <: r"['\"]\[[^\]]+\] .+",
+    register_diagnostic(
+      span = $desc,
+      message = "describe raiz deve seguir `[tipo] nome`, ex.: [hooks] useHook, [Component] Button, [page:logic] isActive (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  or { `it($desc, $fn)`, `test($desc, $fn)` } where {
+    $desc <: JsStringLiteralExpression(),
+    not $desc <: r"['\"]should .+",
+    register_diagnostic(
+      span = $desc,
+      message = "it/test deve começar com should, em inglês, ex.: should return true when active (ver docs/reference/lint-plugins.md).",
+      severity = "error"
+    )
+  }
+}

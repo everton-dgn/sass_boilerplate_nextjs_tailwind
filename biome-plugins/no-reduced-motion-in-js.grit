@@ -1,0 +1,14 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsStringLiteralExpression() as $str,
+  JsTemplateExpression() as $str
+} where {
+  $str <: r".*prefers-reduced-motion.*",
+  register_diagnostic(
+    span = $str,
+    message = "Consulta a prefers-reduced-motion em JS/TS é proibida. A redução é aplicada globalmente por src/theme/styles.css; declare animações normalmente (ver docs/reference/lint-plugins.md).",
+    severity = "error"
+  )
+}
