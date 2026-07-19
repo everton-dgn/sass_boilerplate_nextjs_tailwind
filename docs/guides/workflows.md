@@ -39,7 +39,8 @@ pnpm format && pnpm lint && pnpm typecheck && \
 
 - `pnpm test:e2e` inicia um servidor de desenvolvimento usando `BASE_URL_TEST`
   de `.env.test` (padrão: `http://localhost:3000`).
-- A configuração usa Chrome via `channel: 'chrome'`.
+- A configuração usa o Chromium gerenciado pelo Playwright, sem channel do
+  navegador do sistema.
 - Se a porta 3000 estiver ocupada, atualize `BASE_URL_TEST` e execute
   novamente.
 
