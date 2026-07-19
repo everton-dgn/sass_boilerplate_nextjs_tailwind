@@ -38,10 +38,11 @@ para terminações de linha LF.
 CI roda em Linux. Corrija a capitalização do caminho do import para
 corresponder exatamente ao nome do arquivo.
 
-## Playwright não encontra o Chrome
+## Playwright não encontra o Chromium
 
-A configuração do Playwright usa `channel: 'chrome'`. Instale o Google Chrome
-ou altere a configuração para usar o Chromium do Playwright.
+A configuração usa o Chromium gerenciado pelo Playwright. Execute
+`pnpm exec playwright install chromium`; uma revisão já presente no cache global
+será reutilizada sem novo download.
 
 ## Como adicionar um novo componente shadcn/ui?
 

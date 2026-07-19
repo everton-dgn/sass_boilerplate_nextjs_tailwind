@@ -12,11 +12,11 @@ gerais, leia `../reference/quality-constraints.md`.
   devem corresponder exatamente à capitalização do nome do arquivo.
 - Route groups: pastas como `src/app/(home)` usam parênteses. Use aspas no
   caminho em terminais, por exemplo: `ls "src/app/(home)"`.
-- Playwright: a configuração usa `channel: 'chrome'`, então o Google Chrome
-  deve estar instalado ou a configuração deve ser ajustada.
+- Playwright: a configuração usa o Chromium gerenciado. Execute
+  `pnpm exec playwright install chromium` quando a revisão exigida estiver
+  ausente.
 
 ## macOS
 
 - Use Node 24.x e habilite Corepack para pnpm.
-- Se o Playwright não encontrar o Chrome, instale o Google Chrome e tente
-  novamente.
+- O Playwright reutiliza o Chromium do cache global padrão do macOS.
