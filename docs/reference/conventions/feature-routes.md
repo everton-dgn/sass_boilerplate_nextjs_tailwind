@@ -1,10 +1,10 @@
 # Feature routes — colocalização
 
-Cada feature com lógica própria vive dentro de `src/app/<rota>/` com
+Cada feature com lógica própria vive dentro de `src/app/[locale]/<rota>/` com
 componentes, hooks e services colocalizados:
 
 ```
-src/app/resources/
+src/app/[locale]/resources/
 ├── page.tsx                        # Server Component (prefetch + hydration)
 ├── Client.tsx                      # Client Component principal ('use client')
 ├── layout.tsx                      # Metadata da rota
@@ -107,7 +107,7 @@ export default ResourcesLayout
 Hook customizado que encapsula React Hook Form + mutation:
 
 ```
-src/app/resources/hooks/useCreateResourceForm/
+src/app/[locale]/resources/hooks/useCreateResourceForm/
 └── index.ts
 ```
 

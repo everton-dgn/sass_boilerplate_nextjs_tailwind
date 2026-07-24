@@ -32,6 +32,7 @@ sem trazer uma aplicação de produto pronta.
 | Busca de dados          | TanStack React Query                     |
 | Formulários             | React Hook Form + Zod                    |
 | Cliente HTTP            | Axios                                    |
+| Internacionalização     | next-intl (rotas `[locale]`, en/es/pt)   |
 | Modo escuro             | ThemeProvider próprio (cookie + `.dark`) |
 | Notificações            | Sonner (toast)                           |
 | Ícones                  | lucide-react                             |
@@ -46,6 +47,9 @@ sem trazer uma aplicação de produto pronta.
 
 # :triangular_flag_on_post: Funcionalidades
 
+- [x] Internacionalização com next-intl: rotas `[locale]` (en, es, pt),
+  mensagens por namespace, tipos gerados a partir do locale de referência e
+  testes que falham quando uma tradução perde chave ou placeholder
 - [x] Modo escuro com ThemeProvider próprio (cookie, BroadcastChannel e
   script anti-flash)
 - [x] Notificações toast com Sonner
@@ -74,10 +78,14 @@ project/
 ├── src/
 │   ├── @types/              # Declarações de tipo globais
 │   ├── app/                 # Rotas (App Router)
-│   │   ├── (home)/          # Grupo de rotas da home
-│   │   ├── layout.tsx       # Layout raiz
+│   │   ├── [locale]/        # Segmento de idioma (next-intl)
+│   │   │   ├── (home)/      # Grupo de rotas da home
+│   │   │   ├── [...rest]/   # Catch-all de rota inexistente
+│   │   │   ├── layout.tsx   # Layout do idioma
+│   │   │   ├── error.tsx    # Fronteira de erro de rota
+│   │   │   └── not-found.tsx # Página 404 do idioma
 │   │   ├── global-error.tsx # Fronteira de erro global
-│   │   └── not-found.tsx    # Página 404
+│   │   └── global-not-found.tsx # 404 fora do segmento de idioma
 │   ├── assets/              # SVGs e recursos privados
 │   ├── components/          # Atomic Design
 │   │   ├── atoms/           # Elementos básicos (Button, Input, Textarea…)
@@ -86,6 +94,10 @@ project/
 │   ├── constants/           # Configurações estáticas e schemas de ambiente
 │   ├── hooks/               # React hooks customizados
 │   ├── helpers/             # Utilitários compartilhados (cn helper)
+│   ├── i18n/                # next-intl: routing, request e mensagens
+│   │   ├── messages/        # Traduções por idioma e namespace
+│   │   ├── messagesCodegen/ # Merge das mensagens e geração de tipos
+│   │   └── warnLocaleParity/ # Aviso de divergência entre idiomas
 │   ├── infra/               # Infraestrutura
 │   │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
 │   │   └── store/           # Base para stores Zustand
@@ -95,7 +107,9 @@ project/
 │   │   ├── mocks/           # Mocks compartilhados
 │   │   ├── providers/       # Providers de teste
 │   │   └── helpers/         # Helpers de teste
-│   └── theme/               # Configuração de fontes
+│   ├── theme/               # Fontes e globals.css
+│   ├── global.ts            # Tipos de Locale e Messages do next-intl
+│   └── proxy.ts             # Middleware de idioma (next-intl)
 ├── docs/
 │   ├── guides/              # Como fazer (tarefas)
 │   ├── reference/           # Consulta técnica
@@ -110,8 +124,16 @@ project/
 
 # :white_check_mark: Pré-requisitos
 
-- Node 24.x (veja `engines` em `package.json` e `.nvmrc`).
-- pnpm 10.x via Corepack (veja `packageManager` em `package.json`).
+As versões exatas de Node e pnpm vivem no repositório, não nesta página:
+
+- **Node**: a linha declarada em `engines.node` no `package.json`, espelhada
+  em `.nvmrc` e `.node-version`. Use `fnm use` ou `nvm use` na raiz do projeto
+  para adotá-la automaticamente.
+- **pnpm**: a versão fixada em `packageManager` no `package.json`. Rode
+  `corepack enable` e o Corepack resolve a versão correta sozinho.
+
+Ao subir a linha do Node, altere `package.json`, `.nvmrc`, `.node-version` e
+os workflows do GitHub Actions no mesmo commit.
 
 <br />
 

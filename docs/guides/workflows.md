@@ -51,7 +51,9 @@ src/tests/
 ├── pages/               # Testes por página individual
 │   └── home.spec.ts     # UI, navegação e tema da home
 ├── flows/               # Jornadas multi-página
-│   └── navigation.spec.ts   # Navegação e persistência de tema
+│   ├── navigation.spec.ts    # Navegação entre rotas
+│   ├── localization.spec.ts  # Troca de idioma e prefixo de rota
+│   └── theme.spec.ts         # Persistência de tema entre páginas
 ├── mocks/               # Mocks compartilhados
 ├── providers/           # Providers de teste
 └── helpers/             # Helpers compartilhados
@@ -133,14 +135,48 @@ Todo `.ts` com funções exportadas segue a mesma estrutura de pasta:
 
 ## Adicionando uma nova página
 
-1. Crie uma pasta em `src/app/` com `page.tsx`.
+1. Crie uma pasta em `src/app/[locale]/` com `page.tsx` — toda rota de página
+   vive sob o segmento de idioma.
 2. Páginas são Server Components por padrão.
-3. Adicione metadados via `export const metadata`.
+3. Adicione metadados no `layout.tsx` do segmento via `generateMetadata` com
+   `getTranslations`. O plugin `metadata-in-layout-only` recusa `metadata`
+   exportado de `page.tsx`.
 4. Use organisms para o conteúdo da página.
+5. Crie as chaves de tradução da página nos três idiomas, em
+   `src/i18n/messages/<locale>/pages/<Nome>.json`.
+
+## Adicionando uma tradução
+
+1. Crie ou edite o arquivo do namespace nos três idiomas:
+
+   ```
+   src/i18n/messages/en/components/MeuComponente.json
+   src/i18n/messages/es/components/MeuComponente.json
+   src/i18n/messages/pt/components/MeuComponente.json
+   ```
+
+   Páginas usam `pages/` no lugar de `components/`. O nome do arquivo é o
+   namespace, e o mesmo namespace não pode aparecer em dois arquivos.
+
+2. Consuma no componente:
+
+   ```tsx
+   const t = useTranslations('MeuComponente')
+   ```
+
+3. Em desenvolvimento, o watcher regenera as mensagens e os tipos a cada
+   alteração. Fora do `pnpm dev`, o `next.config.ts` regenera no build.
+4. Rode `pnpm test`. Os testes de `src/i18n/messages/__tests__/` comparam
+   `es` e `pt` contra `en` e falham quando falta chave ou quando um
+   placeholder como `{name}` diverge entre os idiomas.
+
+`src/i18n/messages/generated/` é saída do codegen, está no `.gitignore` e
+nunca deve ser editado à mão.
 
 ## Adicionando uma API Route
 
-1. Crie uma pasta em `src/app/api/<recurso>/` com `route.ts`.
+1. Crie uma pasta em `src/app/api/<recurso>/` com `route.ts`. API Routes ficam
+   fora do segmento `[locale]` e o middleware não as prefixa.
 2. Exporte funções nomeadas por método HTTP (`GET`, `POST`, `PATCH`, `DELETE`).
 3. Use Zod para validar request body e query params.
 4. Para rotas dinâmicas, crie subpasta `[id]/route.ts`.
@@ -159,7 +195,7 @@ src/app/api/<resource>/
 Ao criar uma feature com busca/mutação de dados, siga este padrão:
 
 ```
-src/app/<rota>/services/
+src/app/[locale]/<rota>/services/
 ├── queries/             # Hooks de query (useFindX)
 ├── mutations/           # Hooks de mutação (useCreateX, useUpdateX, useDeleteX)
 │   └── types.ts         # Tipos compartilhados entre mutations

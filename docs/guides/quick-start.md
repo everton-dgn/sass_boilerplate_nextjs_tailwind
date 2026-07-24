@@ -4,8 +4,9 @@ Este guia cobre o mínimo para rodar o boilerplate e entender a configuração.
 
 ## Requisitos
 
-- Node 24.x (veja `engines` em `package.json`).
-- pnpm (via Corepack, usando a versão em `packageManager`).
+- Node na linha declarada em `engines.node` (`package.json`), espelhada em
+  `.nvmrc` e `.node-version`.
+- pnpm via Corepack, usando a versão fixada em `packageManager`.
 
 ## Configuração
 
