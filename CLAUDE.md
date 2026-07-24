@@ -144,7 +144,9 @@ Exemplos:
 - **Projeto**: boilerplate Next.js para iniciar projetos.
 - **Tecnologias**: Next.js 16 App Router + React 19 + TypeScript + shadcn/ui +
   Tailwind CSS v4
-- **Gerenciador de pacotes**: pnpm (não use npm/yarn). Node 24.x.
+- **Gerenciador de pacotes**: pnpm (não use npm/yarn). A versão de pnpm vem
+  de `packageManager` e a linha do Node vem de `engines.node`, ambos no
+  `package.json` — nunca fixe esses números na documentação.
 - **Imports absolutos** via `@/` alias (tsconfig `paths`).
 - **App Router**: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`,
   `global-error.tsx`, `not-found.tsx`. Route groups usam `(group)`.
@@ -154,6 +156,11 @@ Exemplos:
 - **Formulários**: React Hook Form + Zod.
 - **HTTP**: Axios.
 - **Notificações**: Sonner (toast).
+- **Internacionalização**: next-intl com rotas `[locale]` (`en` padrão, `es`,
+  `pt`). Middleware em `src/proxy.ts`, tipos de `Locale` e `Messages` em
+  `src/global.ts`. Traduções em `src/i18n/messages/<locale>/` divididas por
+  namespace; o merge e a geração de tipos rodam no `next.config.ts` via
+  `messagesCodegen`. NUNCA edite `src/i18n/messages/generated/` — é gerado.
 - **Modo escuro**: `ThemeProvider` próprio (classe `.dark`, cookie `theme`,
   sincronização entre abas via `BroadcastChannel` e script anti-flash),
   consumido via `useTheme` de `@/hooks/useTheme`.
@@ -195,10 +202,14 @@ project/
 ├── src/
 │   ├── @types/              # Declarações de tipo globais
 │   ├── app/                 # Rotas (App Router)
-│   │   ├── (home)/          # Grupo de rotas da home
-│   │   ├── layout.tsx       # Layout raiz
+│   │   ├── [locale]/        # Segmento de idioma (next-intl)
+│   │   │   ├── (home)/      # Grupo de rotas da home
+│   │   │   ├── [...rest]/   # Catch-all de rota inexistente
+│   │   │   ├── layout.tsx   # Layout do idioma
+│   │   │   ├── error.tsx    # Fronteira de erro de rota
+│   │   │   └── not-found.tsx # Página 404 do idioma
 │   │   ├── global-error.tsx # Fronteira de erro global
-│   │   └── not-found.tsx    # Página 404
+│   │   └── global-not-found.tsx # 404 fora do segmento de idioma
 │   ├── assets/              # SVGs e recursos privados
 │   ├── components/          # Atomic Design
 │   │   ├── atoms/           # Elementos básicos (Button, Input, Textarea…)
@@ -207,6 +218,10 @@ project/
 │   ├── constants/           # Configurações estáticas e schemas de ambiente
 │   ├── hooks/               # React hooks customizados
 │   ├── helpers/             # Utilitários compartilhados (cn helper)
+│   ├── i18n/                # next-intl: routing, request e mensagens
+│   │   ├── messages/        # Traduções por idioma e namespace
+│   │   ├── messagesCodegen/ # Merge das mensagens e geração de tipos
+│   │   └── warnLocaleParity/ # Aviso de divergência entre idiomas
 │   ├── infra/               # Infraestrutura
 │   │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
 │   │   └── store/           # Base para stores Zustand
@@ -214,7 +229,9 @@ project/
 │   │   ├── pages/           # Testes por página
 │   │   ├── flows/           # Testes de jornada
 │   │   └── ...              # mocks, providers, helpers
-│   └── theme/               # Configuração de fontes
+│   ├── theme/               # Fontes e globals.css
+│   ├── global.ts            # Tipos de Locale e Messages do next-intl
+│   └── proxy.ts             # Middleware de idioma (next-intl)
 ├── docs/
 │   ├── guides/              # Como fazer (tarefas)
 │   ├── reference/           # Consulta técnica
@@ -297,6 +314,24 @@ Detalhes: `docs/reference/styleguide.md`
 - **NUNCA** adicione `'use client'` em hooks. Hooks são consumidos
   por componentes que já são Client Components — a diretiva pertence
   ao componente consumidor, não ao hook
+
+### Internacionalização
+
+- Todo texto visível ao usuário passa por tradução. NUNCA escreva string
+  literal de UI no JSX
+- Um arquivo de mensagens por componente ou página, em
+  `src/i18n/messages/<locale>/{components,pages}/<Nome>.json`. O nome do
+  arquivo é o namespace, e namespace duplicado quebra o build
+- Ao criar uma chave, crie nos **três** idiomas (`en`, `es`, `pt`). O `en` é
+  a referência; os testes de `src/i18n/messages/__tests__/` falham se outro
+  idioma tiver chave a mais, a menos, ou placeholder diferente
+- Em componentes, use `useTranslations` — funciona tanto em Server quanto em
+  Client Component. Reserve `getTranslations` para contexto assíncrono, como
+  `generateMetadata`. Use `t` como nome da função retornada
+- Navegação entre rotas usa os helpers de `@/i18n/navigation`, que preservam
+  o idioma atual
+- `src/i18n/messages/generated/` é gerado pelo `next.config.ts` e ignorado
+  pelo git — nunca edite nem versione
 
 ### Testes
 

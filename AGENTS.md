@@ -48,7 +48,9 @@ Se qualquer comando falhar, corrija e repita até todos passarem.
 - **Projeto**: boilerplate Next.js para iniciar projetos
 - **Stack**: Next.js 16 App Router + React 19 + TypeScript + shadcn/ui +
   Tailwind CSS v4
-- **Pacotes**: pnpm (não use npm/yarn). Node 24.x
+- **Pacotes**: pnpm (não use npm/yarn). A versão de pnpm vem de
+  `packageManager` e a linha do Node vem de `engines.node`, ambos no
+  `package.json` — nunca fixe esses números na documentação
 - **Imports absolutos**: via `@/` alias (tsconfig `paths`)
 - **UI**: shadcn/ui (Radix UI + Tailwind Variants)
 - **Estado**: Zustand (com persist middleware)
@@ -56,6 +58,9 @@ Se qualquer comando falhar, corrija e repita até todos passarem.
 - **Formulários**: React Hook Form + Zod
 - **HTTP**: Axios
 - **Toast**: Sonner
+- **i18n**: next-intl com rotas `[locale]` (`en` padrão, `es`, `pt`).
+  Middleware em `src/proxy.ts`, tipos em `src/global.ts`, mensagens por
+  namespace em `src/i18n/messages/<locale>/`
 - **Tema**: `ThemeProvider` próprio (classe `.dark` + cookie `theme` +
   `useTheme`)
 - **Ícones**: lucide-react
@@ -70,10 +75,14 @@ Se qualquer comando falhar, corrija e repita até todos passarem.
 src/
 ├── @types/              # Declarações de tipo globais
 ├── app/                 # Rotas (App Router)
-│   ├── (home)/          # Grupo de rotas da home
-│   ├── layout.tsx       # Layout raiz
+│   ├── [locale]/        # Segmento de idioma (next-intl)
+│   │   ├── (home)/      # Grupo de rotas da home
+│   │   ├── [...rest]/   # Catch-all de rota inexistente
+│   │   ├── layout.tsx   # Layout do idioma
+│   │   ├── error.tsx    # Fronteira de erro de rota
+│   │   └── not-found.tsx # Página 404 do idioma
 │   ├── global-error.tsx # Fronteira de erro global
-│   └── not-found.tsx    # Página 404
+│   └── global-not-found.tsx # 404 fora do segmento de idioma
 ├── assets/              # SVGs e recursos privados
 ├── components/          # Atomic Design
 │   ├── atoms/           # Elementos básicos (Button, Input, Textarea…)
@@ -82,6 +91,10 @@ src/
 ├── constants/           # Configurações estáticas e schemas de ambiente
 ├── hooks/               # React hooks customizados
 ├── helpers/             # Utilitários compartilhados (cn helper)
+├── i18n/                # next-intl: routing, request e mensagens
+│   ├── messages/        # Traduções por idioma e namespace
+│   ├── messagesCodegen/ # Merge das mensagens e geração de tipos
+│   └── warnLocaleParity/ # Aviso de divergência entre idiomas
 ├── infra/               # Infraestrutura
 │   ├── adapters/        # Adapters de libs (httpClient, queryClient)
 │   └── store/           # Base para stores Zustand
@@ -91,7 +104,9 @@ src/
 │   ├── mocks/           # Mocks compartilhados
 │   ├── providers/       # Providers de teste
 │   └── helpers/         # Helpers de teste
-└── theme/               # Configuração de fontes
+├── theme/               # Fontes e globals.css
+├── global.ts            # Tipos de Locale e Messages do next-intl
+└── proxy.ts             # Middleware de idioma (next-intl)
 ```
 
 ---
@@ -182,6 +197,22 @@ moduleName/
 
 - Hooks customizados em `src/hooks/` com prefixo `use`
 - NUNCA adicione `'use client'` em hooks
+
+### Internacionalização
+
+- Todo texto visível ao usuário passa por tradução. NUNCA escreva string
+  literal de UI no JSX
+- Um arquivo por componente ou página em
+  `src/i18n/messages/<locale>/{components,pages}/<Nome>.json`. O nome do
+  arquivo é o namespace, e namespace duplicado quebra o build
+- Ao criar uma chave, crie nos três idiomas (`en`, `es`, `pt`). O `en` é a
+  referência, e os testes de paridade falham se algum idioma tiver chave a
+  mais, a menos, ou placeholder diferente
+- Em componentes use `useTranslations` (vale para Server e Client Component);
+  reserve `getTranslations` para contexto assíncrono como `generateMetadata`
+- Navegação entre rotas usa os helpers de `@/i18n/navigation`
+- NUNCA edite nem versione `src/i18n/messages/generated/` — é gerado pelo
+  `next.config.ts` e ignorado pelo git
 
 ### Testes
 

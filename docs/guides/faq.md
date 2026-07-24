@@ -2,7 +2,8 @@
 
 ## pnpm install falha com erro de versão
 
-O repositório exige Node 24.x e uma versão fixa de pnpm. Atualize o Node e
+O repositório exige a linha de Node declarada em `engines.node` e a versão de
+pnpm fixada em `packageManager`, ambas no `package.json`. Alinhe o Node e
 execute:
 
 ```bash
