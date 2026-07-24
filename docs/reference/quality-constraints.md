@@ -57,16 +57,15 @@ Exceção: convenções Next.js (`not-found.tsx`, `global-error.tsx`).
   - Linting inclui regras recomendadas mais verificações de a11y e
     complexidade.
 - **Knip** (código e dependências sem uso):
-  - `pnpm audit:dead-code` executa análise completa, análise estrita do grafo
+  - `pnpm dead-code` executa análise completa, análise estrita do grafo
     de produção e detecção de ciclos.
   - Hints de configuração são erros para evitar grafos incompletos.
-  - `pnpm audit:dead-code:entrypoints` audita superfícies públicas sem bloquear.
 - **Commitlint** (formato de commit):
   - Conventional Commits são obrigatórios.
   - Tamanho máximo do header é 120 caracteres.
 - **Lefthook** (gates locais):
   - `pre-commit`: `pnpm format`, `pnpm lint`, `pnpm typecheck`.
-  - `pre-push`: `pnpm test` e `pnpm audit:dead-code` em paralelo.
+  - `pre-push`: `pnpm test`.
 - **TypeScript** (modo estrito):
   - `strict: true`, `noImplicitAny`, `noUnusedLocals`,
     `noUncheckedIndexedAccess`.
@@ -131,8 +130,8 @@ decifrar código obscuro.
 
 ## Dependências
 
-- **Versões exatas** — `.npmrc` contém `save-exact=true`. Todo `pnpm add`
-  grava sem `^` ou `~` (ex: `"1.2.3"` em vez de `"^1.2.3"`).
+- **Versões exatas** — `pnpm-workspace.yaml` contém `saveExact: true`. Todo
+  `pnpm add` grava sem `^` ou `~` (ex: `"1.2.3"` em vez de `"^1.2.3"`).
 - **Por quê**: builds determinísticos, sem surpresas de minor/patch.
 - **Atenção com geradores**: `shadcn add` e similares podem ignorar essa
   configuração. Sempre verifique o `package.json` após usar geradores e remova

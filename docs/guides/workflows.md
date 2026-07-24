@@ -12,7 +12,7 @@ pnpm dev
 pnpm format
 pnpm lint
 pnpm typecheck
-pnpm audit:dead-code
+pnpm dead-code
 pnpm test
 ```
 
@@ -20,7 +20,7 @@ pnpm test
 
 ```bash
 pnpm format && pnpm lint && pnpm typecheck && \
-  pnpm audit:dead-code && pnpm test && pnpm build
+  pnpm dead-code && pnpm test && pnpm build
 ```
 
 ## Variantes de teste
@@ -68,10 +68,8 @@ pnpm detect:duplicates
 
 ## Auditoria de código morto
 
-`pnpm audit:dead-code` executa três gates bloqueantes do Knip: análise completa,
+`pnpm dead-code` executa três gates bloqueantes do Knip: análise completa,
 análise estrita do grafo de produção e ciclos de dependência.
-`pnpm audit:dead-code:entrypoints` é um diagnóstico não bloqueante das
-exportações mantidas como superfícies públicas do boilerplate.
 
 ## Atualização de dependências
 
@@ -84,7 +82,7 @@ pnpm update:pnpm
 
 - Instalados automaticamente no `pnpm install` quando `.git` está presente.
 - `pre-commit`: `pnpm format`, `pnpm lint`, `pnpm typecheck`.
-- `pre-push`: `pnpm test` e `pnpm audit:dead-code` em paralelo.
+- `pre-push`: `pnpm test`.
 
 ## Adicionando um novo componente
 
