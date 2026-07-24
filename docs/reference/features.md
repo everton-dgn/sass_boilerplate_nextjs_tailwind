@@ -2,8 +2,8 @@
 
 ## Página inicial
 
-O boilerplate entrega uma página inicial mínima em `src/app/(home)/` para
-validar layout, assets, tema e configuração do App Router.
+O boilerplate entrega uma página inicial mínima em `src/app/[locale]/(home)/`
+para validar layout, assets, tema e configuração do App Router.
 
 ## Modo escuro
 

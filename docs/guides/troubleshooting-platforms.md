@@ -10,8 +10,8 @@ gerais, leia `../reference/quality-constraints.md`.
   refaça o clone ou renormalize os arquivos.
 - Sensibilidade a maiúsculas: CI roda em Linux, então os caminhos de import
   devem corresponder exatamente à capitalização do nome do arquivo.
-- Route groups: pastas como `src/app/(home)` usam parênteses. Use aspas no
-  caminho em terminais, por exemplo: `ls "src/app/(home)"`.
+- Route groups: pastas como `src/app/[locale]/(home)` usam parênteses. Use
+  aspas no caminho em terminais, por exemplo: `ls "src/app/[locale]/(home)"`.
 - Playwright: a configuração usa o Chromium gerenciado. Execute
   `pnpm exec playwright install chromium` quando a revisão exigida estiver
   ausente.
