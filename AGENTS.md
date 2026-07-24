@@ -211,7 +211,7 @@ pnpm dev                # Servidor de desenvolvimento (localhost:3000)
 pnpm test               # Testes unitários (Vitest)
 pnpm test:e2e           # Testes E2E (Playwright)
 pnpm typecheck          # Verificação de tipos
-pnpm audit:dead-code    # Auditoria de código e dependências sem uso
+pnpm dead-code          # Auditoria de código e dependências sem uso
 pnpm format             # Formatação Biome
 pnpm lint               # Linting Biome
 pnpm build              # Build de produção
@@ -221,7 +221,7 @@ Pipeline completo:
 
 ```bash
 pnpm format && pnpm lint && pnpm typecheck && \
-  pnpm audit:dead-code && pnpm test && pnpm build
+  pnpm dead-code && pnpm test && pnpm build
 ```
 
 ---

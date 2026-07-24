@@ -148,7 +148,7 @@ Disponível em http://localhost:3000
 | `pnpm start`        | Iniciar servidor de produção           |
 | `pnpm lint`         | Executar linting do Biome              |
 | `pnpm format`       | Formatar código com Biome              |
-| `pnpm audit:dead-code` | Auditar código e dependências com Knip |
+| `pnpm dead-code` | Auditar código e dependências com Knip |
 | `pnpm typecheck`    | Verificação de tipos TypeScript        |
 | `pnpm test`         | Executar testes unitários (Vitest)     |
 | `pnpm test:w`       | Executar testes em modo de observação  |
@@ -161,7 +161,7 @@ Disponível em http://localhost:3000
 
 ```bash
 pnpm format && pnpm lint && pnpm typecheck && \
-  pnpm audit:dead-code && pnpm test && pnpm build
+  pnpm dead-code && pnpm test && pnpm build
 ```
 
 <br />
